@@ -11,7 +11,7 @@ export default function RootLayout() {
   return (
     <div className='flex flex-col min-h-screen max-w-[430px] mx-auto'>
       <HeaderComponent {...headerProps} />
-      <main className='flex-1 p-2'>
+      <main className='flex flex-col flex-1 p-2'>
         <Outlet />
       </main>
     </div>

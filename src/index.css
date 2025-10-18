@@ -8,14 +8,16 @@
   --color-lab-light: #3dc0c5;
   --color-party-dark: #642c8d;
   --color-party-light: #7c31b4;
+
+  --header-height: 4rem;
 }
 
 @font-face {
-  font-family: "Pretendard-Regular";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-    format("woff");
+  font-family: "Pretendard";
   font-weight: 400;
   font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff/Pretendard-Regular.woff")
+    format("woff");
 }
 
 * {
@@ -28,7 +30,7 @@ body {
 }
 
 #root {
-  @apply w-full h-full max-w-[430px] mx-auto overflow-y-auto bg-white;
+  @apply w-full h-full bg-white text-black m-0 mx-auto overflow-x-hidden;
 }
 
 h1,
@@ -39,7 +41,7 @@ div {
 }
 
 button {
-  @apply cursor-pointer text-inherit border-0 bg-transparent;
+  @apply cursor-pointer border-0;
 
   &:hover,
   &:focus {

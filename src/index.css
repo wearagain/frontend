@@ -41,11 +41,11 @@ div {
 }
 
 button {
-  @apply cursor-pointer border-0;
+  @apply cursor-pointer;
 
   &:hover,
   &:focus {
-    @apply border-0 cursor-pointer;
+    @apply cursor-pointer;
   }
 }
 
@@ -174,13 +174,4 @@ textarea:focus {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }

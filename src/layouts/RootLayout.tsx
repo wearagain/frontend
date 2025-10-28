@@ -9,9 +9,9 @@ export default function RootLayout() {
   const headerProps = config?.props ?? {};
 
   return (
-    <div className='flex flex-col min-h-screen max-w-[430px] mx-auto'>
+    <div className='flex flex-col h-screen max-w-[430px] mx-auto'>
       <HeaderComponent {...headerProps} />
-      <main className='flex-1 p-2'>
+      <main className='flex-1 overflow-y-auto'>
         <Outlet />
       </main>
     </div>

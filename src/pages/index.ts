@@ -7,11 +7,12 @@ import PartyApplyPage from "./party/PartyApplyPage";
 import PartyDetailPage from "./party/PartyDetailPage";
 import PartyHostPage from "./party/PartyHostPage";
 import PartyListPage from "./party/PartyListPage";
-import EmailSigninPage from "./signin/EmailSigninPage";
-import SigninMainPage from "./signin/SigninMainPage";
+import SigninMainPage from "./auth/SigninMainPage";
+import ResetPasswordPage from "./auth/ResetPasswordPage";
 import SignupEmailPage from "./signup/SignupEmailPage";
-import SignupSocialPage from "./signup/SignupSocialPage";
 import TicketPage from "./ticket/TicketPage";
+import SignupTermsPage from "./signup/SignupTermsPage";
+import SignupCompletePage from "./signup/SignupCompletePage";
 
 export {
   NotFound,
@@ -25,7 +26,8 @@ export {
   PartyHostPage,
   MyPage,
   SigninMainPage,
-  EmailSigninPage,
+  ResetPasswordPage,
   SignupEmailPage,
-  SignupSocialPage,
+  SignupTermsPage,
+  SignupCompletePage,
 };

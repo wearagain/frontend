@@ -29,7 +29,7 @@ export default function HeaderBase() {
           <SheetContent side='right' className='w-64'>
             <SheetHeader>
               <SheetTitle className='text-lg font-semibold'>
-                <Link to='/signin' onClick={() => setOpen(false)}>
+                <Link to='/auth/signin' onClick={() => setOpen(false)}>
                   로그인 하러가기
                 </Link>
               </SheetTitle>

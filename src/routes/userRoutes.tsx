@@ -2,16 +2,17 @@ import RootLayout from "@/layouts/RootLayout";
 import {
   CommunityPage,
   EcoReceiptPage,
-  EmailSigninPage,
   HomePage,
   MyPage,
   PartyApplyPage,
   PartyDetailPage,
   PartyHostPage,
   PartyListPage,
+  ResetPasswordPage,
   SigninMainPage,
+  SignupCompletePage,
   SignupEmailPage,
-  SignupSocialPage,
+  SignupTermsPage,
   TicketPage,
 } from "@/pages";
 import type { RouteObject } from "react-router-dom";
@@ -26,10 +27,10 @@ const userRoutes: RouteObject = {
     },
     // 로그인
     {
-      path: "signin",
+      path: "auth",
       children: [
-        { index: true, element: <SigninMainPage /> }, // /signin
-        { path: "email", element: <EmailSigninPage /> }, // /signin/email
+        { path: "signin", element: <SigninMainPage /> }, // /auth/signin
+        { path: "reset", element: <ResetPasswordPage /> }, // /auth/reset
       ],
     },
 
@@ -37,8 +38,12 @@ const userRoutes: RouteObject = {
     {
       path: "signup",
       children: [
+        // 일반
         { path: "email", element: <SignupEmailPage /> }, // /signup/email
-        { path: "social", element: <SignupSocialPage /> }, // /signup/social
+
+        // 공통
+        { path: "terms", element: <SignupTermsPage /> }, // /signup/terms
+        { path: "complete", element: <SignupCompletePage /> }, // /signup/complete
       ],
     },
 
@@ -63,7 +68,7 @@ const userRoutes: RouteObject = {
       children: [
         { index: true, element: <PartyListPage /> }, // /party
         { path: ":id", element: <PartyDetailPage /> }, // /party/:id
-        { path: ":id/apply", element: <PartyApplyPage /> }, // /party/:id/apply?step=item|info|...
+        { path: ":id/apply", element: <PartyApplyPage /> }, // /party/:id/apply
       ],
     },
 

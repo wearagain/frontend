@@ -1,12 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TermsItem from "./TermsItem";
 import { Button } from "@/components/ui/button";
+import { useSignupStore } from "@/store/useAuthStore";
+import { useSignup } from "@/hooks/auth/useAuth";
 
 interface SignupTermsFormProps {
   onNext: () => void;
 }
 
 export default function SignupTermsForm({ onNext }: SignupTermsFormProps) {
+  const {
+    email,
+    password,
+    phoneNumber,
+    nickname,
+    termsAgreed,
+    marketingAgreed,
+    setTermsAgreed,
+    setMarketingAgreed,
+  } = useSignupStore();
+  const { mutate: signup, isPending } = useSignup();
+
   const [checked, setChecked] = useState({
     all: false,
     age: false,
@@ -33,6 +47,30 @@ export default function SignupTermsForm({ onNext }: SignupTermsFormProps) {
   };
 
   const isRequiredChecked = checked.age && checked.service && checked.privacy;
+
+  useEffect(() => {
+    setTermsAgreed(isRequiredChecked);
+    setMarketingAgreed(checked.marketing);
+  }, [isRequiredChecked, checked.marketing, setTermsAgreed, setMarketingAgreed]);
+
+  const handleNextClick = () => {
+    signup(
+      {
+        email,
+        password,
+        nickname,
+        phoneNumber: phoneNumber ?? "",
+        termsAgreed,
+        marketingAgreed,
+      },
+      {
+        onSuccess: () => {
+          onNext();
+          localStorage.removeItem("signup-storage");
+        },
+      }
+    );
+  };
 
   return (
     <>
@@ -75,10 +113,10 @@ export default function SignupTermsForm({ onNext }: SignupTermsFormProps) {
         <Button
           type='button'
           disabled={!isRequiredChecked}
-          onClick={onNext}
+          onClick={handleNextClick}
           className='w-full h-12 text-base font-semibold'
         >
-          다음
+          {isPending ? "가입 중" : "다음"}
         </Button>
       </div>
     </>

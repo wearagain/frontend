@@ -1,3 +1,4 @@
+import SignupEmailDisplay from "@/components/signup/SignupEmailDisplay";
 import SignupTermsForm from "@/components/signup/SignupTermsForm";
 import { useNavigate } from "react-router-dom";
 
@@ -5,7 +6,7 @@ export default function SignupTermsPage() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    navigate("/signup/profile");
+    navigate("/signup/complete");
   };
 
   return (
@@ -16,10 +17,7 @@ export default function SignupTermsPage() {
         다음 정보를 입력해 주세요
       </h2>
 
-      <div className='my-6'>
-        <p className='text-sm text-gray-400'>이메일</p>
-        <p className='text-base font-medium'>example@wearagain.com</p>
-      </div>
+      <SignupEmailDisplay />
 
       <SignupTermsForm onNext={handleNext} />
     </div>

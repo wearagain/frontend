@@ -8,7 +8,7 @@ const Button = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HT
         ref={ref}
         disabled={disabled}
         className={cn(
-          "flex items-center justify-center rounded-xl px-4 py-3 font-medium transition-all",
+          "flex items-center justify-center rounded-xl px-4 py-3 font-medium transition-all text-16",
           disabled
             ? "bg-gray-200 text-gray-500 cursor-not-allowed"
             : "bg-gray-700 text-white hover:opacity-90",

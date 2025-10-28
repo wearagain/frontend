@@ -4,10 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-lab-dark: #08b0b7;
-  --color-lab-light: #3dc0c5;
-  --color-party-dark: #642c8d;
-  --color-party-light: #7c31b4;
+  --color-mint-dark: #08b0b7;
+  --color-mint-light: #3dc0c5;
+  --color-purple-dark: #642c8d;
+  --color-purple-light: #7c31b4;
 
   --header-height: 4rem;
 }

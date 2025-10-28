@@ -8,7 +8,6 @@ export default function SignupEmailPage() {
         <br />
         다음 정보를 입력해 주세요
       </h2>
-      {/* form이 남은 영역 전체를 차지하도록 flex-1 부여 */}
       <div className='flex-1'>
         <SignupEmailForm />
       </div>

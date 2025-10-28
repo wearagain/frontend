@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const SignupCompletePage = () => {
@@ -6,10 +7,12 @@ const SignupCompletePage = () => {
 
   return (
     <div className='flex flex-col justify-between h-full px-6 pb-8'>
+      <div className='flex gap-4'>
+        <CheckCircle className=' fill-mint-dark text-white' size={100} />
+      </div>
       <div className='flex flex-col items-center justify-center flex-1 text-center mt-16'>
         <h1 className='text-xl font-bold mb-2'>회원가입 완료!</h1>
         <p className='text-gray-500 text-sm mb-8'>함께 가치를 나누어 보아요</p>
-        <div className='w-64 h-64 bg-gray-100 rounded-md' />
       </div>
 
       <Button

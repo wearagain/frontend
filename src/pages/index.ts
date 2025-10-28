@@ -12,7 +12,6 @@ import ResetPasswordPage from "./auth/ResetPasswordPage";
 import SignupEmailPage from "./signup/SignupEmailPage";
 import TicketPage from "./ticket/TicketPage";
 import SignupTermsPage from "./signup/SignupTermsPage";
-import SignupProfilePage from "./signup/SignupProfilePage";
 import SignupCompletePage from "./signup/SignupCompletePage";
 
 export {
@@ -30,6 +29,5 @@ export {
   ResetPasswordPage,
   SignupEmailPage,
   SignupTermsPage,
-  SignupProfilePage,
   SignupCompletePage,
 };

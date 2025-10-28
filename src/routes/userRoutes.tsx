@@ -12,7 +12,6 @@ import {
   SigninMainPage,
   SignupCompletePage,
   SignupEmailPage,
-  SignupProfilePage,
   SignupTermsPage,
   TicketPage,
 } from "@/pages";
@@ -44,7 +43,6 @@ const userRoutes: RouteObject = {
 
         // 공통
         { path: "terms", element: <SignupTermsPage /> }, // /signup/terms
-        { path: "profile", element: <SignupProfilePage /> }, // /signup/profile
         { path: "complete", element: <SignupCompletePage /> }, // /signup/complete
       ],
     },

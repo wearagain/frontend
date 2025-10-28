@@ -15,45 +15,21 @@ export const axiosInstance: AxiosInstance = axios.create({
 });
 
 let csrfTokenCache = "";
-let csrfInitPromise: Promise<void> | null = null;
 
-export const ensureCsrf = async (): Promise<void> => {
-  if (csrfTokenCache) return;
+export const getPing = async (): Promise<void> => {
+  try {
+    await axiosInstance.get("/public/ping");
 
-  if (csrfInitPromise) {
-    await csrfInitPromise;
-    return;
-  }
-
-  csrfInitPromise = (async () => {
-    try {
-      await axiosInstance.get("/csrf", { withCredentials: true });
-
-      const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
-      if (match) {
-        csrfTokenCache = decodeURIComponent(match[1]);
-        console.info("쿠키에서 CSRF 토큰을 읽어왔습니다: ", csrfTokenCache);
-      } else {
-        console.warn("/csrf 요청 이후에도 쿠키에 XSRF-TOKEN이 존재하지 않습니다.");
-      }
-
-      const commonHeaders = axiosInstance.defaults.headers.common;
-      if (commonHeaders instanceof AxiosHeaders) {
-        commonHeaders.set("X-XSRF-TOKEN", csrfTokenCache);
-      } else {
-        axiosInstance.defaults.headers.common = new AxiosHeaders({
-          ...(commonHeaders || {}),
-          "X-XSRF-TOKEN": csrfTokenCache,
-        });
-      }
-    } catch (err) {
-      console.error("CSRF 초기화 실패:", err);
-    } finally {
-      csrfInitPromise = null;
+    const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+    if (match) {
+      csrfTokenCache = decodeURIComponent(match[1]);
+      console.info("쿠키에서 XSRF-TOKEN 읽어옴:", csrfTokenCache);
+    } else {
+      console.warn("/ping 요청 후에도 XSRF-TOKEN 쿠키가 존재하지 않습니다.");
     }
-  })();
-
-  await csrfInitPromise;
+  } catch (error) {
+    console.error("Ping 요청 실패:", error);
+  }
 };
 
 axiosInstance.interceptors.request.use(
@@ -62,7 +38,7 @@ axiosInstance.interceptors.request.use(
 
     if (["POST", "PUT", "PATCH", "DELETE"].includes(method)) {
       if (!csrfTokenCache) {
-        await ensureCsrf();
+        await getPing();
       }
 
       const headers =
@@ -80,7 +56,7 @@ axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
     if (error.response?.status === 401) {
-      console.warn("세션 만료 감지 -> CSRF 토큰 초기화");
+      console.warn("세션 만료 감지 → 쿠키 초기화");
       csrfTokenCache = "";
       window.location.href = "/auth/signin";
     }

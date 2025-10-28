@@ -1,9 +1,5 @@
 import { axiosInstance } from "../axios-instance";
 
-export const initCsrf = async () => {
-  await axiosInstance.get("/csrf", { withCredentials: true });
-};
-
 export const postSignin = async (email: string, password: string) => {
   const formData = new URLSearchParams();
   formData.append("username", email);

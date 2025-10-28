@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { initCsrf, postSignin, postSignout } from "@/apis/auth/signin";
+import { postSignin, postSignout } from "@/apis/auth/signin";
 import {
   postEmailResend,
   postEmailVerification,
@@ -76,7 +76,6 @@ export const useSignin = () => {
   return useMutation({
     mutationKey: ["signin"],
     mutationFn: async (credentials: { email: string; password: string }) => {
-      await initCsrf();
       return await postSignin(credentials.email, credentials.password);
     },
     onSuccess: async () => {
@@ -103,7 +102,6 @@ export const useSignout = () => {
   return useMutation({
     mutationKey: ["signout"],
     mutationFn: async () => {
-      await initCsrf();
       await postSignout();
     },
     onSuccess: async () => {

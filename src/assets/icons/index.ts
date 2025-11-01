@@ -20,4 +20,6 @@ export {
   ChevronLeft,
   Info,
   CheckCircle,
+  ArrowUpDownIcon,
+  ChevronDownIcon,
 } from "lucide-react";

@@ -1,5 +1,11 @@
+import { PartyList } from "@/components/party/partyList/PartyList";
+
 const PartyListPage = () => {
-  return <div>PartyListPage</div>;
+  return (
+    <div>
+      <PartyList />
+    </div>
+  );
 };
 
 export default PartyListPage;

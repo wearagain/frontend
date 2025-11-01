@@ -1,5 +1,5 @@
-import { useInfiniteQuery, type InfiniteData } from "@tanstack/react-query";
-import { getPartyList } from "@/apis/party/getParty";
+import { useInfiniteQuery, useQuery, type InfiniteData } from "@tanstack/react-query";
+import { getPartyDetails, getPartyList } from "@/apis/party/getParty";
 import type { PartyListResponse, PartyListQuery } from "@/types/party";
 
 export const useGetPartyList = (params: PartyListQuery) => {
@@ -15,5 +15,12 @@ export const useGetPartyList = (params: PartyListQuery) => {
       getPartyList({ ...params, cursor: pageParam as string | undefined }),
     initialPageParam: undefined,
     getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.nextCursor : undefined),
+  });
+};
+
+export const useGetParty = (partyId: string) => {
+  return useQuery({
+    queryKey: ["party", partyId],
+    queryFn: () => getPartyDetails(partyId),
   });
 };

@@ -1,3 +1,6 @@
+/**
+ * 파티 리스트
+ */
 // 파티 상태 타입
 export type PartyStatus = "UPCOMING" | "ONGOING" | "COMPLETED" | "CANCELLED";
 
@@ -45,4 +48,28 @@ export interface PartyListResponse {
   nextCursor?: string;
   hasNext: boolean;
   size: number;
+}
+
+/**
+ * 파티 상세 정보
+ */
+export interface PartyDetailResponse {
+  id: string;
+  applicationId: string;
+  hostId: string;
+  isGroup: boolean;
+  title: string;
+  description: string;
+  openAt: string;
+  closeAt: string;
+  address: string;
+  maxChangeCnt: number;
+  maxAttendeeCnt: number;
+  currentAttendeeCnt: number;
+  status: string;
+  hostName: string;
+  hostEmail: string;
+  imageUrl: string;
+  xmap: number;
+  ymap: number;
 }

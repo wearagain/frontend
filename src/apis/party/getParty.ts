@@ -5,6 +5,10 @@ export const getPartyList = async (filters: PartyListQuery): Promise<PartyListRe
   const { data } = await axiosInstance.get<PartyListResponse>("/api/parties", {
     params: filters,
   });
+  return data;
+};
 
+export const getPartyDetails = async (partyId: string) => {
+  const { data } = await axiosInstance.get(`/api/parties/${partyId}`);
   return data;
 };

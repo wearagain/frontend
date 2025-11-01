@@ -1,7 +1,14 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import HeaderContainer from "./HeaderContainer";
-import { Menu } from "lucide-react";
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Menu } from "@/assets/icons";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import { Link, useLocation } from "react-router-dom";
 import { mainMenu } from "@/config/navMenu";
 
@@ -33,6 +40,9 @@ export default function HeaderBase() {
                   로그인 하러가기
                 </Link>
               </SheetTitle>
+              <SheetDescription className='text-sm text-muted-foreground'>
+                메뉴를 선택하면 이동합니다.
+              </SheetDescription>
             </SheetHeader>
 
             <nav className='flex flex-col gap-4 mt-6 ml-4 text-base font-medium'>
@@ -47,6 +57,7 @@ export default function HeaderBase() {
                   {item.label}
                 </Link>
               ))}
+              <div>로그아웃</div>
             </nav>
           </SheetContent>
         </Sheet>

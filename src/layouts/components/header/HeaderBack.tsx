@@ -1,5 +1,5 @@
 import HeaderContainer from "./HeaderContainer";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft } from "@/assets/icons";
 import { useNavigate } from "react-router-dom";
 
 interface HeaderBackProps {

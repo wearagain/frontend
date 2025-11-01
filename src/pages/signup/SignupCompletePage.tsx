@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle } from "@/assets/icons";
 import { useNavigate } from "react-router-dom";
 
 const SignupCompletePage = () => {

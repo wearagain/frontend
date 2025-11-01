@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Home, Users, MessageSquare, Ticket, User } from "lucide-react";
+import { Home, Users, MessageSquare, Ticket, User } from "@/assets/icons";
 
 export interface NavItem {
   label: string;

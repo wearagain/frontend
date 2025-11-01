@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Camera } from "lucide-react";
+import { Camera } from "@/assets/icons";
 import { ProfileIcon } from "@/assets/icons";
 import { cn } from "@/lib/utils";
 

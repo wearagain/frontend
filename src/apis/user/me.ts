@@ -8,8 +8,6 @@ export interface UserProfile {
 }
 
 export const getMe = async (): Promise<UserProfile> => {
-  const { data } = await axiosInstance.get("/api/me", {
-    withCredentials: true,
-  });
+  const { data } = await axiosInstance.get("/api/me");
   return data;
 };

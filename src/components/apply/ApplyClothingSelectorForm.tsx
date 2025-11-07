@@ -78,7 +78,7 @@ export default function ApplyClothingSelectorForm({ maxItemLimit, onNext }: Prop
     <div>
       <div className='flex flex-col h-screen'>
         <div className='bg-white flex-shrink-0 border-b-1 sticky top-0 border-gray-100 z-100'>
-          <h2 className='text-lg font-semibold px-4 pt-6 mb-5'>
+          <h2 className='text-lg font-semibold px-5 pt-6 mb-5'>
             교환하려는 품목을
             <br />
             모두 선택해 주세요

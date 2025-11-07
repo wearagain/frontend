@@ -4,6 +4,8 @@ import {
   EcoReceiptPage,
   HomePage,
   MyPage,
+  ApplyCompletePage,
+  ApplyHistoryDetailPage,
   PartyApplyPage,
   PartyDetailPage,
   PartyHostPage,
@@ -69,6 +71,8 @@ const userRoutes: RouteObject = {
         { index: true, element: <PartyListPage /> }, // /party
         { path: ":id", element: <PartyDetailPage /> }, // /party/:id
         { path: ":id/apply", element: <PartyApplyPage /> }, // /party/:id/apply
+        { path: ":id/apply/complete", element: <ApplyCompletePage /> }, // /party/:id/apply/complete
+        { path: "history", element: <ApplyHistoryDetailPage /> }, // /party/apply/history
       ],
     },
 

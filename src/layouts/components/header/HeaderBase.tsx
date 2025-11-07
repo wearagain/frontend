@@ -1,24 +1,21 @@
 import { useEffect, useState } from "react";
 import HeaderContainer from "./HeaderContainer";
 import { Menu } from "@/assets/icons";
-import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from "@/components/ui/sheet";
+import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Link, useLocation } from "react-router-dom";
 import { mainMenu } from "@/config/navMenu";
+import { useMe } from "@/hooks/auth/useMe";
 
 export default function HeaderBase() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { data } = useMe();
 
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
+
+  const nickname = data?.nickname ?? null;
 
   return (
     <HeaderContainer>
@@ -35,13 +32,14 @@ export default function HeaderBase() {
           <SheetContent side='right' className='w-64 overflow-y-auto'>
             <SheetHeader>
               <SheetTitle className='text-lg font-semibold'>
-                <Link to='/auth/signin' onClick={() => setOpen(false)}>
-                  로그인 하러가기
-                </Link>
+                {nickname ? (
+                  <span className='text-gray-900'>{nickname}님</span>
+                ) : (
+                  <Link to='/auth/signin' onClick={() => setOpen(false)}>
+                    로그인 하러가기
+                  </Link>
+                )}
               </SheetTitle>
-              <SheetDescription className='text-sm text-muted-foreground'>
-                메뉴를 선택하면 이동합니다.
-              </SheetDescription>
             </SheetHeader>
 
             <nav className='flex flex-col gap-6 mt-6 ml-4 text-base font-medium pb-4'>

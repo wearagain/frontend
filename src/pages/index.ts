@@ -3,6 +3,8 @@ import NotFound from "./NotFound";
 import EcoReceiptPage from "./eco-receipt/EcoReceiptPage";
 import HomePage from "./home/HomePage";
 import MyPage from "./my/MyPage";
+import ApplyCompletePage from "./party/ApplyCompletePage";
+import ApplyHistoryDetailPage from "./party/ApplyHistoryDetailPage";
 import PartyApplyPage from "./party/PartyApplyPage";
 import PartyDetailPage from "./party/PartyDetailPage";
 import PartyHostPage from "./party/PartyHostPage";
@@ -23,6 +25,8 @@ export {
   PartyListPage,
   PartyDetailPage,
   PartyApplyPage,
+  ApplyCompletePage,
+  ApplyHistoryDetailPage,
   PartyHostPage,
   MyPage,
   SigninMainPage,

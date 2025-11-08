@@ -16,17 +16,55 @@ interface Props {
   onUpdateInfo: (itemId: string, info: Partial<ItemInfo>) => void;
 }
 
+// 이미지 압축
+const compressImage = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      image.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        const MAX_WIDTH = 1024;
+        let width = image.width;
+        let height = image.height;
+
+        if (width > MAX_WIDTH) {
+          height = height * (MAX_WIDTH / width);
+          width = MAX_WIDTH;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        ctx?.drawImage(image, 0, 0, width, height);
+
+        const base64Url = canvas.toDataURL("image/jpeg", 0.8);
+        resolve(base64Url);
+      };
+      image.src = e.target?.result as string;
+    };
+
+    reader.onerror = (error) => reject(error);
+    reader.readAsDataURL(file);
+  });
+};
+
 export default function ItemInfoCard({ item, itemInfo, onDelete, onUpdateInfo }: Props) {
+  // TODO: 사진 업로드 방식 추후 수정
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
 
-    const newImages = Array.from(files).map((file) => URL.createObjectURL(file));
+    const uploadPromises = Array.from(files).map((file) => compressImage(file));
 
-    const updatedImages = [...itemInfo.images, ...newImages].slice(0, 5);
-    onUpdateInfo(item.itemId, { images: updatedImages });
-
-    e.target.value = "";
+    Promise.all(uploadPromises).then((newImages) => {
+      const updatedImages = [...itemInfo.images, ...newImages].slice(0, 5);
+      onUpdateInfo(item.itemId, { images: updatedImages });
+      e.target.value = "";
+    });
   };
 
   const handleRemoveImage = (idxToRemove: number) => {
@@ -44,7 +82,7 @@ export default function ItemInfoCard({ item, itemInfo, onDelete, onUpdateInfo }:
             <X className='w-5 h-5' />
           </button>
         </div>
-        <p className='text-sm text-gray-500'>교환 이력 없음</p>
+        <p className='text-sm text-gray-500'>{itemInfo.description || "교환 이력 없음"}</p>
       </div>
 
       <div className='grid grid-cols-4 gap-3'>

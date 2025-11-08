@@ -4,7 +4,7 @@ import { useApplyStore } from "@/store/useApplyStore";
 import ClothingCategoryDisplay from "@/components/apply/ClothingCategoryDisplay";
 import ClothingSelectedModal from "@/components/apply/ClothingSelectedModal";
 import { type ClothingCategoryCode, type SelectedItem } from "@/types/clothingCategory";
-import { findCategoryByCode } from "@/utils/clothingUtils";
+import { findCategoryByCode } from "@/utils/apply/clothingUtils";
 
 interface Props {
   onNext: (selectedItems: SelectedItem[]) => void;
@@ -77,7 +77,7 @@ export default function ApplyClothingSelectorForm({ maxItemLimit, onNext }: Prop
   return (
     <div>
       <div className='flex flex-col h-screen'>
-        <div className='bg-white flex-shrink-0 border-b-1 sticky top-0 border-gray-100 z-100'>
+        <div className='bg-white flex-shrink-0 border-b-1 sticky top-0 border-gray-100 z-10'>
           <h2 className='text-lg font-semibold px-5 pt-6 mb-5'>
             교환하려는 품목을
             <br />

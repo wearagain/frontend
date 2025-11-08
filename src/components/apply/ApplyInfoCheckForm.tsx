@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useApplyStore } from "@/store/useApplyStore";
 
 import { ChevronDown, ChevronUp } from "lucide-react";
@@ -10,6 +10,9 @@ import AppliedItem from "./AppliedItem";
 
 interface Props {
   onFinalSubmit: () => void;
+  partyName: string;
+  onBack: () => void;
+  isPending: boolean;
 }
 
 const formatDateTime = (date: Date | null | undefined, time: string | null): string => {
@@ -24,8 +27,15 @@ const formatDateTime = (date: Date | null | undefined, time: string | null): str
   return "날짜 및 시간 정보 없음";
 };
 
-export default function ApplyInfoCheckForm({ onFinalSubmit }: Props) {
+export default function ApplyInfoCheckForm({ onFinalSubmit, partyName, onBack, isPending }: Props) {
   const { selectedItems, selectedDate, selectedTime, itemsInfo } = useApplyStore();
+  useEffect(() => {
+    if (selectedItems.length === 0) {
+      onBack();
+    }
+  }, [selectedItems, onBack]);
+
+  const isValid = !!selectedDate && !!selectedTime;
 
   const [isDetailsOpen, setIsDetailsOpen] = useState(true);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -67,6 +77,10 @@ export default function ApplyInfoCheckForm({ onFinalSubmit }: Props) {
   const isRequiredChecked = checked.service && checked.privacy && checked.thirdParty;
 
   const handleFinalCheck = () => {
+    if (!isValid) {
+      onBack();
+      return;
+    }
     if (isRequiredChecked) {
       setShowConfirmModal(true);
     }
@@ -79,7 +93,7 @@ export default function ApplyInfoCheckForm({ onFinalSubmit }: Props) {
 
   return (
     <div className='flex flex-col min-h-full mb-32'>
-      <div className='bg-white flex-shrink-0 sticky top-0 z-100'>
+      <div className='bg-white flex-shrink-0 sticky top-0 z-10'>
         <h2 className='text-lg font-semibold px-5 pt-6 mb-5'>
           마지막으로 정보 확인 후
           <br />
@@ -181,7 +195,7 @@ export default function ApplyInfoCheckForm({ onFinalSubmit }: Props) {
         {/* 신청 버튼 */}
         <Button
           onClick={handleFinalCheck}
-          disabled={!isRequiredChecked}
+          disabled={!isRequiredChecked || isPending}
           className='w-full h-12 text-base font-semibold'
         >
           신청하기
@@ -193,7 +207,7 @@ export default function ApplyInfoCheckForm({ onFinalSubmit }: Props) {
         <ConfirmModal
           onClose={() => setShowConfirmModal(false)}
           onConfirm={handleConfirmSubmit}
-          partyName='파티명'
+          partyName={partyName}
           partyDate={formatDateTime(selectedDate, selectedTime)}
           totalCount={totalItemsCount}
         />

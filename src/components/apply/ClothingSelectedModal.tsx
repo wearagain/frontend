@@ -1,6 +1,6 @@
 import { Button } from "../ui/button";
 import { type ClothingCategoryCode } from "@/types/clothingCategory";
-import { findCategoryByCode } from "@/utils/clothingUtils";
+import { findCategoryByCode } from "@/utils/apply/clothingUtils";
 import { Plus, Minus, X } from "lucide-react";
 
 interface Props {
@@ -51,7 +51,7 @@ export default function ClothingSelectedModal({
 
                   <button
                     onClick={() => onCountChange(code, count + 1)}
-                    disabled={isDecrementDisabled}
+                    disabled={isIncrementDisabled}
                     className={`w-6 h-6 rounded-full border flex items-center justify-center ${
                       isIncrementDisabled
                         ? "border-gray-200 text-gray-400 cursor-default"

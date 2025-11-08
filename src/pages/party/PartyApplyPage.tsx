@@ -1,6 +1,8 @@
-import { useState, useMemo, useCallback } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useState, useMemo, useCallback, useEffect } from "react";
+import { useSearchParams, useNavigate, useParams } from "react-router-dom";
+import { useGetParty } from "@/hooks/party/useGetParty";
 import { useApplyStore } from "@/store/useApplyStore";
+import { useApplySubmit } from "@/hooks/party/useApply";
 
 import ApplyClothingInfoForm from "@/components/apply/ApplyClothingInfoForm";
 import ApplyClothingSelectorForm from "@/components/apply/ApplyClothingSelectorForm";
@@ -10,15 +12,13 @@ import { Button } from "@/components/ui/button";
 
 import { type SelectedItem } from "@/types/clothingCategory";
 
-// api로 불러오는 정보
-const DUMMY_LIMIT = 5;
-
 export default function PartyApplyPage() {
-  const maxLimit = DUMMY_LIMIT;
-
   // Step 관리
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { id: partyId } = useParams();
+  const { data } = useGetParty(partyId!);
+
   const step = parseInt(searchParams.get("step") || "1");
 
   // 상태 관리
@@ -27,10 +27,19 @@ export default function PartyApplyPage() {
     itemsInfo,
     selectedDate,
     selectedTime,
+    setPartyId,
     setSelectedItems,
     setDateTime,
     reset,
   } = useApplyStore();
+
+  const { mutate: submitApply, isPending } = useApplySubmit(partyId!);
+
+  useEffect(() => {
+    if (partyId) {
+      setPartyId(partyId);
+    }
+  }, [partyId, setPartyId]);
 
   // 유효성 상태 관리
   const [step2Valid, setStep2Valid] = useState(false);
@@ -60,10 +69,21 @@ export default function PartyApplyPage() {
   );
 
   const handleFinalSubmit = useCallback(() => {
-    // TODO: 서버로 데이터 전송 로직 추가
-    reset();
-    navigate("complete");
-  }, [selectedItems, itemsInfo, selectedDate, selectedTime, reset, navigate]);
+    submitApply(
+      {
+        selectedItems,
+        itemsInfo,
+        selectedDate,
+        selectedTime,
+      },
+      {
+        onSuccess: () => {
+          reset();
+          navigate("complete");
+        },
+      }
+    );
+  }, [selectedItems, itemsInfo, selectedDate, selectedTime, submitApply, reset, navigate]);
 
   // navigation handlers
   const handleGoBack = useCallback(() => {
@@ -71,6 +91,10 @@ export default function PartyApplyPage() {
       setStep(step - 1);
     }
   }, [step, setStep]);
+
+  const handleGoToFirst = useCallback(() => {
+    setStep(1);
+  }, [setStep]);
 
   const handleGoNext = useCallback(() => {
     const nextStep = step + 1;
@@ -104,15 +128,19 @@ export default function PartyApplyPage() {
     return true;
   }, [step, step2Valid, step3Valid]);
 
+  if (!data) {
+    return <div></div>;
+  }
+
   return (
     <div className='flex flex-col min-h-screen'>
       {/* 폼 */}
       {step === 1 && (
-        <ApplyClothingSelectorForm maxItemLimit={maxLimit} onNext={handleCategorySubmit} />
+        <ApplyClothingSelectorForm maxItemLimit={data.maxChangeCnt} onNext={handleCategorySubmit} />
       )}
       {step === 2 && (
         <ApplyClothingInfoForm
-          maxItemLimit={maxLimit}
+          maxItemLimit={data.maxChangeCnt}
           onBack={handleGoBack}
           onSetIsValid={setStep2Valid}
         />
@@ -121,11 +149,20 @@ export default function PartyApplyPage() {
         <ApplyDateTimeSelctorForm
           onSetIsValid={setStep3Valid}
           onUpdateTempDateTime={handleDateTimeUpdate}
+          openAt={data.openAt}
+          closeAt={data.closeAt}
           initialDate={selectedDate}
           initialTime={selectedTime}
         />
       )}
-      {step === 4 && <ApplyInfoCheckForm onFinalSubmit={handleFinalSubmit} />}
+      {step === 4 && (
+        <ApplyInfoCheckForm
+          onFinalSubmit={handleFinalSubmit}
+          partyName={data.title}
+          onBack={handleGoToFirst}
+          isPending={isPending}
+        />
+      )}
 
       {/* 다음 버튼 */}
       {(step == 2 || step == 3) && (

@@ -16,7 +16,7 @@ export default function ConfirmModal({
   totalCount,
 }: Props) {
   return (
-    <div className='fixed inset-0 bg-black/50 flex items-center justify-center z-1000'>
+    <div className='fixed inset-0 bg-black/50 flex items-center justify-center z-100'>
       <div className='bg-white rounded-xl p-5 w-[85%] max-w-sm shadow-2xl'>
         <h3 className='font-bold text-lg mb-5'>해당 내용 신청하시겠습니까?</h3>
 

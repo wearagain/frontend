@@ -73,3 +73,33 @@ export interface PartyDetailResponse {
   xmap: number;
   ymap: number;
 }
+
+/**
+ * 파티 주최 요청 타입
+ */
+export interface PartyHostRequest {
+  isGroup: boolean;
+  groupName: string;
+  name: string;
+  phone: string;
+  email: string;
+  openAt: Date;
+  closeAt: Date;
+  address: string;
+  addressDetail: string;
+  maxChangeCnt: number;
+  maxAttendeeCnt: number;
+  partyTitle: string;
+  partyDescription: string;
+  deliverAddress: string;
+  deliverAddressDetail: string;
+  desiredDate: Date;
+  taxReceipt: boolean;
+  taxEmail: string;
+  xmap: number;
+  ymap: number;
+
+  // 백엔드에서 빠진 값
+  openTime?: string;
+  closeTime?: string;
+}

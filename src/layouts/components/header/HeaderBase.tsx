@@ -5,11 +5,20 @@ import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "@/co
 import { Link, useLocation } from "react-router-dom";
 import { mainMenu } from "@/config/navMenu";
 import { useMe } from "@/hooks/auth/useMe";
+import { useSignout } from "@/hooks/auth/useAuth";
 
 export default function HeaderBase() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const { data } = useMe();
+  const { mutate: signout, isPending } = useSignout();
+
+  const handleSignout = () => {
+    if (isPending) return;
+    signout(undefined, {
+      onSettled: () => setOpen(false),
+    });
+  };
 
   useEffect(() => {
     setOpen(false);
@@ -80,7 +89,12 @@ export default function HeaderBase() {
                   )}
                 </div>
               ))}
-              <div className='mt-4 cursor-pointer text-sm text-gray-500'>로그아웃</div>
+              <div
+                className='mt-4 cursor-pointer text-sm text-gray-500 hover:text-gray-800 transition'
+                onClick={handleSignout}
+              >
+                {isPending ? "로그아웃 중..." : "로그아웃"}
+              </div>
             </nav>
           </SheetContent>
         </Sheet>

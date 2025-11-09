@@ -58,7 +58,6 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401) {
       console.warn("세션 만료 감지 → 쿠키 초기화");
       csrfTokenCache = "";
-      window.location.href = "/auth/signin";
     }
     return Promise.reject(error);
   }

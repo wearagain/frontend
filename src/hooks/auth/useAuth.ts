@@ -9,6 +9,7 @@ import {
 } from "@/apis/auth/signup";
 import { startSocialLogin } from "@/apis/auth/social";
 import { handleApiError } from "@/utils/handleApiError";
+import { useNavigate } from "react-router-dom";
 
 // 회원가입 관련
 export const useEmailVerification = () => {
@@ -96,19 +97,28 @@ export const useSocialLogin = () => {
 };
 
 // 로그아웃 관련
+
 export const useSignout = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-  return useMutation({
+  const mutation = useMutation({
     mutationKey: ["signout"],
-    mutationFn: async () => {
-      await postSignout();
-    },
+    mutationFn: async () => await postSignout(),
     onSuccess: async () => {
       queryClient.removeQueries({ queryKey: ["me"], exact: true });
+      document.cookie = "XSRF-TOKEN=; Max-Age=0; path=/;";
+      navigate("/auth/signin");
     },
     onError: (error: unknown) => {
       console.error("로그아웃 실패:", error);
+      alert("로그아웃 중 오류가 발생했습니다.");
     },
   });
+
+  return {
+    mutate: mutation.mutate,
+    mutateAsync: mutation.mutateAsync,
+    isPending: mutation.isPending,
+  };
 };

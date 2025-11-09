@@ -4,7 +4,8 @@ import EcoReceiptPage from "./eco-receipt/EcoReceiptPage";
 import HomePage from "./home/HomePage";
 import MyPage from "./my/MyPage";
 import ApplyCompletePage from "./party/ApplyCompletePage";
-import ApplyHistoryDetailPage from "./party/ApplyHistoryDetailPage";
+import ApplyListPage from "./party/ApplyListPage";
+import ApplyDetailPage from "./party/ApplyDetailPage";
 import PartyApplyPage from "./party/PartyApplyPage";
 import PartyDetailPage from "./party/PartyDetailPage";
 import PartyHostPage from "./party/PartyHostPage";
@@ -26,7 +27,8 @@ export {
   PartyDetailPage,
   PartyApplyPage,
   ApplyCompletePage,
-  ApplyHistoryDetailPage,
+  ApplyListPage,
+  ApplyDetailPage,
   PartyHostPage,
   MyPage,
   SigninMainPage,

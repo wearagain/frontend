@@ -18,7 +18,8 @@ export const headerConfig: Record<string, HeaderRule> = {
   "/modal": { component: HeaderClose, props: { onClose: () => window.history.back() } },
   "/party/:id/apply": { component: HeaderTitle },
   "/party/:id/apply/complete": { component: HeaderClose },
-  "/party/history": { component: HeaderBack, props: { label: "신청내역" } },
+  "/party/apply": { component: HeaderBack, props: { label: "신청내역" } },
+  "/party/apply/:id": { component: HeaderBack, props: { label: "신청내역" } },
 };
 
 export function getHeaderByPath(pathname: string): HeaderRule | null {

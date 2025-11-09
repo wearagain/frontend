@@ -5,7 +5,8 @@ import {
   HomePage,
   MyPage,
   ApplyCompletePage,
-  ApplyHistoryDetailPage,
+  ApplyListPage,
+  ApplyDetailPage,
   PartyApplyPage,
   PartyDetailPage,
   PartyHostPage,
@@ -72,7 +73,8 @@ const userRoutes: RouteObject = {
         { path: ":id", element: <PartyDetailPage /> }, // /party/:id
         { path: ":id/apply", element: <PartyApplyPage /> }, // /party/:id/apply
         { path: ":id/apply/complete", element: <ApplyCompletePage /> }, // /party/:id/apply/complete
-        { path: "history", element: <ApplyHistoryDetailPage /> }, // /party/apply/history
+        { path: "apply", element: <ApplyListPage /> }, // /party/apply
+        { path: "apply/:id", element: <ApplyDetailPage /> }, // /party/apply/:id
       ],
     },
 

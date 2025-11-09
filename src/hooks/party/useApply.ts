@@ -1,5 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
-import { postPartyParticipant } from "@/apis/party/apply";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  postPartyParticipant,
+  getMyParticipations,
+  getParticipationDetail,
+  deleteParticipation,
+} from "@/apis/party/apply";
+import type { PartyParticipantResponse } from "@/types/apply";
 import { useMe } from "@/hooks/auth/useMe";
 import { handleApiError } from "@/utils/handleApiError";
 import type { SelectedItem } from "@/types/clothingCategory";
@@ -71,6 +77,38 @@ export const useApplySubmit = (partyId: string) => {
     onError: (error: unknown) => {
       alert(handleApiError(error));
       console.error("파티 신청 실패:", error);
+    },
+  });
+};
+
+export const useGetParticipantList = () => {
+  return useQuery<PartyParticipantResponse[], Error>({
+    queryKey: ["myParticipants"],
+    queryFn: getMyParticipations,
+  });
+};
+
+export const useGetParticipation = (participantId: string) => {
+  return useQuery({
+    queryKey: ["participant", participantId],
+    queryFn: () => getParticipationDetail(participantId),
+  });
+};
+
+export const useCancelParticipation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<PartyParticipantResponse, Error, string>({
+    mutationKey: ["cancelParticipation"],
+    mutationFn: (participantId: string) => deleteParticipation(participantId),
+
+    onSuccess: (data, participantId) => {
+      alert(`신청 ${participantId} 취소가 완료되었습니다.`);
+      queryClient.invalidateQueries({ queryKey: ["participant", participantId] });
+      queryClient.invalidateQueries({ queryKey: ["myParticipants"] });
+    },
+    onError: (error: unknown) => {
+      alert(handleApiError(error));
     },
   });
 };

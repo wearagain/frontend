@@ -1,22 +1,8 @@
 import { axiosInstance } from "../axios-instance";
-
-interface ClothingItemPayload {
-  mainCategory: string;
-  subCategory: string;
-  description: string;
-  imageUrls: string[];
-}
-
-interface ApplyBody {
-  name: string;
-  phone: string;
-  email: string;
-  clothingItems: ClothingItemPayload[];
-  attendanceDate: string;
-}
+import type { PartyParticipantRequest, PartyParticipantResponse } from "@/types/apply";
 
 // 신청 관련
-export const postPartyParticipant = async (partyId: string, payload: ApplyBody) => {
+export const postPartyParticipant = async (partyId: string, payload: PartyParticipantRequest) => {
   const { data } = await axiosInstance.post(`/api/parties/${partyId}/participants`, payload, {
     headers: {
       "Content-Type": "application/json",
@@ -26,6 +12,22 @@ export const postPartyParticipant = async (partyId: string, payload: ApplyBody) 
 };
 
 // 신청 내역 관련
+export const getMyParticipations = async (): Promise<PartyParticipantResponse[]> => {
+  const { data } = await axiosInstance.get("/api/parties/participants/my");
+  return data;
+};
 
-// /api/parties/participants/my -> 전체 내역 조회
-// /api/parties/participants/{participantId} -> 상세 내역 조회
+export const getParticipationDetail = async (
+  participantId: string
+): Promise<PartyParticipantResponse> => {
+  const { data } = await axiosInstance.get(`/api/parties/participants/${participantId}`);
+  return data;
+};
+
+// 신청 취소 관련
+export const deleteParticipation = async (
+  participantId: string
+): Promise<PartyParticipantResponse> => {
+  const { data } = await axiosInstance.delete(`/api/parties/participants/${participantId}`);
+  return data;
+};

@@ -15,7 +15,7 @@ export const BoardDetailImages = ({ images }: Props) => {
       <img
         src={images[0]}
         alt='board'
-        className='w-full h-full object-cover'
+        className='w-full h-full object-contain'
         onError={(e) => {
           (e.currentTarget as HTMLImageElement).src = defaultImg;
         }}

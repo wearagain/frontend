@@ -32,3 +32,11 @@ export interface BoardListResponse {
   nextCursor: string | null;
   hasNext: boolean;
 }
+
+// Board Post
+export interface BoardPostRequest {
+  title: string;
+  content: string;
+  boardType: BoardType;
+  images: string[];
+}

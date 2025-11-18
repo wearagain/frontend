@@ -1,6 +1,7 @@
 import type { BoardItem } from "@/types/board";
 import defaultThumbnail from "@/assets/images/default.png";
 import { ThumbsUp, MessageSquare } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface BoardCardProps {
   post: BoardItem;
@@ -8,6 +9,11 @@ interface BoardCardProps {
 
 export const BoardCard = ({ post }: BoardCardProps) => {
   const { title, content, boardType, createdAt, images, comments } = post;
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/community/board/${post.id}`);
+  };
 
   const hasImages = Array.isArray(images) && images.length > 0;
   const validSrc = hasImages ? images[0] : undefined;
@@ -50,7 +56,10 @@ export const BoardCard = ({ post }: BoardCardProps) => {
   };
 
   return (
-    <div className='flex gap-3 bg-white p-4 hover:bg-gray-50 cursor-pointer rounded-lg'>
+    <div
+      className='flex gap-3 bg-white p-4 hover:bg-gray-50 cursor-pointer rounded-lg'
+      onClick={handleClick}
+    >
       {hasImages && (
         <div className='w-20 h-20 rounded-lg overflow-hidden bg-gray-100 shrink-0'>
           <img

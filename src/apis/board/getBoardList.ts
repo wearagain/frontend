@@ -6,6 +6,7 @@ export const getBoardList = async (params: BoardQuery): Promise<BoardListRespons
   const queryParams = boardType ? { ...rest, boardType } : rest;
 
   const { data } = await axiosInstance.get<BoardListResponse>(
+    // 백엔드 수정 예정
     `/api/board/boards/{boardType}${boardType ?? ""}`,
     { params: queryParams }
   );

@@ -19,6 +19,7 @@ import {
   TicketPage,
 } from "@/pages";
 import type { RouteObject } from "react-router-dom";
+import ExchangePage from "@/pages/community/ExchangePage.tsx";
 
 const userRoutes: RouteObject = {
   path: "/",
@@ -57,8 +58,12 @@ const userRoutes: RouteObject = {
     { path: "eco-receipt", element: <EcoReceiptPage /> }, // /eco-receipt
 
     // 커뮤니티
-    { path: "community", element: <CommunityPage /> }, // /community
-
+    { path: "community",
+      children: [
+        { index: true, element: <CommunityPage /> }, // /
+        { path: "exchange", element: <ExchangePage /> }, // /community/exchange
+      ],
+    },
     // QR 및 티켓
     {
       path: "ticket",

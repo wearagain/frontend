@@ -6,12 +6,22 @@ import { Link, useLocation } from "react-router-dom";
 import { mainMenu } from "@/config/navMenu";
 import { useMe } from "@/hooks/auth/useMe";
 import { useSignout } from "@/hooks/auth/useAuth";
+import { ChevronLeft } from "@/assets/icons";
+import { useNavigate } from "react-router-dom";
 
-export default function HeaderBase() {
+interface HeaderProps {
+  label?: string;
+  showBack?: boolean;
+  showLabel?: boolean
+}
+
+export default function HeaderBase({ label = "가치입다", showBack = false, showLabel = true }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const { data } = useMe();
   const { mutate: signout, isPending } = useSignout();
+
+  const navigate = useNavigate();
 
   const handleSignout = () => {
     if (isPending) return;
@@ -28,8 +38,15 @@ export default function HeaderBase() {
 
   return (
     <HeaderContainer>
-      <div className='flex justify-between items-center w-full'>
-        <h2 className='font-semibold text-lg'>가치입다</h2>
+        <div className='flex justiby-between gap-2'>
+          {showBack && (
+            <button onClick={() => navigate(-1)}>
+              <ChevronLeft className='w-6 h-6' />
+            </button>
+          )}
+
+          {showLabel && label && <h2 className='text-lg font-semibold text-start'>{label}</h2>}
+        </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
@@ -98,7 +115,6 @@ export default function HeaderBase() {
             </nav>
           </SheetContent>
         </Sheet>
-      </div>
     </HeaderContainer>
   );
 }

@@ -11,7 +11,7 @@ export default function RootLayout() {
   return (
     <div className='flex flex-col h-screen max-w-[430px] mx-auto'>
       <HeaderComponent {...headerProps} />
-      <main className='flex-1 overflow-y-auto'>
+      <main className='flex-1 overflow-y-auto px-4'>
         <Outlet />
       </main>
     </div>

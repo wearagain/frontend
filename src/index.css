@@ -38,6 +38,10 @@ body {
   @apply w-full h-screen bg-white text-black m-0 mx-auto overflow-x-hidden;
 }
 
+main {
+  @apply overflow-x-hidden
+}
+
 #root {
   @apply w-full h-full bg-white text-[#222222] m-0 mx-auto overflow-x-hidden;
 }
@@ -50,7 +54,7 @@ div {
 }
 
 h2 {
-  @apply text-lg font-bold
+  @apply text-xl font-bold
 }
 
 h3 {
@@ -198,5 +202,13 @@ textarea:focus {
 }
 
 .divider {
-  @apply border-b-4 mb-5 border-gray-100;
+    @apply border-b-4 mb-5 border-gray-100;
+}
+
+.custom-scroll::-webkit-scrollbar {
+    display: none;
+}
+.custom-scroll {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
 }

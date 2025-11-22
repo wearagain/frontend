@@ -1,7 +1,7 @@
-import ClothBoard from "@/components/community/ScrollLayout/ClothBoard.tsx";
+import ClothBoard from "@/components/community/SliderLayout/ClothBoard.tsx";
 import type {ExchangeThumbnailResponse} from "@/types/community.ts";
 import {generateDummyThumbnails} from "@/utils/community/dummy.ts";
-import RedirectBoard from "@/components/community/ScrollLayout/RedirectBoard.tsx";
+import RedirectBoard from "@/components/community/SliderLayout/RedirectBoard.tsx";
 
 const ExchangePage = () => {
 

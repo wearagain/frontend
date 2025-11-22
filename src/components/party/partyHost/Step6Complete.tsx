@@ -14,7 +14,7 @@ export default function Step6Complete() {
           <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M5 13l4 4L19 7' />
         </svg>
       </div>
-      <h2 className='text-lg font-semibold mb-2'>신청이 완료됐습니다</h2>
+      <h2 className='mb-2'>신청이 완료됐습니다</h2>
 
       <Button className='mt-6 bg-(--color-purple-light) hover:opacity-90 w-full'>
         신청내역 확인하기

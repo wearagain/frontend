@@ -42,7 +42,7 @@ export default function ApplyClothingInfoForm({ maxItemLimit, onBack, onSetIsVal
   return (
     <div className='flex flex-col min-h-full mb-32'>
       <div className='bg-white flex-shrink-0 sticky top-0 border-b-1 border-gray-100 z-10'>
-        <h2 className='text-lg font-semibold px-5 pt-6 mb-5'>
+        <h2 className='px-5 pt-6 mb-5'>
           원활한 검수 작업을 위해
           <br />
           아래 정보를 입력해 주세요

@@ -94,7 +94,7 @@ export default function Step3PartyInfo({ onNext, onBack }: Step3Props) {
 
   return (
     <div>
-      <h2 className='text-lg font-semibold mb-4'>파티 주최를 위한 정보를 입력해 주세요</h2>
+      <h2 className='mb-4'>파티 주최를 위한 정보를 입력해 주세요</h2>
 
       <div className='space-y-6 mb-6'>
         <div className='p-4 bg-white'>

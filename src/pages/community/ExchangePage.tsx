@@ -1,5 +1,9 @@
+import ClothBoard from "@/components/community/ScrollLayout/ClothBoard.tsx";
+
 const ExchangePage = () => {
-  return <div>ExchangePage</div>;
+  return <div>
+    <ClothBoard></ClothBoard>
+  </div>;
 };
 
 export default ExchangePage;

@@ -45,7 +45,7 @@ export default function HeaderBase({ label = "가치입다", showBack = false, s
             </button>
           )}
 
-          {showLabel && label && <h2 className='text-lg font-semibold text-start'>{label}</h2>}
+          {showLabel && label && <h2 className='text-start'>{label}</h2>}
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>

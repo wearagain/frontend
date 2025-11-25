@@ -10,7 +10,7 @@ export default function HeaderContainer({ children, className }: HeaderContainer
   return (
     <header
       className={cn(
-        "flex items-end justify-between w-full h-[var(--header-height)] px-4 pb-2 border-b border-gray-300 bg-white",
+        "flex items-end justify-between w-full h-[var(--header-height)] px-4 pb-3 bg-white",
         className
       )}
     >

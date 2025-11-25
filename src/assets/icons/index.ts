@@ -22,4 +22,5 @@ export {
   CheckCircle,
   ArrowUpDownIcon,
   ChevronDownIcon,
+  SearchIcon,
 } from "lucide-react";

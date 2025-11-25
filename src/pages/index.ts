@@ -1,4 +1,3 @@
-import CommunityPage from "./community/CommunityPage";
 import NotFound from "./NotFound";
 import EcoReceiptPage from "./eco-receipt/EcoReceiptPage";
 import HomePage from "./home/HomePage";
@@ -16,12 +15,15 @@ import SignupEmailPage from "./signup/SignupEmailPage";
 import TicketPage from "./ticket/TicketPage";
 import SignupTermsPage from "./signup/SignupTermsPage";
 import SignupCompletePage from "./signup/SignupCompletePage";
+import CommunityBoardPage from "./community/board/CommunityBoardPage";
+import CommunityExchange from "./community/CommunityExchangePage";
+import CommunityPostPage from "./community/board/CommunityPostPage";
+import BoardDetailPage from "./community/board/BoardDetailPage";
 
 export {
   NotFound,
   HomePage,
   EcoReceiptPage,
-  CommunityPage,
   TicketPage,
   PartyListPage,
   PartyDetailPage,
@@ -36,4 +38,8 @@ export {
   SignupEmailPage,
   SignupTermsPage,
   SignupCompletePage,
+  CommunityBoardPage,
+  CommunityExchange,
+  CommunityPostPage,
+  BoardDetailPage,
 };

@@ -1,5 +1,5 @@
-import ScrollHeader from "@/components/community/SliderLayout/ScrollHeader.tsx";
-import ClothItem from "@/components/community/SliderLayout/ClothItem.tsx";
+import ScrollHeader from "@/components/community/sliderLayout/ScrollHeader.tsx";
+import ClothItem from "@/components/community/sliderLayout/ClothItem.tsx";
 import type {ThumbnailItem} from "@/types/community.ts";
 
 interface BoardProps {

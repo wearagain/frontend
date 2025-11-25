@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useGetBoardDetail } from "@/hooks/board/useGetBoardDetail";
 import { useState } from "react";
-import { BoardDetailHeader } from "@/components/\bcommunity/board/boardDetails/BoardDetailHeader";
-import { BoardDetailImages } from "@/components/\bcommunity/board/boardDetails/BoardDetailImages";
-import { BoardDetailContent } from "@/components/\bcommunity/board/boardDetails/BoardDetailContent";
-import { BoardComments } from "@/components/\bcommunity/board/boardDetails/BoardComments";
-import { CommentInputBar } from "@/components/\bcommunity/board/boardDetails/CommentInputBar";
+import { BoardDetailHeader } from "@/components/community/board/boardDetails/BoardDetailHeader";
+import { BoardDetailImages } from "@/components/community/board/boardDetails/BoardDetailImages";
+import { BoardDetailContent } from "@/components/community/board/boardDetails/BoardDetailContent";
+import { BoardComments } from "@/components/community/board/boardDetails/BoardComments";
+import { CommentInputBar } from "@/components/community/board/boardDetails/CommentInputBar";
 import { MessageSquare, ThumbsUp } from "lucide-react";
 
 const BoardDetailPage = () => {

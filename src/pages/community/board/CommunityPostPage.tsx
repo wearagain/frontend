@@ -3,8 +3,8 @@ import { Input } from "@/components/ui/input";
 import { fileToBase64 } from "@/utils/fileToBase64";
 import type { BoardType, BoardPostRequest } from "@/types/board";
 import { usePostBoard } from "@/hooks/board/usePostBoard";
-import { BoardTypeSelect } from "@/components/\bcommunity/board/boardPost/BoardTypeSelect";
-import { PhotoUploader } from "@/components/\bcommunity/board/boardPost/PhotoUploader";
+import { BoardTypeSelect } from "@/components/community/board/boardPost/BoardTypeSelect";
+import { PhotoUploader } from "@/components/community/board/boardPost/PhotoUploader";
 
 const CommunityPostPage = () => {
   const [title, setTitle] = useState("");

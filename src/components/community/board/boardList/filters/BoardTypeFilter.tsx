@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import type { BoardType } from "@/types/board";
+import { Button } from "@/components/ui/button.tsx";
+import type { BoardType } from "@/types/board.ts";
 
 interface BoardTypeFilterProps {
   value?: BoardType;

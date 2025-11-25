@@ -1,4 +1,4 @@
-import type { CommentItem } from "@/types/boardDetail";
+import type { CommentItem } from "@/types/boardDetail.ts";
 import { format } from "date-fns";
 
 interface Props {

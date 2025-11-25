@@ -1,7 +1,7 @@
-import { SearchBar } from "./filters/SearchBar";
-import { SortFilter } from "./filters/SortFilter";
-import { BoardTypeFilter } from "./filters/BoardTypeFilter";
-import type { BoardType } from "@/types/board";
+import { SearchBar } from "./filters/SearchBar.tsx";
+import { SortFilter } from "./filters/SortFilter.tsx";
+import { BoardTypeFilter } from "./filters/BoardTypeFilter.tsx";
+import type { BoardType } from "@/types/board.ts";
 
 interface BoardHeaderProps {
   sort?: "popular" | "latest";

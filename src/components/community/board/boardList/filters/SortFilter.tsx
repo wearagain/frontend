@@ -1,11 +1,11 @@
 import { ChevronDownIcon } from "@/assets/icons";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button.tsx";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu.tsx";
 
 interface SortFilterProps {
   value?: "popular" | "latest";

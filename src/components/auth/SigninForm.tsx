@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "@/assets/icons";
 import { useNavigate } from "react-router-dom";
 
 import { Input } from "@/components/ui/input";

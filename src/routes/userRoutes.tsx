@@ -1,9 +1,11 @@
 import RootLayout from "@/layouts/RootLayout";
 import {
-  CommunityPage,
   EcoReceiptPage,
   HomePage,
   MyPage,
+  ApplyCompletePage,
+  ApplyListPage,
+  ApplyDetailPage,
   PartyApplyPage,
   PartyDetailPage,
   PartyHostPage,
@@ -14,6 +16,10 @@ import {
   SignupEmailPage,
   SignupTermsPage,
   TicketPage,
+  CommunityBoardPage,
+  CommunityExchange,
+  CommunityPostPage,
+  BoardDetailPage,
 } from "@/pages";
 import type { RouteObject } from "react-router-dom";
 
@@ -54,7 +60,16 @@ const userRoutes: RouteObject = {
     { path: "eco-receipt", element: <EcoReceiptPage /> }, // /eco-receipt
 
     // 커뮤니티
-    { path: "community", element: <CommunityPage /> }, // /community
+    {
+      path: "community",
+      children: [
+        { path: "board", element: <CommunityBoardPage /> },
+        { path: "board/:boardId", element: <BoardDetailPage /> },
+        { path: "board/post", element: <CommunityPostPage /> },
+
+        { path: "exchange", element: <CommunityExchange /> },
+      ],
+    }, // /community
 
     // QR 및 티켓
     {
@@ -69,6 +84,9 @@ const userRoutes: RouteObject = {
         { index: true, element: <PartyListPage /> }, // /party
         { path: ":id", element: <PartyDetailPage /> }, // /party/:id
         { path: ":id/apply", element: <PartyApplyPage /> }, // /party/:id/apply
+        { path: ":id/apply/complete", element: <ApplyCompletePage /> }, // /party/:id/apply/complete
+        { path: "apply", element: <ApplyListPage /> }, // /party/apply
+        { path: "apply/:id", element: <ApplyDetailPage /> }, // /party/apply/:id
       ],
     },
 

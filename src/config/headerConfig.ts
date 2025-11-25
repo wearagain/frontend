@@ -1,4 +1,10 @@
-import { HeaderBase, HeaderBack, HeaderClose, HeaderGuide } from "@/layouts/components/header";
+import {
+  HeaderBase,
+  HeaderBack,
+  HeaderClose,
+  HeaderGuide,
+  HeaderTitle,
+} from "@/layouts/components/header";
 
 interface HeaderRule<Props = Record<string, unknown>> {
   component: React.FC<Props>;
@@ -10,6 +16,10 @@ export const headerConfig: Record<string, HeaderRule> = {
   "/onboarding": { component: HeaderGuide },
   "/detail": { component: HeaderBack, props: { label: "상세 보기" } },
   "/modal": { component: HeaderClose, props: { onClose: () => window.history.back() } },
+  "/party/:id/apply": { component: HeaderTitle },
+  "/party/:id/apply/complete": { component: HeaderClose },
+  "/party/apply": { component: HeaderBack, props: { label: "신청내역" } },
+  "/party/apply/:id": { component: HeaderBack, props: { label: "신청내역" } },
 };
 
 export function getHeaderByPath(pathname: string): HeaderRule | null {

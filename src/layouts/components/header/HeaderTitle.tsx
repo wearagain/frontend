@@ -1,5 +1,5 @@
 import HeaderContainer from "./HeaderContainer";
-import { ChevronLeft, Info } from "lucide-react";
+import { ChevronLeft, Info } from "@/assets/icons";
 import { useNavigate } from "react-router-dom";
 
 export default function HeaderGuide() {

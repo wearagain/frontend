@@ -1,5 +1,5 @@
 import HeaderContainer from "./HeaderContainer";
-import { X } from "lucide-react";
+import { X } from "@/assets/icons";
 
 interface HeaderCloseProps {
   onClose?: () => void;

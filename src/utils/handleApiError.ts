@@ -1,6 +1,6 @@
 import type { AxiosError } from "axios";
 
-function isAxiosErrorWithMessage(
+export function isAxiosErrorWithMessage(
   error: unknown
 ): error is AxiosError<{ error?: string; message?: string }> {
   return (

@@ -16,12 +16,21 @@
   font-family: "Pretendard";
   font-weight: 400;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff/Pretendard-Regular.woff")
-    format("woff");
+  font-display: swap;
+  src:
+    url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Regular.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff/Pretendard-Regular.woff")
+      format("woff");
+}
+
+:root {
+  --font-body: Pretendard, system-ui, sans-serif;
 }
 
 * {
-  @apply box-border font-[Pretendard-Regular];
+  box-sizing: border-box;
+  font-family: var(--font-body);
 }
 
 html,
@@ -58,7 +67,6 @@ textarea:focus {
 }
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -174,4 +182,8 @@ textarea:focus {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+.divider {
+  @apply border-b-4 mb-5 border-gray-100;
 }

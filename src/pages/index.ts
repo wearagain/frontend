@@ -16,30 +16,33 @@ import TicketPage from "./ticket/TicketPage";
 import SignupTermsPage from "./signup/SignupTermsPage";
 import SignupCompletePage from "./signup/SignupCompletePage";
 import CommunityBoardPage from "./community/board/CommunityBoardPage";
-import CommunityExchange from "./community/CommunityExchangePage";
 import CommunityPostPage from "./community/board/CommunityPostPage";
 import BoardDetailPage from "./community/board/BoardDetailPage";
+import ExchangePage from "./community/exchange/ExchangePage.tsx";
+import ExchangeListPage from "./community/exchange/ExchangeListPage.tsx"
+
 
 export {
-  NotFound,
-  HomePage,
-  EcoReceiptPage,
-  TicketPage,
-  PartyListPage,
-  PartyDetailPage,
-  PartyApplyPage,
-  ApplyCompletePage,
-  ApplyListPage,
-  ApplyDetailPage,
-  PartyHostPage,
-  MyPage,
-  SigninMainPage,
-  ResetPasswordPage,
-  SignupEmailPage,
-  SignupTermsPage,
-  SignupCompletePage,
-  CommunityBoardPage,
-  CommunityExchange,
-  CommunityPostPage,
-  BoardDetailPage,
+    NotFound,
+    HomePage,
+    EcoReceiptPage,
+    TicketPage,
+    PartyListPage,
+    PartyDetailPage,
+    PartyApplyPage,
+    ApplyCompletePage,
+    ApplyListPage,
+    ApplyDetailPage,
+    PartyHostPage,
+    MyPage,
+    SigninMainPage,
+    ResetPasswordPage,
+    SignupEmailPage,
+    SignupTermsPage,
+    SignupCompletePage,
+    CommunityBoardPage,
+    CommunityPostPage,
+    BoardDetailPage,
+    ExchangePage,
+    ExchangeListPage
 };

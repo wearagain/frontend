@@ -1,29 +1,28 @@
 import RootLayout from "@/layouts/RootLayout";
 import {
-  EcoReceiptPage,
-  HomePage,
-  MyPage,
-  ApplyCompletePage,
-  ApplyListPage,
-  ApplyDetailPage,
-  PartyApplyPage,
-  PartyDetailPage,
-  PartyHostPage,
-  PartyListPage,
-  ResetPasswordPage,
-  SigninMainPage,
-  SignupCompletePage,
-  SignupEmailPage,
-  SignupTermsPage,
-  TicketPage,
-  CommunityBoardPage,
-  // CommunityExchange,
-  CommunityPostPage,
-  BoardDetailPage,
+    EcoReceiptPage,
+    HomePage,
+    MyPage,
+    ApplyCompletePage,
+    ApplyListPage,
+    ApplyDetailPage,
+    PartyApplyPage,
+    PartyDetailPage,
+    PartyHostPage,
+    PartyListPage,
+    ResetPasswordPage,
+    SigninMainPage,
+    SignupCompletePage,
+    SignupEmailPage,
+    SignupTermsPage,
+    TicketPage,
+    CommunityBoardPage,
+    CommunityPostPage,
+    BoardDetailPage,
+    ExchangePage,
+    ExchangeListPage
 } from "@/pages";
 import type {RouteObject} from "react-router-dom";
-import ExchangePage from "@/pages/community/ExchangePage.tsx";
-// import ListPage from "@/pages/community/ListPage.tsx";
 
 const userRoutes: RouteObject = {
     path: "/",
@@ -69,9 +68,8 @@ const userRoutes: RouteObject = {
         { path: "board/:boardId", element: <BoardDetailPage /> },
         { path: "board/post", element: <CommunityPostPage /> },
 
-        // { path: "exchange", element: <CommunityExchange /> },
           {path: "exchange", element: <ExchangePage/>}, // /community/exchange
-          // {path: "exchange/list", element: <ListPage/>}, // /community/exchange/list
+          {path: "exchange/list", element: <ExchangeListPage/>}, // /community/exchange/list
       ],
     }, // /community
 

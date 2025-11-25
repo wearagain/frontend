@@ -1,6 +1,5 @@
 import RootLayout from "@/layouts/RootLayout";
 import {
-  CommunityPage,
   EcoReceiptPage,
   HomePage,
   MyPage,
@@ -17,6 +16,10 @@ import {
   SignupEmailPage,
   SignupTermsPage,
   TicketPage,
+  CommunityBoardPage,
+  CommunityExchange,
+  CommunityPostPage,
+  BoardDetailPage,
 } from "@/pages";
 import type { RouteObject } from "react-router-dom";
 
@@ -57,7 +60,16 @@ const userRoutes: RouteObject = {
     { path: "eco-receipt", element: <EcoReceiptPage /> }, // /eco-receipt
 
     // 커뮤니티
-    { path: "community", element: <CommunityPage /> }, // /community
+    {
+      path: "community",
+      children: [
+        { path: "board", element: <CommunityBoardPage /> },
+        { path: "board/:boardId", element: <BoardDetailPage /> },
+        { path: "board/post", element: <CommunityPostPage /> },
+
+        { path: "exchange", element: <CommunityExchange /> },
+      ],
+    }, // /community
 
     // QR 및 티켓
     {

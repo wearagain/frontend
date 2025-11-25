@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { QrCode, Leaf, Users, MessageSquare, User, HelpCircle } from "lucide-react";
+import { QrCode, Leaf, Users, MessageSquare, User, HelpCircle, Home } from "lucide-react";
 
 export interface NavChild {
   label: string;
@@ -16,6 +16,11 @@ export interface NavCategory {
 }
 
 export const mainMenu: NavCategory[] = [
+  {
+    label: "홈",
+    icon: Home,
+    path: "/home",
+  },
   {
     label: "QR",
     icon: QrCode,

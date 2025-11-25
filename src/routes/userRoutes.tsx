@@ -1,26 +1,29 @@
 import RootLayout from "@/layouts/RootLayout";
 import {
-    CommunityPage,
-    EcoReceiptPage,
-    HomePage,
-    MyPage,
-    ApplyCompletePage,
-    ApplyListPage,
-    ApplyDetailPage,
-    PartyApplyPage,
-    PartyDetailPage,
-    PartyHostPage,
-    PartyListPage,
-    ResetPasswordPage,
-    SigninMainPage,
-    SignupCompletePage,
-    SignupEmailPage,
-    SignupTermsPage,
-    TicketPage,
+  EcoReceiptPage,
+  HomePage,
+  MyPage,
+  ApplyCompletePage,
+  ApplyListPage,
+  ApplyDetailPage,
+  PartyApplyPage,
+  PartyDetailPage,
+  PartyHostPage,
+  PartyListPage,
+  ResetPasswordPage,
+  SigninMainPage,
+  SignupCompletePage,
+  SignupEmailPage,
+  SignupTermsPage,
+  TicketPage,
+  CommunityBoardPage,
+  // CommunityExchange,
+  CommunityPostPage,
+  BoardDetailPage,
 } from "@/pages";
 import type {RouteObject} from "react-router-dom";
 import ExchangePage from "@/pages/community/ExchangePage.tsx";
-import ListPage from "@/pages/community/ListPage.tsx";
+// import ListPage from "@/pages/community/ListPage.tsx";
 
 const userRoutes: RouteObject = {
     path: "/",
@@ -58,21 +61,25 @@ const userRoutes: RouteObject = {
         // 환경영수증
         {path: "eco-receipt", element: <EcoReceiptPage/>}, // /eco-receipt
 
-        // 커뮤니티
-        {
-            path: "community",
-            children: [
-                {index: true, element: <CommunityPage/>}, // /
-                {path: "exchange", element: <ExchangePage/>}, // /community/exchange
-                {path: "exchange/list", element: <ListPage/>}, // /community/exchange/list
-            ],
-        },
-        // QR 및 티켓
-        {
-            path: "ticket",
-            element: <TicketPage/>,
-        },
+    // 커뮤니티
+    {
+      path: "community",
+      children: [
+        { path: "board", element: <CommunityBoardPage /> },
+        { path: "board/:boardId", element: <BoardDetailPage /> },
+        { path: "board/post", element: <CommunityPostPage /> },
 
+        // { path: "exchange", element: <CommunityExchange /> },
+          {path: "exchange", element: <ExchangePage/>}, // /community/exchange
+          // {path: "exchange/list", element: <ListPage/>}, // /community/exchange/list
+      ],
+    }, // /community
+
+    // QR 및 티켓
+    {
+      path: "ticket",
+      element: <TicketPage />,
+    },
         // 파티 참여
         {
             path: "party",

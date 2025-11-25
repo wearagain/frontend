@@ -1,4 +1,4 @@
-import ClothDetailBoard from "@/components/community/scrollLayout/ClothDetailBoard.tsx";
+import ClothColList from "@/components/community/scrollList/ClothColList.tsx";
 import { generateDummyDetails } from "@/utils/community/dummy.ts";
 import { TabFilter } from "@/components/community/common/filters/BoardTypeFilter.tsx";
 import type { ClothCategory } from "@/types/community.ts";
@@ -21,7 +21,7 @@ const ExchangeListPage = () => {
   return (
     <div className='flex flex-col h-full gap-6'>
       <TabFilter value={filterType} onChange={setFilterType} tabs={tabs} />
-      <ClothDetailBoard items={items} />
+      <ClothColList items={items} />
     </div>
   );
 };

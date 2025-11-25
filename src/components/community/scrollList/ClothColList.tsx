@@ -1,15 +1,15 @@
 import type { RepairClothsResponse } from "@/types/community.ts";
-import ClothItemDetail from "@/components/community/scrollLayout/ClothItemDetail.tsx";
+import ClothColItem from "@/components/community/scrollList/ClothColItem.tsx";
 
 interface BoardProps {
   items: RepairClothsResponse[];
 }
 
-export default function ClothDetailBoard({ items }: BoardProps) {
+export default function ClothColList({ items }: BoardProps) {
   return (
     <div className='flex-1 overflow-y-auto grid grid-cols-2 gap-4 pr-4 w-full custom-scroll'>
       {items.map((item) => (
-        <ClothItemDetail {...item} />
+        <ClothColItem {...item} />
       ))}
     </div>
   );

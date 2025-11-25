@@ -1,7 +1,7 @@
-import ClothBoard from "@/components/community/sliderLayout/ClothBoard.tsx";
+import ClothRowBoard from "@/components/community/sliderBoard/ClothRowBoard.tsx";
 import type { ExchangeThumbnailResponse } from "@/types/community.ts";
 import { generateDummyThumbnails } from "@/utils/community/dummy.ts";
-import RedirectBoard from "@/components/community/sliderLayout/RedirectBoard.tsx";
+import RedirectBoard from "@/components/community/sliderBoard/RedirectBoard.tsx";
 
 const ExchangePage = () => {
   // 더미 데이터
@@ -17,8 +17,11 @@ const ExchangePage = () => {
 
   return (
     <div className='flex flex-col h-full overflow-y-auto custom-scroll gap-11'>
-      <ClothBoard label={boardLabel.private} items={thumbnails.privateThumbnails}></ClothBoard>
-      <ClothBoard label={boardLabel.public} items={thumbnails.publicThumbnails}></ClothBoard>
+      <ClothRowBoard
+        label={boardLabel.private}
+        items={thumbnails.privateThumbnails}
+      ></ClothRowBoard>
+      <ClothRowBoard label={boardLabel.public} items={thumbnails.publicThumbnails}></ClothRowBoard>
 
       <RedirectBoard />
     </div>

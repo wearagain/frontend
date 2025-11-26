@@ -8,7 +8,7 @@ interface TabFilterProps<T extends string> {
 
 export function TabFilter<T extends string>({ value, onChange, tabs }: TabFilterProps<T>) {
   return (
-    <div className='flex h-fit gap-x-[6px] overflow-x-auto no-scrollbar pb-3 border-b border-[#E0E2E4]'>
+    <div className='main-inner flex h-fit gap-x-[6px] overflow-x-auto no-scrollbar py-3 border-b border-[#E0E2E4]'>
       {tabs.map(({ label, value: tabValue }) => (
         <Button
           key={label}

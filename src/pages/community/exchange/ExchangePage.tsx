@@ -1,7 +1,7 @@
-import ClothRowBoard from "@/components/community/sliderBoard/ClothRowBoard.tsx";
+import ClothRowBoard from "@/components/community/exchange/sliderBoard/ClothRowBoard.tsx";
 import type { ExchangeThumbnailResponse } from "@/types/community.ts";
 import { generateDummyThumbnails } from "@/utils/community/dummy.ts";
-import RedirectBoard from "@/components/community/sliderBoard/RedirectBoard.tsx";
+import RedirectBoard from "@/components/community/exchange/sliderBoard/RedirectBoard.tsx";
 
 const ExchangePage = () => {
   // 더미 데이터

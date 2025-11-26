@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import type { RepairClothsDetail, RepairClothsDetailResponse } from "@/types/community.ts";
 import { generateDummyRepairClothDetails } from "@/utils/community/dummy.ts";
-import ImageSlider from "@/components/community/clothDetail/ImageSlider.tsx";
-import NameInfo from "@/components/community/clothDetail/NameInfo.tsx";
-import ClothNameInfo from "@/components/community/clothDetail/ClothNameInfo.tsx";
-import ClothDetailInfo from "@/components/community/clothDetail/ClothDetailInfo.tsx";
-import ClothDetailFunction from "@/components/community/clothDetail/ClothDetailFooter.tsx";
-import DetailBottomBar from "@/components/community/clothDetail/DetailBottomBar.tsx";
+import ImageSlider from "@/components/community/exchange/clothDetail/ImageSlider.tsx";
+import NameInfo from "@/components/community/exchange/clothDetail/NameInfo.tsx";
+import ClothNameInfo from "@/components/community/exchange/clothDetail/ClothNameInfo.tsx";
+import ClothDetailInfo from "@/components/community/exchange/clothDetail/ClothDetailInfo.tsx";
+import ClothDetailFunction from "@/components/community/exchange/clothDetail/ClothDetailFooter.tsx";
+import DetailBottomBar from "@/components/community/exchange/clothDetail/DetailBottomBar.tsx";
 
 const ClothDetailPage = () => {
   // TODO: useGetDetail

@@ -1,5 +1,5 @@
-import BoardHeader from "@/components/community/sliderBoard/BoardHeader.tsx";
-import ClothRowItem from "@/components/community/sliderBoard/ClothRowItem.tsx";
+import BoardHeader from "@/components/community/exchange/sliderBoard/BoardHeader.tsx";
+import ClothRowItem from "@/components/community/exchange/sliderBoard/ClothRowItem.tsx";
 import type { ThumbnailItem } from "@/types/community.ts";
 
 interface BoardProps {

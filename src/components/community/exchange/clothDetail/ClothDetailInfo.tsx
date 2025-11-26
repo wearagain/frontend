@@ -1,4 +1,4 @@
-import DetailRow from "@/components/community/clothDetail/DetailRow.tsx";
+import DetailRow from "@/components/community/exchange/clothDetail/DetailRow.tsx";
 
 interface ClothDetailInfoProps {
   clothingNumber: string;
@@ -10,7 +10,7 @@ interface ClothDetailInfoProps {
 
 export default function ClothDetailInfo(item: ClothDetailInfoProps) {
   return (
-    <div className='main-inner flex flex-col gap-4 pb-8'>
+    <div className='main-inner flex flex-col gap-4 pb-8 pr-5'>
       <h3>상품 정보</h3>
       <DetailRow label='의류코드' detail={item.clothingNumber} />
       <DetailRow label='성별' detail={item.gender} />

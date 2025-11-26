@@ -1,4 +1,4 @@
-import ClothColList from "@/components/community/scrollList/ClothColList.tsx";
+import ClothColList from "@/components/community/exchange/scrollList/ClothColList.tsx";
 import { generateDummyDetails } from "@/utils/community/dummy.ts";
 import { TabFilter } from "@/components/community/common/filters/BoardTypeFilter.tsx";
 import type { ClothFilterCategory } from "@/types/community.ts";
@@ -16,10 +16,10 @@ const ExchangeListPage = () => {
     { label: "기타", value: "ETC" },
   ];
 
-  const [filterType, setFilterType] = useState<ClothFilterCategory | undefined>(undefined);
+  const [filterType, setFilterType] = useState<ClothFilterCategory | undefined>("ALL");
 
   return (
-    <div className='main-inner flex flex-col h-full gap-6'>
+    <div className='flex flex-col h-full gap-6'>
       <TabFilter value={filterType} onChange={setFilterType} tabs={tabs} />
       <ClothColList items={items} />
     </div>

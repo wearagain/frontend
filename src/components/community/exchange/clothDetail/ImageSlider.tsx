@@ -1,4 +1,4 @@
-import ImageIndicator from "@/components/community/clothDetail/ImageIndicator.tsx";
+import ImageIndicator from "@/components/community/exchange/clothDetail/ImageIndicator.tsx";
 import { useEffect, useRef, useState } from "react";
 
 interface ImageSliderProps {

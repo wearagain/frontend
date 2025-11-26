@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import type { RepairClothsDetail, RepairClothsDetailResponse } from "@/types/community.ts";
 import { generateDummyRepairClothDetails } from "@/utils/community/dummy.ts";
 import ImageSlider from "@/components/community/clothDetail/ImageSlider.tsx";
@@ -6,6 +6,7 @@ import NameInfo from "@/components/community/clothDetail/NameInfo.tsx";
 import ClothNameInfo from "@/components/community/clothDetail/ClothNameInfo.tsx";
 import ClothDetailInfo from "@/components/community/clothDetail/ClothDetailInfo.tsx";
 import ClothDetailFunction from "@/components/community/clothDetail/ClothDetailFooter.tsx";
+import DetailBottomBar from "@/components/community/clothDetail/DetailBottomBar.tsx";
 
 const ClothDetailPage = () => {
   // TODO: useGetDetail
@@ -17,8 +18,12 @@ const ClothDetailPage = () => {
   };
   const [images, setImages] = useState<string[]>(dummyResult.images);
 
+  useEffect(() => {
+    setImages(dummyResult.images);
+  }, []);
+
   return (
-    <div>
+    <div className='relative'>
       <ImageSlider images={images} />
       <NameInfo name={dummyResult.repairerName} />
       <div className='divider' />
@@ -37,6 +42,7 @@ const ClothDetailPage = () => {
         issueDescription={dummyResult.issueDescription}
       />
       <ClothDetailFunction />
+      <DetailBottomBar isLiked={dummy.isLikedByUser} />
     </div>
   );
 };

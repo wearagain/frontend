@@ -16,9 +16,11 @@ import TicketPage from "./ticket/TicketPage";
 import SignupTermsPage from "./signup/SignupTermsPage";
 import SignupCompletePage from "./signup/SignupCompletePage";
 import CommunityBoardPage from "./community/board/CommunityBoardPage";
-import CommunityExchange from "./community/CommunityExchangePage";
 import CommunityPostPage from "./community/board/CommunityPostPage";
 import BoardDetailPage from "./community/board/BoardDetailPage";
+import ExchangePage from "./community/exchange/ExchangePage.tsx";
+import ExchangeListPage from "./community/exchange/ExchangeListPage.tsx";
+import ClothDetailPage from "./community/exchange/ClothDetailPage.tsx";
 
 export {
   NotFound,
@@ -39,7 +41,9 @@ export {
   SignupTermsPage,
   SignupCompletePage,
   CommunityBoardPage,
-  CommunityExchange,
   CommunityPostPage,
   BoardDetailPage,
+  ExchangePage,
+  ExchangeListPage,
+  ClothDetailPage,
 };

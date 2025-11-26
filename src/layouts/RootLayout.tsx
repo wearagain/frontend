@@ -8,7 +8,7 @@ export default function RootLayout() {
   return (
     <div className='flex flex-col h-screen max-w-[430px] mx-auto'>
       {HeaderComponent && <HeaderComponent {...header.props} />}
-      <main className='flex-1 overflow-y-auto pl-5 py-5'>
+      <main className='flex-1 overflow-y-auto custom-scroll'>
         <Outlet />
       </main>
     </div>

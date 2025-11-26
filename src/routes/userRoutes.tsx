@@ -125,21 +125,21 @@ const userRoutes: RouteObject = {
           path: "exchange",
           element: <ExchangePage />,
           handle: {
-            header: { type: "base", label: "수선의류 교환", onClose: () => window.history.back() },
+            header: { type: "base", label: "수선의류 교환", showBack: true },
           },
         }, // /community/exchange
         {
           path: "exchange/list",
           element: <ExchangeListPage />,
           handle: {
-            header: { type: "base", label: "수선의류 교환", onClose: () => window.history.back() },
+            header: { type: "base", label: "수선의류 교환", showBack: true },
           },
         }, // /community/exchange/list
         {
           path: "exchange/list/:clothesId",
           element: <ClothDetailPage />,
           handle: {
-            header: { type: "base", label: "수선의류명", onClose: () => window.history.back() },
+            header: { type: "base", label: "수선의류명", showBack: true },
           },
         }, // /community/exchange/list
       ],

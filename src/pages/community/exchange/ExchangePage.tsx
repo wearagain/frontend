@@ -16,7 +16,7 @@ const ExchangePage = () => {
   };
 
   return (
-    <div className='flex flex-col h-full overflow-y-auto custom-scroll gap-11'>
+    <div className='main-inner flex flex-col h-full overflow-y-auto custom-scroll gap-11'>
       <ClothRowBoard
         label={boardLabel.private}
         items={thumbnails.privateThumbnails}

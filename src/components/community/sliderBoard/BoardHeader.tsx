@@ -13,7 +13,7 @@ export default function BoardHeader({ label }: HeaderProps) {
   };
 
   return (
-    <div className='flex justify-between w-full items-center pr-5'>
+    <div className='flex justify-between w-full items-center pr-5 py-3'>
       <h3>{label}</h3>
       <button onClick={clickMore} className='text-[#939396] text-base'>
         더보기

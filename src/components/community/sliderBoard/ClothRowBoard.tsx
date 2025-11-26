@@ -9,7 +9,7 @@ interface BoardProps {
 
 export default function ClothRowBoard({ label, items }: BoardProps) {
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col'>
       <BoardHeader label={label}></BoardHeader>
       <div className='flex gap-4 pr-4 overflow-x-auto custom-scroll'>
         {items.map((item) => (

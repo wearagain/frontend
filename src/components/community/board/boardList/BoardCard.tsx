@@ -1,4 +1,4 @@
-import type { BoardItem } from "@/types/board";
+import type { BoardItem } from "@/types/board.ts";
 import defaultThumbnail from "@/assets/images/default.png";
 import { ThumbsUp, MessageSquare } from "lucide-react";
 import { useNavigate } from "react-router-dom";

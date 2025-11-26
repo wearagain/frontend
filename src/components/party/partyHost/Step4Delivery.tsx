@@ -57,7 +57,7 @@ export default function Step4Delivery({ onNext, onBack }: Step4Props) {
 
   return (
     <div>
-      <h2 className='text-lg font-semibold mb-4'>배송 및 결제 정보를 입력해 주세요</h2>
+      <h2 className='mb-4'>배송 및 결제 정보를 입력해 주세요</h2>
 
       <div className='space-y-6 mb-6'>
         <div className='rounded-xl p-4 bg-white'>

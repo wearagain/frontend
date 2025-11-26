@@ -1,5 +1,5 @@
 import { UserRound } from "lucide-react";
-import type { BoardDetail } from "@/types/boardDetail";
+import type { BoardDetail } from "@/types/boardDetail.ts";
 import { format } from "date-fns";
 
 interface Props {

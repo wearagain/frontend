@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
-import { useGetBoardList } from "@/hooks/board/useGetBoardList";
-import { BoardCard } from "./BoardCard";
-import type { BoardListResponse } from "@/types/board";
+import { useGetBoardList } from "@/hooks/board/useGetBoardList.ts";
+import { BoardCard } from "./BoardCard.tsx";
+import type { BoardListResponse } from "@/types/board.ts";
 
 interface BoardListProps {
   boardType?: "FREE" | "QNA" | "INFO";

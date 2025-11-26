@@ -1,10 +1,10 @@
-import type { BoardType } from "@/types/board";
+import type { BoardType } from "@/types/board.ts";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu.tsx";
 import { ChevronDown } from "lucide-react";
 
 const TYPE_OPTIONS: { label: string; value: BoardType }[] = [

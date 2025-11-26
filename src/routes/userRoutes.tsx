@@ -19,9 +19,12 @@ import {
   CommunityBoardPage,
   CommunityPostPage,
   BoardDetailPage,
+  ExchangePage,
+  ExchangeListPage,
 } from "@/pages";
 
 import type { RouteObject } from "react-router-dom";
+import ClothDetailPage from "@/pages/community/exchange/ClothDetailPage.tsx";
 
 const userRoutes: RouteObject = {
   path: "/",
@@ -118,16 +121,35 @@ const userRoutes: RouteObject = {
             header: { type: "close", label: "글쓰기", onClose: () => window.history.back() },
           },
         },
+        {
+          path: "exchange",
+          element: <ExchangePage />,
+          handle: {
+            header: { type: "base", label: "수선의류 교환", showBack: true },
+          },
+        }, // /community/exchange
+        {
+          path: "exchange/list",
+          element: <ExchangeListPage />,
+          handle: {
+            header: { type: "base", label: "수선의류 교환", showBack: true },
+          },
+        }, // /community/exchange/list
+        {
+          path: "exchange/list/:clothesId",
+          element: <ClothDetailPage />,
+          handle: {
+            header: { type: "base", label: "수선의류명", showBack: true },
+          },
+        }, // /community/exchange/list
       ],
     }, // /community
-
     // 티켓
     {
       path: "ticket",
       element: <TicketPage />,
       handle: { header: { type: "base" } },
     },
-
     // 파티 참여
     {
       path: "party",

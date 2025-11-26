@@ -29,7 +29,7 @@ export default function Step2HostInfo({ onNext, onBack }: Step2Props) {
 
   return (
     <div>
-      <h2 className='text-lg font-semibold mb-4'>파티 주최를 위한 정보를 입력해 주세요</h2>
+      <h2 className='mb-4'>파티 주최를 위한 정보를 입력해 주세요</h2>
 
       <div className='space-y-4 mb-6'>
         <div className='flex flex-col gap-2'>

@@ -1,4 +1,4 @@
-import type { BoardDetail } from "@/types/boardDetail";
+import type { BoardDetail } from "@/types/boardDetail.ts";
 
 interface Props {
   board: BoardDetail;

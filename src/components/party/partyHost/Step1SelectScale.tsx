@@ -30,7 +30,7 @@ export default function Step1SelectScale({ onNext }: Step1Props) {
 
   return (
     <div>
-      <h2 className='text-lg font-semibold mb-4'>주최 규모를 선택해 주세요</h2>
+      <h2 className='mb-4'>주최 규모를 선택해 주세요</h2>
 
       <div className='grid grid-cols-2 gap-4 mb-6'>
         {/* 단체 선택 */}

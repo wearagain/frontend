@@ -11,7 +11,7 @@ export const PartyInfo = ({ data }: PartyInfoProps) => {
   return (
     <section className='mt-4 pb-4 border-b-2 border-b-gray-200'>
       <p className='text-sm text-gray-500 mb-1'>{data.isGroup ? "단체" : "개인"}</p>
-      <h1 className='text-lg font-semibold'>{data.title}</h1>
+      <h2>{data.title}</h2>
 
       <div className='flex items-center gap-2 mt-2 text-sm text-gray-600'>
         <Users size={16} />

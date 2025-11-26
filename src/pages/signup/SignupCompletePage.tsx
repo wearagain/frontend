@@ -11,7 +11,7 @@ const SignupCompletePage = () => {
         <CheckCircle className=' fill-mint-dark text-white' size={100} />
       </div>
       <div className='flex flex-col items-center justify-center flex-1 text-center mt-16'>
-        <h1 className='text-xl font-bold mb-2'>회원가입 완료!</h1>
+        <h1 className='mb-2'>회원가입 완료!</h1>
         <p className='text-gray-500 text-sm mb-8'>함께 가치를 나누어 보아요</p>
       </div>
 

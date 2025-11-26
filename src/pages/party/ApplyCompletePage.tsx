@@ -10,7 +10,7 @@ const ApplyCompletePage = () => {
       <div className='flex flex-col items-center justify-center flex-1'>
         <CheckCircle2 className=' fill-mint-dark text-white' size={100} />
         <div className='text-center mt-8'>
-          <h1 className='text-xl font-semibold mb-2'>신청이 완료됐습니다</h1>
+          <h2 className='text-xl font-semibold mb-2'>신청이 완료됐습니다</h2>
         </div>
       </div>
 

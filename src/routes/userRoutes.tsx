@@ -22,23 +22,52 @@ import {
   ExchangePage,
   ExchangeListPage,
 } from "@/pages";
+
 import type { RouteObject } from "react-router-dom";
 import ClothDetailPage from "@/pages/community/exchange/ClothDetailPage.tsx";
 
 const userRoutes: RouteObject = {
   path: "/",
   element: <RootLayout />,
+  handle: {
+    header: {
+      type: "base",
+      label: "",
+      showBack: false,
+    },
+  },
   children: [
     {
       index: true,
       element: <HomePage />,
+      handle: {
+        header: {
+          type: "base",
+        },
+      },
     },
+
+    // 메인
+    {
+      path: "home",
+      element: <HomePage />,
+      handle: { header: { type: "base" } },
+    }, // /home
+
     // 로그인
     {
       path: "auth",
       children: [
-        { path: "signin", element: <SigninMainPage /> }, // /auth/signin
-        { path: "reset", element: <ResetPasswordPage /> }, // /auth/reset
+        {
+          path: "signin",
+          element: <SigninMainPage />,
+          handle: { header: { type: "close" } },
+        }, // /auth/signin
+        {
+          path: "reset",
+          element: <ResetPasswordPage />,
+          handle: { header: { type: "base", label: "비밀번호 재설정", showBack: true } },
+        }, // /auth/reset
       ],
     },
 
@@ -46,58 +75,131 @@ const userRoutes: RouteObject = {
     {
       path: "signup",
       children: [
-        // 일반
-        { path: "email", element: <SignupEmailPage /> }, // /signup/email
-
-        // 공통
-        { path: "terms", element: <SignupTermsPage /> }, // /signup/terms
-        { path: "complete", element: <SignupCompletePage /> }, // /signup/complete
+        {
+          path: "email",
+          element: <SignupEmailPage />,
+          handle: { header: { type: "back" } },
+        }, // /signup/email
+        {
+          path: "terms",
+          element: <SignupTermsPage />,
+          handle: { header: { type: "back" } },
+        }, // /signup/terms
+        {
+          path: "complete",
+          element: <SignupCompletePage />,
+          handle: { header: { type: "close", onClose: () => window.history.back() } },
+        }, // /signup/complete
       ],
     },
 
-    // 메인
-    { path: "home", element: <HomePage /> }, // /home
-
     // 환경영수증
-    { path: "eco-receipt", element: <EcoReceiptPage /> }, // /eco-receipt
+    {
+      path: "eco-receipt",
+      element: <EcoReceiptPage />,
+      handle: { header: { type: "base" } },
+    }, // /eco-receipt
 
     // 커뮤니티
     {
       path: "community",
       children: [
-        { path: "board", element: <CommunityBoardPage /> },
-        { path: "board/:boardId", element: <BoardDetailPage /> },
-        { path: "board/post", element: <CommunityPostPage /> },
-
-        { path: "exchange", element: <ExchangePage /> }, // /community/exchange
-        { path: "exchange/list", element: <ExchangeListPage /> }, // /community/exchange/list
-        { path: "exchange/list/:clothesId", element: <ClothDetailPage /> }, // /community/exchange/list
+        {
+          path: "board",
+          element: <CommunityBoardPage />,
+          handle: { header: { type: "base", label: "커뮤니티", showBack: true } },
+        },
+        {
+          path: "board/:boardId",
+          element: <BoardDetailPage />,
+          handle: { header: { type: "base", label: "커뮤니티", showBack: true } },
+        },
+        {
+          path: "board/post",
+          element: <CommunityPostPage />,
+          handle: {
+            header: { type: "close", label: "글쓰기", onClose: () => window.history.back() },
+          },
+        },
+        {
+          path: "exchange",
+          element: <ExchangePage />,
+          handle: {
+            header: { type: "base", label: "수선의류 교환", onClose: () => window.history.back() },
+          },
+        }, // /community/exchange
+        {
+          path: "exchange/list",
+          element: <ExchangeListPage />,
+          handle: {
+            header: { type: "base", label: "수선의류 교환", onClose: () => window.history.back() },
+          },
+        }, // /community/exchange/list
+        {
+          path: "exchange/list/:clothesId",
+          element: <ClothDetailPage />,
+          handle: {
+            header: { type: "base", label: "수선의류명", onClose: () => window.history.back() },
+          },
+        }, // /community/exchange/list
       ],
     }, // /community
-
-    // QR 및 티켓
+    // 티켓
     {
       path: "ticket",
       element: <TicketPage />,
+      handle: { header: { type: "base" } },
     },
     // 파티 참여
     {
       path: "party",
       children: [
-        { index: true, element: <PartyListPage /> }, // /party
-        { path: ":id", element: <PartyDetailPage /> }, // /party/:id
-        { path: ":id/apply", element: <PartyApplyPage /> }, // /party/:id/apply
-        { path: ":id/apply/complete", element: <ApplyCompletePage /> }, // /party/:id/apply/complete
-        { path: "apply", element: <ApplyListPage /> }, // /party/apply
-        { path: "apply/:id", element: <ApplyDetailPage /> }, // /party/apply/:id
+        {
+          index: true,
+          element: <PartyListPage />,
+          handle: { header: { type: "base", label: "참여하기", showBack: true } },
+        }, // /party
+        {
+          path: ":id",
+          element: <PartyDetailPage />,
+          handle: { header: { type: "base", label: "파티명", showBack: true } },
+        }, // /party/:id
+        {
+          path: ":id/apply",
+          element: <PartyApplyPage />,
+          handle: { header: { type: "title", label: "신청하기" } },
+        }, // /party/:id/apply
+        {
+          path: ":id/apply/complete",
+          element: <ApplyCompletePage />,
+          handle: { header: { type: "close" } },
+        }, // /party/apply
+        {
+          path: "apply",
+          element: <ApplyListPage />,
+          handle: { header: { type: "base", label: "신청내역", showBack: true } },
+        }, // /party/apply/:id
+        {
+          path: "apply/:id",
+          element: <ApplyDetailPage />,
+          handle: { header: { type: "base", label: "신청내역", showBack: true } },
+        },
       ],
     },
 
-    // 파티 주최
-    { path: "host", element: <PartyHostPage /> }, // /host
+    // 주최
+    {
+      path: "host",
+      element: <PartyHostPage />,
+      handle: { header: { type: "base", label: "주최하기", showBack: true } },
+    }, // /host
 
     // 마이페이지
-    { path: "mypage", element: <MyPage /> }, // /mypage
+    {
+      path: "mypage",
+      element: <MyPage />,
+      handle: { header: { type: "base", label: "마이페이지", showBack: true } },
+    }, // /mypage
   ],
 };
 

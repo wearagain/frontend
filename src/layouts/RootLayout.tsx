@@ -1,17 +1,14 @@
-import { Outlet, useLocation } from "react-router-dom";
-import { getHeaderByPath } from "@/config/headerConfig";
-import { HeaderBack } from "@/layouts/components/header";
+import { Outlet } from "react-router-dom";
+import { useHeader } from "@/hooks/common/useHeaderRenderer.ts";
 
 export default function RootLayout() {
-  const { pathname } = useLocation();
-  const config = getHeaderByPath(pathname);
-  const HeaderComponent = config?.component || HeaderBack;
-  const headerProps = config?.props ?? {};
+  const header = useHeader();
+  const HeaderComponent = header?.component;
 
   return (
     <div className='flex flex-col h-screen max-w-[430px] mx-auto'>
-      <HeaderComponent {...headerProps} />
-      <main className='flex-1 overflow-y-auto custom-scroll'>
+      {HeaderComponent && <HeaderComponent {...header.props} />}
+      <main className='flex-1 overflow-y-auto pl-5 py-5'>
         <Outlet />
       </main>
     </div>

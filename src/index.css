@@ -76,6 +76,10 @@ button {
   }
 }
 
+button:disabled {
+  cursor: not-allowed !important;
+}
+
 input,
 input:focus,
 textarea,

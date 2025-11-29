@@ -10,17 +10,19 @@ export default function RequestBottomBar({ onClick }: RequestBottomBarProps) {
     formState: { isValid },
   } = useFormContext();
   return (
-    <div className='main-inner z-99 pr-5 pb-14 pt-5 flex gap-[10px] min-h-[52px] sticky bottom-0 w-full bg-white'>
-      <Button
-        disabled={!isValid}
-        type='button'
-        onClick={onClick}
-        theme='mint'
-        variant='primary'
-        className='flex-1 h-full'
-      >
-        교환하기
-      </Button>
+    <div className='fixed z-10 bottom-0 left-0 right-0 px-5 pt-5 pb-14 max-w-[430px] mx-auto bg-white'>
+      <div className='flex gap-4 h-[52px] w-full'>
+        <Button
+          disabled={!isValid}
+          type='button'
+          onClick={onClick}
+          theme='mint'
+          variant='primary'
+          className='flex-1 h-full'
+        >
+          교환하기
+        </Button>
+      </div>
     </div>
   );
 }

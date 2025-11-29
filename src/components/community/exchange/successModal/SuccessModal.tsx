@@ -12,7 +12,7 @@ const SuccessModal = ({ onClose }: SuccessModalProps) => {
   const location = useLocation();
 
   return (
-    <div className='fixed inset-y-0 left-0 right-0 z-[1001] flex flex-col justify-between px-6 pb-8 bg-white max-w-[430px] mx-auto top-0'>
+    <div className='fixed inset-y-0 left-0 right-0 z-[1001] flex flex-col justify-between px-6 bg-white max-w-[430px] mx-auto top-0'>
       <div className='sticky top-0 flex items-end justify-between w-full h-[var(--header-height)] px-4 pb-3 bg-white    '>
         <button onClick={onClose} className='ml-auto'>
           <X className='w-6 h-6' />

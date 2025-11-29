@@ -13,12 +13,14 @@ interface HeaderProps {
   label?: string;
   showBack?: boolean;
   showLabel?: boolean;
+  to?: string;
 }
 
 export default function HeaderBase({
   label = "가치입다",
   showBack = false,
   showLabel = true,
+  to,
 }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -44,7 +46,7 @@ export default function HeaderBase({
     <HeaderContainer>
       <div className='flex justify-between gap-2 items-center'>
         {showBack && (
-          <button onClick={() => navigate(-1)}>
+          <button onClick={() => (to ? navigate(to) : navigate(-1))}>
             <ChevronLeft className='w-6 h-6' />
           </button>
         )}

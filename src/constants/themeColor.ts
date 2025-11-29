@@ -29,6 +29,26 @@ export const buttonTheme = {
       hover: ``,
     },
   },
+  cancel: {
+    primary: {
+      base: `
+        bg-[#D9D9D9]
+        text-[#222222]
+      `,
+      hover: `
+        hover:bg-[#C8C8C8]
+      `,
+    },
+    muted: {
+      base: `
+        bg-[#E6E6E6]
+        text-[#4A4A4A]
+      `,
+      hover: `
+        hover:bg-[#D0D0D0]
+      `,
+    },
+  },
 } as const;
 
 export type ThemeKey = keyof typeof buttonTheme;

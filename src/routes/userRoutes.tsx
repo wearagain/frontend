@@ -21,6 +21,7 @@ import {
   BoardDetailPage,
   ExchangePage,
   ExchangeListPage,
+  ExchangeRequestPage,
 } from "@/pages";
 
 import type { RouteObject } from "react-router-dom";
@@ -127,21 +128,28 @@ const userRoutes: RouteObject = {
           handle: {
             header: { type: "base", label: "수선의류 교환", showBack: true },
           },
-        }, // /community/exchange
+        },
         {
           path: "exchange/list",
           element: <ExchangeListPage />,
           handle: {
             header: { type: "base", label: "수선의류 교환", showBack: true },
           },
-        }, // /community/exchange/list
+        },
         {
           path: "exchange/list/:clothesId",
           element: <ClothDetailPage />,
           handle: {
             header: { type: "base", label: "수선의류명", showBack: true },
           },
-        }, // /community/exchange/list
+        },
+        {
+          path: "exchange/:clothesId/request",
+          element: <ExchangeRequestPage />,
+          handle: {
+            header: { type: "back", label: "교환하기" },
+          },
+        },
       ],
     }, // /community
     // 티켓

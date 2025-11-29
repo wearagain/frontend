@@ -42,7 +42,7 @@ const ClothDetailPage = () => {
         issueDescription={dummyResult.issueDescription}
       />
       <ClothDetailFunction />
-      <DetailBottomBar isLiked={dummy.isLikedByUser} />
+      <DetailBottomBar id={dummy.clothingDetail.id} isLiked={dummy.isLikedByUser} />
     </div>
   );
 };

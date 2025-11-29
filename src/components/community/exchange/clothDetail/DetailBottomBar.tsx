@@ -1,10 +1,14 @@
 import { Heart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button.tsx";
 
 interface DetailBottomBarProps {
+  id: string;
   isLiked: boolean;
 }
 
-export default function DetailBottomBar({ isLiked }: DetailBottomBarProps) {
+export default function DetailBottomBar({ isLiked, id }: DetailBottomBarProps) {
+  const navigate = useNavigate();
   return (
     <div className='main-inner pr-5 pb-14 pt-5 flex gap-[10px] min-h-[52px] sticky bottom-0 w-full bg-white'>
       <button
@@ -18,9 +22,16 @@ export default function DetailBottomBar({ isLiked }: DetailBottomBarProps) {
       >
         <Heart className='w-6 h-6' fill={isLiked ? "#F23F3F" : "none"} stroke='#F23F3F' />
       </button>
-      <button className='flex-1 h-full min-h-[52px] bg-[#3DC0C5] rounded-[10px] border border-[#3DC0C5]'>
-        <h3 className='text-white'>교환하기</h3>
-      </button>
+
+      <Button
+        type='button'
+        onClick={() => navigate(`/community/exchange/${id}/request`)}
+        theme='mint'
+        variant='primary'
+        className='flex-1 h-full min-h-[52px]'
+      >
+        교환하기
+      </Button>
     </div>
   );
 }

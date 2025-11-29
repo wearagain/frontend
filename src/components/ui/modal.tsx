@@ -24,7 +24,7 @@ export default function Modal({
 }: Props) {
   return (
     <div className='fixed inset-0 bg-black/50 flex items-center justify-center z-100'>
-      <div className=' min-w-max p-5 w-full max-w-[430px]'>
+      <div className='p-5 w-full max-w-[430px] min-w-[340px]'>
         <div className='p-5 bg-white rounded-[20px] shadow-2xl'>
           <h4 className='font-bold text-[20px]'>{header}</h4>
           <div className='py-5'>{children}</div>

@@ -23,7 +23,7 @@ const ClothDetailPage = () => {
   }, []);
 
   return (
-    <div className='relative'>
+    <div className='relative bottombar-p'>
       <ImageSlider images={images} />
       <NameInfo name={dummyResult.repairerName} />
       <div className='divider' />
@@ -42,7 +42,7 @@ const ClothDetailPage = () => {
         issueDescription={dummyResult.issueDescription}
       />
       <ClothDetailFunction />
-      <DetailBottomBar isLiked={dummy.isLikedByUser} />
+      <DetailBottomBar id={dummy.clothingDetail.id} isLiked={dummy.isLikedByUser} />
     </div>
   );
 };

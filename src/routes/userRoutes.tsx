@@ -22,10 +22,11 @@ import {
   ExchangePage,
   ExchangeListPage,
   ExchangeRequestPage,
+  ClothDetailPage,
+  RequestInfoPage,
 } from "@/pages";
 
 import type { RouteObject } from "react-router-dom";
-import ClothDetailPage from "@/pages/community/exchange/ClothDetailPage.tsx";
 
 const userRoutes: RouteObject = {
   path: "/",
@@ -126,14 +127,19 @@ const userRoutes: RouteObject = {
           path: "exchange",
           element: <ExchangePage />,
           handle: {
-            header: { type: "base", label: "수선의류 교환", showBack: true },
+            header: { type: "base", label: "수선의류 교환", showBack: true, to: "/home" },
           },
         },
         {
           path: "exchange/list",
           element: <ExchangeListPage />,
           handle: {
-            header: { type: "base", label: "수선의류 교환", showBack: true },
+            header: {
+              type: "base",
+              label: "수선의류 교환",
+              showBack: true,
+              to: "/community/exchange",
+            },
           },
         },
         {
@@ -148,6 +154,13 @@ const userRoutes: RouteObject = {
           element: <ExchangeRequestPage />,
           handle: {
             header: { type: "back", label: "교환하기" },
+          },
+        },
+        {
+          path: "exchange/:clothesId/request/info",
+          element: <RequestInfoPage />,
+          handle: {
+            header: { type: "backClose", label: "신청내역", to: "/community/exchange" },
           },
         },
       ],

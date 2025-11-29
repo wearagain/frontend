@@ -22,6 +22,7 @@ import ExchangePage from "./community/exchange/ExchangePage.tsx";
 import ExchangeListPage from "./community/exchange/ExchangeListPage.tsx";
 import ClothDetailPage from "./community/exchange/ClothDetailPage.tsx";
 import ExchangeRequestPage from "./community/exchange/ExchangeRequestPage";
+import RequestInfoPage from "./community/exchange/RequestInfoPage";
 
 export {
   NotFound,
@@ -48,4 +49,5 @@ export {
   ExchangeListPage,
   ClothDetailPage,
   ExchangeRequestPage,
+  RequestInfoPage,
 };

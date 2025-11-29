@@ -6,6 +6,7 @@
 @theme inline {
   --color-mint-dark: #08b0b7;
   --color-mint-light: #3dc0c5;
+  --color-mint-lighter: #e0f2f1;
   --color-purple-dark: #642c8d;
   --color-purple-light: #7c31b4;
 
@@ -171,6 +172,8 @@ textarea:focus {
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 }
+
+
 
 .dark {
   --background: oklch(0.145 0 0);

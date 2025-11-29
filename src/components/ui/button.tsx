@@ -17,7 +17,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled}
         className={cn(
-          "flex min-w-max items-center justify-center rounded-[10px] px-4 py-4 font-medium transition-all text-16",
+          "flex min-w-30 items-center justify-center rounded-[10px] px-4 py-4 font-medium transition-all text-16",
           `${colorSet.base} ${colorSet.hover}`,
           className
         )}

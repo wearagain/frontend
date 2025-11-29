@@ -1,5 +1,5 @@
 import { useFormContext, useWatch } from "react-hook-form";
-import SectionTitle from "@/components/community/exchange/requestInfo/SectionTitle.tsx";
+import SectionTitle from "@/components/community/exchange/requestApply/SectionTitle.tsx";
 import { Calendar } from "@/components/ui/calendar.tsx";
 import { useMemo } from "react";
 

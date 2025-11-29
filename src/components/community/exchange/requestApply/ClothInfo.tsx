@@ -1,4 +1,4 @@
-import SectionTitle from "@/components/community/exchange/requestInfo/SectionTitle.tsx";
+import SectionTitle from "@/components/community/exchange/requestApply/SectionTitle.tsx";
 
 interface ClothInfoProps {
   code: string;

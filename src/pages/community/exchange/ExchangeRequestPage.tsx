@@ -1,8 +1,8 @@
-import ClothInfo from "@/components/community/exchange/requestInfo/ClothInfo.tsx";
-import TicketInfo from "@/components/community/exchange/requestInfo/TicketInfo.tsx";
-import PlaceInfo from "@/components/community/exchange/requestInfo/PlaceInfo.tsx";
-import DateInfo from "@/components/community/exchange/requestInfo/DateInfo.tsx";
-import RequestBottomBar from "@/components/community/exchange/requestInfo/RequestBottomBar.tsx";
+import ClothInfo from "@/components/community/exchange/requestApply/ClothInfo.tsx";
+import TicketInfo from "@/components/community/exchange/requestApply/TicketInfo.tsx";
+import PlaceInfo from "@/components/community/exchange/requestApply/PlaceInfo.tsx";
+import DateInfo from "@/components/community/exchange/requestApply/DateInfo.tsx";
+import RequestBottomBar from "@/components/community/exchange/requestApply/RequestBottomBar.tsx";
 import Modal from "@/components/ui/modal.tsx";
 import { useState } from "react";
 import PlaceModalContent from "@/components/community/exchange/modalContents/PlaceModalContent.tsx";
@@ -36,7 +36,7 @@ const ExchangeRequestPage = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <form className='bottombar-p' onSubmit={methods.handleSubmit(onSubmit)}>
         <ClothInfo code={dummyResult.clothingNumber} />
         <div className='divider' />
         <TicketInfo ticket={10} />

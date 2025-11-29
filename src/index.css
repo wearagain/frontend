@@ -217,6 +217,10 @@ textarea:focus {
   @apply pl-5;
 }
 
+.bottombar-p {
+  @apply pb-[128px]
+}
+
 .custom-scroll::-webkit-scrollbar {
   display: none;
 }

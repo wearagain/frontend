@@ -23,7 +23,7 @@ const ClothDetailPage = () => {
   }, []);
 
   return (
-    <div className='relative'>
+    <div className='relative bottombar-p'>
       <ImageSlider images={images} />
       <NameInfo name={dummyResult.repairerName} />
       <div className='divider' />

@@ -1,13 +1,15 @@
 import { useMatches } from "react-router-dom";
 import { HeaderBase, HeaderBack, HeaderClose, HeaderTitle } from "@/layouts/components/header";
+import HeaderBackClose from "@/layouts/components/header/HeaderBackClose.tsx";
 
-export type HeaderType = "base" | "back" | "close" | "title" | "guide";
+export type HeaderType = "base" | "back" | "close" | "title" | "guide" | "backClose";
 
 export interface HeaderHandle {
   type: HeaderType;
   label?: string;
   showBack?: boolean;
   onClose?: () => void;
+  to?: string;
 }
 
 export interface HeaderRule {
@@ -30,6 +32,7 @@ export function useHeader(): HeaderRule | null {
     back: HeaderBack,
     close: HeaderClose,
     title: HeaderTitle,
+    backClose: HeaderBackClose,
   };
 
   const Component = componentMap[header.type];

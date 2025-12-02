@@ -73,13 +73,48 @@ export const buttonTheme = {
     muted: {
       base: `
         bg-[var(--color-purple-lighter)]
-        text-[#424242]
+        text-[var(--color-purple-light)]
         border-[var(--color-purple-lighter)]
       `,
       hover: `
         hover:bg-[var(--color-purple-light)]
         hover:border-[var(--color-purple-light)]
       `,
+    },
+  },
+  purpleOutlined: {
+    primary: {
+      base: `
+        bg-[var(--color-purple-lighter)]
+        text-[var(--color-purple-light)]
+        border-[var(--color-purple-light)]
+      `,
+      hover: `
+        hover:bg-[var(--color-purple-light)]
+        hover:text-[#ffffff]
+        hover:border-[var(--color-purple-light)]
+      `,
+    },
+    muted: {
+      base: `
+        bg-[#E6E6E6]
+        text-[#4A4A4A]
+        border-[#E6E6E6]
+      `,
+      hover: `
+        hover:bg-[#D0D0D0]
+        hover:border-[#D0D0D0]
+      `,
+    },
+  },
+  normalOutlined: {
+    primary: {
+      base: `bg-white border-gray-200 text-gray-500 cursor-not-allowed`,
+      hover: `hover:bg-gray-100`,
+    },
+    muted: {
+      base: `bg-white border-gray-200 text-gray-500 cursor-not-allowed`,
+      hover: ``,
     },
   },
 } as const;
@@ -105,7 +140,10 @@ export const filterTheme = {
   purple: `
     bg-[var(--color-purple-lighter)]
     text-[var(--color-purple-light)]
-    border-[var(--color-purple-light)]`,
+    border-[var(--color-purple-light)]
+    hover:bg-[var(--color-purple-light)]
+    hover:text-[#ffffff]
+    `,
 };
 
 export type FilterThemeKey = keyof typeof filterTheme;

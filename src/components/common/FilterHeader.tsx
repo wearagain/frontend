@@ -17,12 +17,12 @@ export function FilterHeader<T extends string>({
   const appliedFilterTheme = filterTheme[theme];
 
   return (
-    <div className='main-inner flex h-fit gap-x-[6px] overflow-x-auto no-scrollbar py-3 border-b border-[#E0E2E4]'>
+    <div className='main-inner flex h-fit gap-x-[6px] overflow-x-auto no-scrollbar custom-scroll py-3 border-b border-[#E0E2E4]'>
       {tabs.map(({ label, value: tabValue }) => (
         <Button
           key={label}
           onClick={() => onChange(tabValue)}
-          className={`h-9 w-fit rounded-full border transition-colors ${
+          className={`h-9 w-fit min-w-max rounded-full border transition-colors ${
             value === tabValue ? appliedFilterTheme : filterTheme.normal
           }`}
         >

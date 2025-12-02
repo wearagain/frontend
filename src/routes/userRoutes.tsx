@@ -25,7 +25,8 @@ import {
   ClothDetailPage,
   RequestInfoPage,
 } from "@/pages";
-
+import ChatPageWrapper from "@/pages/chat/ChatPageWrapper";
+import PartyChatPageWrapper from "@/pages/chat/PartyChatPageWrapper";
 import type { RouteObject } from "react-router-dom";
 
 const userRoutes: RouteObject = {
@@ -214,6 +215,24 @@ const userRoutes: RouteObject = {
       element: <PartyHostPage />,
       handle: { header: { type: "base", label: "주최하기", showBack: true } },
     }, // /host
+
+    // 일반 채팅 - 리스트와 개별 채팅방
+    {
+      path: "chat",
+      children: [
+        { index: true, element: <ChatPageWrapper /> }, // /chat
+        { path: ":roomId", element: <ChatPageWrapper /> }, // /chat/:roomId
+      ],
+    },
+
+    // 파티 채팅 - 리스트와 개별 채팅방
+    {
+      path: "party-chat",
+      children: [
+        { index: true, element: <PartyChatPageWrapper /> }, // /party-chat
+        { path: ":roomId", element: <PartyChatPageWrapper /> }, // /party-chat/:roomId
+      ],
+    },
 
     // 마이페이지
     {

@@ -49,6 +49,26 @@ export const buttonTheme = {
       `,
     },
   },
+  purple: {
+    primary: {
+      base: `
+        bg-[var(--color-purple-light)]
+        text-[#FFFFFF]
+      `,
+      hover: `
+        hover:bg-[var(--color-purple-dark)]
+      `,
+    },
+    muted: {
+      base: `
+        bg-[var(--color-purple-lighter)]
+        text-[#424242]
+      `,
+      hover: `
+        hover:bg-[var(--color-purple-light)]
+      `,
+    },
+  },
 } as const;
 
 export type ThemeKey = keyof typeof buttonTheme;

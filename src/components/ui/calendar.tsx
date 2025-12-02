@@ -4,7 +4,6 @@ import { format } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 
 function Calendar({
   className,
@@ -128,7 +127,7 @@ function CalendarDayButton({
   }, [modifiers.focused]);
 
   return (
-    <Button
+    <button
       ref={ref}
       data-day={day.date.toLocaleDateString()}
       data-selected-single={
@@ -142,6 +141,7 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
+        "flex items-center  justify-center rounded-[10px] px-4 py-4 font-medium transition-all text-16",
         "bg-transparent text-base text-[#222222]",
         modifiers.today && !modifiers.selected && "!text-[#3DC0C5]",
         modifiers.selected && "bg-[#08B0B7] text-white rounded-[8px]",

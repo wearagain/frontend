@@ -81,10 +81,10 @@ export default function PartyChatRoom({
   };
 
   return (
-    <div className='w-full h-full bg-white flex flex-col'>
+    <div className='fixed inset-y-[64px] h-full right-0 left-0 bg-white flex flex-col max-w-[430px] top-[64px] mx-auto bg-white'>
       {/* 파티 정보 배너 */}
       {partyInfo && (
-        <div className='flex-shrink-0 bg-gradient-to-r from-[#7C31B4] to-[#9A4DDA] text-white p-4'>
+        <div className='sticky top-0 w-full flex-shrink-0 bg-gradient-to-r from-[#7C31B4] to-[#9A4DDA] text-white p-4'>
           <div className='flex items-start gap-3'>
             <div className='flex-shrink-0'>
               <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
@@ -224,7 +224,7 @@ export default function PartyChatRoom({
         )}
       </div>
 
-      <div className='flex-shrink-0 p-4 bg-white border-t border-gray-200'>
+      <div className='flex-shrink-0 p-4 sticky bottom-0  bg-white border-t border-gray-200'>
         <div className='flex items-end gap-2'>
           <textarea
             ref={inputRef}

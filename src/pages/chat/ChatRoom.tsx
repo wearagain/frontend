@@ -69,8 +69,8 @@ export default function ChatRoom({
   };
 
   return (
-    <div className='w-full h-full bg-white flex flex-col'>
-      <div className='flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200 bg-white'>
+    <div className='fixed inset-y-[64px] h-full right-0 left-0 bg-white flex flex-col max-w-[430px] top-[64px] mx-auto'>
+      <div className='sticky top-0 w-full flex items-center justify-between p-4 border-b border-gray-200 bg-white'>
         <div className='flex items-center gap-3'>
           {onBack && (
             <button
@@ -157,7 +157,7 @@ export default function ChatRoom({
         )}
       </div>
 
-      <div className='flex-shrink-0 p-4 bg-white border-t border-gray-200'>
+      <div className='sticky bottom-0 items-end w-full p-4 bg-white border-t border-gray-200'>
         <div className='flex items-end gap-2'>
           <textarea
             ref={inputRef}

@@ -275,7 +275,7 @@ export default function ChatPage({ currentUserId }: ChatPageProps) {
   const showChatRoom = !!roomId;
 
   return (
-    <div className='flex justify-center bg-gray-100 h-screen'>
+    <div className='flex justify-center bg-gray-100'>
       <div className='w-full max-w-md h-full flex flex-col'>
         {!showChatRoom && (
           <>

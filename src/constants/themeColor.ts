@@ -82,32 +82,19 @@ export const buttonTheme = {
       `,
     },
   },
-  purple: {
-    primary: {
-      base: `
-        bg-[var(--color-purple-light)]
-        text-[#FFFFFF]
-      `,
-      hover: `
-        hover:bg-[var(--color-purple-dark)]
-      `,
-    },
-    muted: {
-      base: `
-        bg-[var(--color-purple-lighter)]
-        text-[#424242]
-      `,
-      hover: `
-        hover:bg-[var(--color-purple-light)]
-      `,
-    },
-  },
 } as const;
 
 export type ThemeKey = keyof typeof buttonTheme;
 export type VariantKey<T extends ThemeKey> = keyof (typeof buttonTheme)[T];
 
 export const filterTheme = {
+  normal: `
+    bg-white
+    text-gray-700
+    border-gray-300
+    hover:bg-gray-100
+    hover:text-gray-700
+  `,
   mint: `
         bg-[var(--color-mint-lighter)]
         text-[var(--color-mint-light)]

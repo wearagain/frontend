@@ -23,9 +23,7 @@ export function FilterHeader<T extends string>({
           key={label}
           onClick={() => onChange(tabValue)}
           className={`h-9 w-fit rounded-full border transition-colors ${
-            value === tabValue
-              ? appliedFilterTheme
-              : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+            value === tabValue ? appliedFilterTheme : filterTheme.normal
           }`}
         >
           {label}

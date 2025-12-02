@@ -1,10 +1,16 @@
 import { useMatches } from "react-router-dom";
-import { HeaderBase, HeaderBack, HeaderClose, HeaderTitle } from "@/layouts/components/header";
-import HeaderBackClose from "@/layouts/components/header/HeaderBackClose.tsx";
-import HeaderAdmin from "@/layouts/components/header/HeaderAdmin.tsx";
+import {
+  HeaderBase,
+  HeaderBack,
+  HeaderClose,
+  HeaderGuide,
+  HeaderBackClose,
+  HeaderAdmin,
+  HeaderAdminClose,
+} from "@/layouts/components/header";
 
-export type HeaderType = "base" | "back" | "close" | "title" | "guide" | "backClose";
-export type HeaderAdminType = "adminBase";
+export type HeaderType = "base" | "back" | "close" | "guide" | "backClose";
+export type HeaderAdminType = "adminBase" | "adminClose";
 
 export interface HeaderHandle {
   type: HeaderType | HeaderAdminType;
@@ -33,9 +39,10 @@ export function useHeader(): HeaderRule | null {
     base: HeaderBase,
     back: HeaderBack,
     close: HeaderClose,
-    title: HeaderTitle,
+    guide: HeaderGuide,
     backClose: HeaderBackClose,
     adminBase: HeaderAdmin,
+    adminClose: HeaderAdminClose,
   };
 
   const Component = componentMap[header.type];

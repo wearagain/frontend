@@ -25,4 +25,5 @@ export {
   Heart,
   SearchIcon,
   MessageSquareText,
+  EllipsisVertical,
 } from "lucide-react";

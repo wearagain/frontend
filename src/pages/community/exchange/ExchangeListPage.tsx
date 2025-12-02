@@ -1,8 +1,8 @@
 import ClothColList from "@/components/community/exchange/scrollList/ClothColList.tsx";
 import { generateDummyDetails } from "@/utils/community/dummy.ts";
-import { TabFilter } from "@/components/community/common/filters/BoardTypeFilter.tsx";
 import type { ClothFilterCategory } from "@/types/community.ts";
 import { useState } from "react";
+import { FilterHeader } from "@/components/common/FilterHeader.tsx";
 
 const ExchangeListPage = () => {
   // TODO: GET API 연동
@@ -20,7 +20,7 @@ const ExchangeListPage = () => {
 
   return (
     <div className='flex flex-col h-full gap-6'>
-      <TabFilter value={filterType} onChange={setFilterType} tabs={tabs} />
+      <FilterHeader onChange={setFilterType} tabs={tabs} theme='mint' value={filterType} />
       <ClothColList items={items} />
     </div>
   );

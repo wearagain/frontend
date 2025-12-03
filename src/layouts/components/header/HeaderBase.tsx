@@ -19,6 +19,8 @@ export default function HeaderBase({
   to,
 }: HeaderProps) {
   const [open, setOpen] = useState(false);
+  const dummyTicket = 2;
+  const dummyCo2 = 12.5;
   const location = useLocation();
   const { data } = useMe();
 
@@ -29,6 +31,7 @@ export default function HeaderBase({
   }, [location.pathname]);
 
   const nickname = data?.nickname ?? null;
+  // const isHost = data?.isHost ?? false;
 
   return (
     <HeaderContainer>
@@ -37,8 +40,14 @@ export default function HeaderBase({
 
         {showLabel && label && <h2 className='text-start'>{label}</h2>}
       </div>
-
-      <Hamburger nickname={nickname} open={open} setOpen={setOpen} />
+      <Hamburger
+        open={open}
+        setOpen={setOpen}
+        nickname={nickname}
+        ticket={dummyTicket}
+        co2={dummyCo2}
+        isHost={false}
+      />
     </HeaderContainer>
   );
 }

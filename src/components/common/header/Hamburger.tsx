@@ -3,22 +3,30 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetDescription,
   SheetTrigger,
 } from "@/components/ui/sheet.tsx";
 import { Menu } from "@/assets/icons";
 import { Link } from "react-router-dom";
 import { mainMenu } from "@/config/navMenu.ts";
 import { useSignout } from "@/hooks/auth/useAuth.ts";
+import HeaderActions from "@/components/common/header/hamburger/HeaderActions.tsx";
+import UserProfile from "@/components/common/header/hamburger/UserProfile.tsx";
+import MenuItem from "@/components/common/header/hamburger/MenuItem.tsx";
 
 interface HamburgerProps {
   open: boolean;
   setOpen: (value: boolean) => void;
   nickname: string | null;
+  ticket: number;
+  co2: number;
+  isHost?: boolean;
 }
 
-export default function Hamburger({ open, setOpen, nickname }: HamburgerProps) {
+export default function Hamburger({ open, setOpen, nickname, ticket, co2, isHost }: HamburgerProps) {
   const { mutate: signout, isPending } = useSignout();
 
+  const handleClose = () => setOpen(false);
   const handleSignout = () => {
     if (isPending) return;
     signout(undefined, {
@@ -26,71 +34,49 @@ export default function Hamburger({ open, setOpen, nickname }: HamburgerProps) {
     });
   };
 
+  const filteredMenu = mainMenu.filter(
+      (item) => !item.host || (item.host && isHost)
+  );
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <button aria-label='메뉴 열기' className='border-0 bg-transparent'>
-          <Menu className='w-6 h-6' />
+          <Menu className='w-6 h-6 text-[#222222]' />
         </button>
       </SheetTrigger>
 
-      <SheetContent side='right' className='w-64 overflow-y-auto'>
-        <SheetHeader>
-          <SheetTitle className='text-lg font-semibold'>
-            {nickname ? (
-              <span className='text-gray-900'>{nickname}님</span>
-            ) : (
-              <Link to='/auth/signin' onClick={() => setOpen(false)}>
-                로그인 하러가기
-              </Link>
+      <SheetContent side='right' className='overflow-y-auto px-5'>
+        <SheetHeader className='sticky top-0 bg-white z-10 pt-3 pb-4'>
+          <HeaderActions onClose={handleClose} nickname={nickname} />
+          <SheetTitle>
+            {/* 헤더 */}
+            {nickname ? (<UserProfile nickname={nickname} ticket={ticket} co2={co2}/>) : (
+                <Link to='/auth/signin' onClick={() => setOpen(false)}>
+                  로그인 하러가기
+                </Link>
             )}
           </SheetTitle>
+          <SheetDescription/>
         </SheetHeader>
-
-        <nav className='flex flex-col gap-6 mt-6 ml-4 text-base font-medium pb-4'>
-          {mainMenu.map((category) => (
-            <div key={category.label} className='pb-4 border-b border-b-gray-300'>
-              {/* 상위 카테고리 */}
-              {category.path ? (
-                <Link
-                  to={category.path}
-                  onClick={() => setOpen(false)}
-                  className='font-semibold text-lg hover:text-primary'
-                >
-                  {category.icon && <category.icon className='inline-block w-5 h-5 mr-2' />}
-                  {category.label}
-                </Link>
-              ) : (
-                <div className='font-semibold text-lg'>
-                  {category.icon && <category.icon className='inline-block w-5 h-5 mr-2' />}
-                  {category.label}
-                </div>
-              )}
-
-              {/* 하위 메뉴 */}
-              {category.children && (
-                <ul className='ml-4 mt-2 flex flex-col gap-2 text-[15px]'>
-                  {category.children.map((child) => (
-                    <li key={child.path}>
-                      <Link
-                        to={child.path}
-                        onClick={() => setOpen(false)}
-                        className='hover:text-primary transition-colors'
-                      >
-                        {child.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+        {/* 메뉴 */}
+        <nav className='flex flex-col gap-4 my-5 text-[#222222] font-medium'>
+          {filteredMenu.map((item, index) => (
+              <div key={`${item.label}-${index}`}>
+                <MenuItem item={item} onClose={handleClose}/>
+                {item.divider && (
+                    <div className='border-b border-gray-200 mt-5 mb-1' />
+                )}
+              </div>
           ))}
-          <div
-            className='mt-4 cursor-pointer text-sm text-gray-500 hover:text-gray-800 transition'
+
+          {/* 로그아웃 */}
+          {nickname && (
+              <div className='mt-11 underline cursor-pointer text-sm text-[#939396] hover:text-gray-800 transition'
             onClick={handleSignout}
           >
             {isPending ? "로그아웃 중..." : "로그아웃"}
-          </div>
+          </div>)}
         </nav>
       </SheetContent>
     </Sheet>

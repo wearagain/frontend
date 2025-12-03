@@ -220,7 +220,15 @@ textarea:focus {
 }
 
 .bottombar-p {
-  @apply pb-[128px]
+  @apply pb-32
+}
+
+.bottombar-wrapper {
+  @apply fixed bottom-0 left-0 right-0 w-full pt-5 pb-14 bg-white
+}
+
+.bottombar {
+  @apply flex gap-4 mx-auto h-[52px] w-full px-5 max-w-[430px]
 }
 
 .custom-scroll::-webkit-scrollbar {

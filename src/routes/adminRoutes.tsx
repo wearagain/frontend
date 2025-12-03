@@ -1,6 +1,8 @@
 import RootLayout from "@/layouts/RootLayout";
 import type { RouteObject } from "react-router-dom";
 import AdminPartyPage from "@/pages/admin/community/AdminPartyPage.tsx";
+import AdminPartyDetailPage from "@/pages/admin/community/AdminPartyDetailPage.tsx";
+import PartyAdminDropdownContents from "@/components/common/header/DropdownMenu/PartyAdminDropdownContents.tsx";
 
 const adminRoutes: RouteObject = {
   path: "/admin",
@@ -14,10 +16,21 @@ const adminRoutes: RouteObject = {
   },
   children: [
     {
-      // index: true,
       path: "party",
       element: <AdminPartyPage />,
       handle: { header: { type: "adminBase", label: "주최 신청 관리", showBack: true } },
+    },
+    {
+      path: "party/:partyId",
+      element: <AdminPartyDetailPage />,
+      handle: {
+        header: {
+          type: "adminClose",
+          showLabel: false,
+          to: -1,
+          children: <PartyAdminDropdownContents />,
+        },
+      },
     },
   ],
 };

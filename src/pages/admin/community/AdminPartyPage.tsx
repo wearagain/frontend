@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FilterHeader } from "@/components/common/FilterHeader.tsx";
 import type { AdminPartyFilter } from "@/types/adminTypes.ts";
 import { generateDummyParties, type PartyItem } from "@/utils/admin/dummy.ts";
-import PartyRow from "@/components/admin/community/PartyRow.tsx";
+import PartyRow from "@/components/admin/community/AppliedPartyList/PartyRow.tsx";
 
 export default function AdminPartyPage() {
   const tabs: { label: string; value: AdminPartyFilter }[] = [
@@ -15,6 +15,7 @@ export default function AdminPartyPage() {
 
   const [filterType, setFilterType] = useState<AdminPartyFilter | undefined>("ALL");
   const AdminPartyDummy: PartyItem[] = generateDummyParties(6);
+
   return (
     <div className='flex flex-col h-full'>
       <FilterHeader onChange={setFilterType} tabs={tabs} theme='purple' value={filterType} />

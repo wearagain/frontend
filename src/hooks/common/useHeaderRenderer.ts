@@ -18,6 +18,7 @@ export interface HeaderHandle {
   showBack?: boolean;
   onClose?: () => void;
   to?: string;
+  children?: React.ReactNode;
 }
 
 export interface HeaderRule {

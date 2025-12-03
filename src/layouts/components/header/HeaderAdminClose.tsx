@@ -1,13 +1,14 @@
 import HeaderContainer from "./HeaderContainer";
 import { useNavigate } from "react-router-dom";
 import { Close, Message } from "@/components/common/header";
-import Settings from "@/components/common/header/Settings.tsx";
+import DropdownMenu from "@/components/common/header/DropdownMenu/DropdownMenu.tsx";
 
 interface HeaderProps {
   label?: string;
   showLabel?: boolean;
   to?: string;
   onClose?: () => void;
+  children?: React.ReactNode;
 }
 
 export default function HeaderAdminClose({
@@ -15,6 +16,7 @@ export default function HeaderAdminClose({
   showLabel = true,
   onClose,
   to,
+  children,
 }: HeaderProps) {
   const navigate = useNavigate();
 
@@ -28,7 +30,7 @@ export default function HeaderAdminClose({
       {/* Right Side */}
       <div className='flex gap-3'>
         <Message />
-        <Settings onClick={() => console.log("clicked setings")} />
+        <DropdownMenu children={children} />
       </div>
     </HeaderContainer>
   );

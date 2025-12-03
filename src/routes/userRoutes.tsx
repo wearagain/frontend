@@ -189,7 +189,7 @@ const userRoutes: RouteObject = {
         {
           path: ":id/apply",
           element: <PartyApplyPage />,
-          handle: { header: { type: "title", label: "신청하기" } },
+          handle: { header: { type: "guide", label: "신청하기" } },
         }, // /party/:id/apply
         {
           path: ":id/apply/complete",

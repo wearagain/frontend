@@ -7,18 +7,14 @@ interface LocalDropdownMenuProps {
 }
 
 export default function LocalDropdownMenu({ children, className = "w-6" }: LocalDropdownMenuProps) {
-  const { open, toggle, ref } = useDropdown();
+  const { open, toggle } = useDropdown();
 
   return (
     <div className='relative inline-block'>
       <button onClick={toggle}>
         <EllipsisVertical className={className} />
       </button>
-      {open && (
-        <div ref={ref} className='dropdown-menu'>
-          {children}
-        </div>
-      )}
+      {open && <div className='dropdown-menu'>{children}</div>}
     </div>
   );
 }

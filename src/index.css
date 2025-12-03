@@ -245,7 +245,7 @@ textarea:focus {
 }
 
 .dropdown-menu-header {
-  @apply whitespace-nowrap absolute right-5 z-[9999] top-2 translate-y-5/8 bg-white border border-[#E4E4E4] rounded-[10px] px-2 py-2 text-sm shadow w-fit h-fit
+  @apply whitespace-nowrap absolute right-1 z-[9999] top-0 translate-y-1/2 bg-white border border-[#E4E4E4] rounded-[10px] px-2 py-2 text-sm shadow w-fit h-fit
 }
 
 .dropdown-menu-item {

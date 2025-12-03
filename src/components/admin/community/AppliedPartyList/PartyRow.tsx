@@ -7,7 +7,7 @@ export default function PartyRow(items: PartyItem) {
     <div className='py-5 h-[114px] min-h-max'>
       <div className='flex justify-between items-center'>
         <PartyRowDetail {...items} />
-        <PartyRowButtons status='PENDING' />
+        <PartyRowButtons status='PENDING' id={items.partyId} />
       </div>
     </div>
   );

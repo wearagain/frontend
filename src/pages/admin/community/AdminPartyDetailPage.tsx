@@ -3,6 +3,7 @@ import { generateDummyParties, type PartyItem } from "@/utils/admin/dummy.ts";
 import PartyDetailBottomBar from "@/components/admin/community/AppliedPartyDetail/PartyDetailBottomBar.tsx";
 import { useGetPartyDetails } from "@/hooks/admin/party/useGetPartyDetail.ts";
 import DetailSection from "@/components/admin/community/AppliedPartyDetail/DetailSection.tsx";
+import { Outlet } from "react-router-dom";
 
 export default function AdminPartyDetailPage() {
   const AdminPartyDummy: PartyItem = generateDummyParties(1)[0];
@@ -19,7 +20,8 @@ export default function AdminPartyDetailPage() {
       {group2 && <DetailSection title='파티 정보' data={group2} labelWidth='w-[92px]' />}
       <div className='divider' />
       {group3 && <DetailSection title='결제 및 배송' data={group3} labelWidth='w-[102px]' />}
-      <PartyDetailBottomBar id='3' />
+      <PartyDetailBottomBar />
+      <Outlet />
     </div>
   );
 }

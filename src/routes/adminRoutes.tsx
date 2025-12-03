@@ -3,6 +3,8 @@ import type { RouteObject } from "react-router-dom";
 import AdminPartyPage from "@/pages/admin/community/AdminPartyPage.tsx";
 import AdminPartyDetailPage from "@/pages/admin/community/AdminPartyDetailPage.tsx";
 import PartyAdminDropdownContents from "@/components/common/header/DropdownMenu/PartyAdminDropdownContents.tsx";
+import ApproveModal from "@/components/admin/community/Modal/ApproveModal.tsx";
+import RejectModal from "@/components/admin/community/Modal/RejectModal.tsx";
 
 const adminRoutes: RouteObject = {
   path: "/admin",
@@ -31,6 +33,10 @@ const adminRoutes: RouteObject = {
           children: <PartyAdminDropdownContents />,
         },
       },
+      children: [
+        { path: "approved", element: <ApproveModal /> },
+        { path: "rejected", element: <RejectModal /> },
+      ],
     },
   ],
 };

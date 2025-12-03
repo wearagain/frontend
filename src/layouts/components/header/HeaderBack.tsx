@@ -1,6 +1,6 @@
 import HeaderContainer from "./HeaderContainer";
-import { ChevronLeft } from "@/assets/icons";
 import { useNavigate } from "react-router-dom";
+import { Back } from "@/components/common/header";
 
 interface HeaderBackProps {
   label?: string;
@@ -13,9 +13,7 @@ export default function HeaderBack({ label, to }: HeaderBackProps) {
   return (
     <HeaderContainer>
       <div className='flex'>
-        <button onClick={() => (to ? navigate(to) : navigate(-1))}>
-          <ChevronLeft className='w-6 h-6' />
-        </button>
+        <Back onClick={() => (to ? navigate(to) : navigate(-1))} />
         {label && <h2 className='ml-2 text-lg font-semibold'>{label}</h2>}
       </div>
     </HeaderContainer>

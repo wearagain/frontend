@@ -7,8 +7,8 @@ interface InfoBottomBarProps {
 
 export default function InfoBottomBar({ onConfirm, onCancel }: InfoBottomBarProps) {
   return (
-    <div className='fixed bottom-0 left-0 right-0 px-5 pt-5 pb-14 max-w-[430px] mx-auto bg-white'>
-      <div className='flex gap-4 h-[52px] w-full'>
+    <div className='bottombar-wrapper'>
+      <div className='bottombar'>
         <Button
           type='button'
           onClick={onCancel}

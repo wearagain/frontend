@@ -1,0 +1,37 @@
+import HeaderContainer from "./HeaderContainer";
+import { useNavigate } from "react-router-dom";
+import { Close, Message } from "@/components/common/header";
+import DropdownMenu from "@/components/common/header/DropdownMenu/DropdownMenu.tsx";
+
+interface HeaderProps {
+  label?: string;
+  showLabel?: boolean;
+  to?: string;
+  onClose?: () => void;
+  children?: React.ReactNode;
+}
+
+export default function HeaderAdminClose({
+  label = "가치입다",
+  showLabel = true,
+  onClose,
+  to,
+  children,
+}: HeaderProps) {
+  const navigate = useNavigate();
+
+  return (
+    <HeaderContainer>
+      <div className='flex justify-between gap-2 items-center'>
+        <Close onClose={() => (to ? navigate(to) : onClose?.())} />
+        {showLabel && label && <h2 className='text-start'>{label}</h2>}
+      </div>
+
+      {/* Right Side */}
+      <div className='flex gap-3 items-end'>
+        <Message />
+        <DropdownMenu children={children} />
+      </div>
+    </HeaderContainer>
+  );
+}

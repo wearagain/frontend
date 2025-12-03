@@ -3,7 +3,7 @@ import HeaderContainer from "./HeaderContainer";
 import { useLocation } from "react-router-dom";
 import { useMe } from "@/hooks/auth/useMe";
 import { useNavigate } from "react-router-dom";
-import { Back, Hamburger } from "@/components/common/header";
+import { Message, Hamburger, Back } from "@/components/common/header";
 
 interface HeaderProps {
   label?: string;
@@ -12,15 +12,13 @@ interface HeaderProps {
   to?: string;
 }
 
-export default function HeaderBase({
+export default function HeaderAdmin({
   label = "가치입다",
   showBack = false,
   showLabel = true,
   to,
 }: HeaderProps) {
   const [open, setOpen] = useState(false);
-  const dummyTicket = 2;
-  const dummyCo2 = 12.5;
   const location = useLocation();
   const { data } = useMe();
 
@@ -31,7 +29,6 @@ export default function HeaderBase({
   }, [location.pathname]);
 
   const nickname = data?.nickname ?? null;
-  // const isHost = data?.isHost ?? false;
 
   return (
     <HeaderContainer>
@@ -40,14 +37,12 @@ export default function HeaderBase({
 
         {showLabel && label && <h2 className='text-start'>{label}</h2>}
       </div>
-      <Hamburger
-        open={open}
-        setOpen={setOpen}
-        nickname={nickname}
-        ticket={dummyTicket}
-        co2={dummyCo2}
-        isHost={false}
-      />
+
+      {/* Right Side */}
+      <div className='flex gap-3'>
+        <Message />
+        <Hamburger nickname={nickname} open={open} setOpen={setOpen} />
+      </div>
     </HeaderContainer>
   );
 }

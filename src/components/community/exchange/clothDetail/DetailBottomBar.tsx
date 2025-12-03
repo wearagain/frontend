@@ -10,8 +10,8 @@ interface DetailBottomBarProps {
 export default function DetailBottomBar({ isLiked, id }: DetailBottomBarProps) {
   const navigate = useNavigate();
   return (
-    <div className='fixed bottom-0 left-0 right-0 px-5 pt-5 pb-14 max-w-[430px] mx-auto bg-white'>
-      <div className='flex gap-4 h-[52px] w-full'>
+    <div className='bottombar-wrapper'>
+      <div className='bottombar'>
         <button
           // onClick={() =>
           //   setLiked((i) => {

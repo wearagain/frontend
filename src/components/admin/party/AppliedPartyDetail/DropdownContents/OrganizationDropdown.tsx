@@ -1,4 +1,4 @@
-import DropdownMenuContents from "@/components/admin/community/AppliedPartyDetail/DropdownContents/DropdownMenuContents.tsx";
+import DropdownMenuContents from "@/components/admin/party/AppliedPartyDetail/DropdownContents/DropdownMenuContents.tsx";
 import LocalDropdownMenu from "@/components/common/LocalDropdownMenu.tsx";
 
 export default function OrganizationDropdown() {

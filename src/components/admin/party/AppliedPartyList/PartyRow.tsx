@@ -1,6 +1,6 @@
 import type { PartyItem } from "@/utils/admin/dummy.ts";
-import PartyRowDetail from "@/components/admin/community/AppliedPartyList/PartyRowDetail.tsx";
-import PartyRowButtons from "@/components/admin/community/AppliedPartyList/PartyRowButtons.tsx";
+import PartyRowDetail from "@/components/admin/party/AppliedPartyList/PartyRowDetail.tsx";
+import PartyRowButtons from "@/components/admin/party/AppliedPartyList/PartyRowButtons.tsx";
 
 export default function PartyRow(items: PartyItem) {
   return (

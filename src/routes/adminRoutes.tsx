@@ -1,10 +1,10 @@
 import RootLayout from "@/layouts/RootLayout";
 import type { RouteObject } from "react-router-dom";
-import AdminPartyPage from "@/pages/admin/community/AdminPartyPage.tsx";
-import AdminPartyDetailPage from "@/pages/admin/community/AdminPartyDetailPage.tsx";
+import AdminPartyPage from "@/pages/admin/party/AdminPartyPage.tsx";
+import AdminPartyDetailPage from "@/pages/admin/party/AdminPartyDetailPage.tsx";
 import PartyAdminDropdownContents from "@/components/common/header/DropdownMenu/PartyAdminDropdownContents.tsx";
-import ApproveModal from "@/components/admin/community/Modal/ApproveModal.tsx";
-import RejectModal from "@/components/admin/community/Modal/RejectModal.tsx";
+import ApproveModal from "@/components/admin/party/Modal/ApproveModal.tsx";
+import RejectModal from "@/components/admin/party/Modal/RejectModal.tsx";
 
 const adminRoutes: RouteObject = {
   path: "/admin",

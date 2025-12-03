@@ -1,5 +1,5 @@
 import { PartyDetailMap } from "@/constants/adminConstants.ts";
-import OrganizationDropdown from "@/components/admin/community/AppliedPartyDetail/DropdownContents/OrganizationDropdown.tsx";
+import OrganizationDropdown from "@/components/admin/party/AppliedPartyDetail/DropdownContents/OrganizationDropdown.tsx";
 
 interface DetailSectionProps {
   title: string;

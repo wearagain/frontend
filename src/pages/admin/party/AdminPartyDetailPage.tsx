@@ -1,8 +1,8 @@
-import PartyDetailHeader from "@/components/admin/community/AppliedPartyDetail/PartyDetailHeader.tsx";
+import PartyDetailHeader from "@/components/admin/party/AppliedPartyDetail/PartyDetailHeader.tsx";
 import { generateDummyParties, type PartyItem } from "@/utils/admin/dummy.ts";
-import PartyDetailBottomBar from "@/components/admin/community/AppliedPartyDetail/PartyDetailBottomBar.tsx";
+import PartyDetailBottomBar from "@/components/admin/party/AppliedPartyDetail/PartyDetailBottomBar.tsx";
 import { useGetPartyDetails } from "@/hooks/admin/party/useGetPartyDetail.ts";
-import DetailSection from "@/components/admin/community/AppliedPartyDetail/DetailSection.tsx";
+import DetailSection from "@/components/admin/party/AppliedPartyDetail/DetailSection.tsx";
 import { Outlet } from "react-router-dom";
 
 export default function AdminPartyDetailPage() {

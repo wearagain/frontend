@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FilterHeader } from "@/components/common/FilterHeader.tsx";
 import type { AdminPartyFilter } from "@/types/adminTypes.ts";
 import { generateDummyParties, type PartyItem } from "@/utils/admin/dummy.ts";
-import PartyRow from "@/components/admin/community/AppliedPartyList/PartyRow.tsx";
+import PartyRow from "@/components/admin/party/AppliedPartyList/PartyRow.tsx";
 import { Outlet } from "react-router-dom";
 
 export default function AdminPartyPage() {

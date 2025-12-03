@@ -28,7 +28,7 @@ export default function HeaderAdminClose({
       </div>
 
       {/* Right Side */}
-      <div className='flex gap-3'>
+      <div className='flex gap-3 items-end'>
         <Message />
         <DropdownMenu children={children} />
       </div>

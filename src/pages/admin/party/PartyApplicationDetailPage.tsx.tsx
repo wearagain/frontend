@@ -5,7 +5,7 @@ import { useGetPartyDetails } from "@/hooks/admin/party/useGetPartyDetail.ts";
 import DetailSection from "@/components/admin/party/AppliedPartyDetail/DetailSection.tsx";
 import { Outlet } from "react-router-dom";
 
-export default function AdminPartyDetailPage() {
+export default function PartyApplicationDetailPageTsx() {
   const AdminPartyDummy: PartyItem = generateDummyParties(1)[0];
 
   const id = window.location.pathname.split("/").pop() ?? "";

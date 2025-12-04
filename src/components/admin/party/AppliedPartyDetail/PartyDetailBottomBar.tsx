@@ -8,7 +8,7 @@ export default function PartyDetailBottomBar() {
       <div className='bottombar'>
         <Button
           type='button'
-          onClick={() => navigate(`approved`)}
+          onClick={() => navigate(`approve`)}
           theme='purple'
           variant='primary'
           className='flex-1 h-full min-h-[52px]'
@@ -18,7 +18,7 @@ export default function PartyDetailBottomBar() {
 
         <Button
           type='button'
-          onClick={() => navigate(`rejected`)}
+          onClick={() => navigate(`reject`)}
           // onClick={() => navigate(`/community/exchange/${id}/request`)}
           theme='purple'
           variant='primary'

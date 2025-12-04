@@ -14,7 +14,7 @@ export default function PartyRowButtons({ status = "PENDING", id }: PartyRowButt
       <Button
         type='button'
         disabled={status == "REJECTED"}
-        onClick={() => navigate(`${id}/approved`)}
+        onClick={() => navigate(`${id}/approve`)}
         theme={status == "APPROVED" ? "purpleOutlined" : "normalOutlined"}
         variant='primary'
         className='h-[40px] w-fit'
@@ -25,7 +25,7 @@ export default function PartyRowButtons({ status = "PENDING", id }: PartyRowButt
       <Button
         type='button'
         disabled={status == "APPROVED"}
-        onClick={() => navigate(`${id}/rejected`)}
+        onClick={() => navigate(`${id}/reject`)}
         theme={status == "REJECTED" ? "purpleOutlined" : "normalOutlined"}
         variant='primary'
         className='h-[40px] w-fit'

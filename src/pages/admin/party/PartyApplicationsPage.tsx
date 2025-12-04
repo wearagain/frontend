@@ -5,7 +5,7 @@ import { generateDummyParties, type PartyItem } from "@/utils/admin/dummy.ts";
 import PartyRow from "@/components/admin/party/AppliedPartyList/PartyRow.tsx";
 import { Outlet } from "react-router-dom";
 
-export default function AdminPartyPage() {
+export default function PartyApplicationsPage() {
   const tabs: { label: string; value: AdminPartyFilter }[] = [
     { label: "전체", value: "ALL" },
     { label: "승인대기", value: "PENDING" },

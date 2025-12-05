@@ -61,6 +61,7 @@ export default function ApplyListPage() {
       <ApplyHeader currentTab={currentTab} setCurrentTab={setCurrentTab} />
       {/* filter */}
       <FilterHeader
+        className={'sticky top-[57px] min-h-fit bg-white'}
         onChange={(v) => v && setCurrentStatus(v)}
         tabs={statusTabs}
         value={currentStatus}

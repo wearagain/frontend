@@ -31,7 +31,8 @@ export const dummyParticipateData: PartyParticipantResponse[] = [
 
     // 파티 정보
     partyTitle: "광진 능동 파티",
-    partyAddress: "서울특별시 광진구 군자동",
+    address: "서울특별시 광진구 군자동",
+    addressDetail: ""
   },
   {
     id: "p2",
@@ -62,7 +63,8 @@ export const dummyParticipateData: PartyParticipantResponse[] = [
 
     // 파티 정보
     partyTitle: "광진 능동 파티",
-    partyAddress: "서울특별시 광진구 군자동",
+    address: "서울특별시 광진구 군자동",
+    addressDetail: ""
   },
   {
     id: "p3",
@@ -100,7 +102,86 @@ export const dummyParticipateData: PartyParticipantResponse[] = [
 
     // 파티 정보
     partyTitle: "광진 능동 파티",
-    partyAddress: "서울특별시 광진구 군자동",
+    address: "서울특별시 광진구 군자동",
+    addressDetail: ""
+  },
+  {
+    id: "p4",
+    partyId: "party-003",
+    userId: "user-003",
+
+    name: "이영희",
+    phone: "010-3333-4444",
+    email: "lee@example.com",
+
+    clothingItems: [
+      {
+        clothingNumber: "CL-3001",
+        mainCategory: "드레스",
+        subCategory: "원피스",
+        description: "봄 시즌 화이트 원피스",
+        imageUrls: [],
+      },
+      {
+        clothingNumber: "CL-3002",
+        mainCategory: "기타",
+        subCategory: "가방",
+        description: "여성 미니백",
+        imageUrls: [],
+      },
+    ],
+
+    attendanceDate: "2025-10-03T14:00:00",
+    status: "REJECTED",
+    appliedAt: "2025-03-22",
+    processedAt: null,
+
+    qrCode: null,
+    qrExpiresAt: null,
+
+    // 파티 정보
+    partyTitle: "광진 능동 파티",
+    address: "서울특별시 광진구 군자동",
+    addressDetail: ""
+  },
+  {
+    id: "p5",
+    partyId: "party-003",
+    userId: "user-003",
+
+    name: "이영희",
+    phone: "010-3333-4444",
+    email: "lee@example.com",
+
+    clothingItems: [
+      {
+        clothingNumber: "CL-3001",
+        mainCategory: "드레스",
+        subCategory: "원피스",
+        description: "봄 시즌 화이트 원피스",
+        imageUrls: [],
+      },
+      {
+        clothingNumber: "CL-3002",
+        mainCategory: "기타",
+        subCategory: "가방",
+        description: "여성 미니백",
+        imageUrls: [],
+      },
+    ],
+
+    attendanceDate: "2025-10-03T14:00:00",
+    status: "APPROVED",
+    appliedAt: "2025-03-22",
+    processedAt: null,
+
+    qrCode: null,
+    qrExpiresAt: null,
+
+    // 파티 정보
+    partyTitle: "광진 능동 파티",
+    address: "서울특별시 광진구 군자동",
+    addressDetail: ""
   },
 ];
 

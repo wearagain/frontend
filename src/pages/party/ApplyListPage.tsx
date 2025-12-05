@@ -5,6 +5,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { dummyParticipateData, dummyHostData } from "@/utils/apply/dummy.ts";
 
+export type ApplyStatus = "apply" | "canceled";
+export type ApplyTab = "participate" | "host";
+
 const statusTabs: { label: string; value: "apply" | "canceled" }[] = [
   { label: "신청", value: "apply" },
   { label: "취소", value: "canceled" },
@@ -14,14 +17,14 @@ export default function ApplyListPage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const currentTab = (searchParams.get("tab") as "participate" | "host") || "participate";
-  const currentStatus = (searchParams.get("status") as "apply" | "canceled") || "apply";
+  const currentTab = (searchParams.get("tab") as ApplyTab) || "participate";
+  const currentStatus = (searchParams.get("status") as ApplyStatus) || "apply";
 
-  const setCurrentTab = (tab: "participate" | "host") => {
+  const setCurrentTab = (tab: ApplyTab) => {
     setSearchParams({ tab, status: "apply" });
   };
 
-  const setCurrentStatus = (status: "apply" | "canceled") => {
+  const setCurrentStatus = (status: ApplyStatus) => {
     setSearchParams({ tab: currentTab, status });
   };
 

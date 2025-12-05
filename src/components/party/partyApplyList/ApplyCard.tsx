@@ -3,33 +3,13 @@ import { ChevronRight } from "lucide-react";
 import type { PartyParticipantResponse, HostApplicationResponse } from "@/types/apply";
 import { STATUS_MAP } from "@/types/apply";
 import { InfoRow } from "./InfoRow";
+import { formatDateKR, formatDateTimeKR } from "@/utils/formatDate.ts";
 
 interface ApplyCardProps {
   type: "participate" | "host";
   data: PartyParticipantResponse | HostApplicationResponse;
   onClick?: () => void;
 }
-
-// TODO: 중복 사용이 많아 분리하기
-// 날짜 포맷 유틸리티 함수
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
-
-const formatDateTime = (dateString: string) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-  });
-};
 
 // 파티 참여 카드
 const ParticipateCard = ({
@@ -56,7 +36,7 @@ const ParticipateCard = ({
         </div>
 
         <div className='flex-1 flex flex-col gap-2 text-sm'>
-          <InfoRow label='날짜' value={formatDateTime(data.attendanceDate)} />
+          <InfoRow label='날짜' value={formatDateTimeKR(data.attendanceDate)} />
           <InfoRow label='장소' value={partyAddress} />
           <InfoRow label='교환의류' value={`${data.clothingItems.length}벌`} />
           <InfoRow
@@ -80,7 +60,7 @@ const HostCard = ({ data, onClick }: { data: HostApplicationResponse; onClick?: 
       </div>
 
       <div className='flex flex-col gap-2 text-sm'>
-        <InfoRow label='날짜' value={formatDate(data.desiredDate)} />
+        <InfoRow label='날짜' value={formatDateKR(data.desiredDate)} />
         <InfoRow label='장소' value={data.address} />
         <InfoRow label='참여자' value={`${data.maxAttendeeCnt}명`} />
         <InfoRow label='교환의류' value={`${data.maxChangeCnt}벌`} />

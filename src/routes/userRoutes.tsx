@@ -172,6 +172,7 @@ const userRoutes: RouteObject = {
       element: <TicketPage />,
       handle: { header: { type: "base" } },
     },
+
     // 파티 참여
     {
       path: "party",

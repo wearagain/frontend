@@ -1,7 +1,7 @@
 import RootLayout from "@/layouts/RootLayout";
 import type { RouteObject } from "react-router-dom";
 import PartyApplicationsPage from "@/pages/admin/party/PartyApplicationsPage.tsx";
-import PartyApplicationDetailPageTsx from "@/pages/admin/party/PartyApplicationDetailPage.tsx.tsx";
+import PartyApplicationDetailPage from "@/pages/admin/party/PartyApplicationDetailPage.tsx";
 import PartyAdminDropdownContents from "@/components/common/header/DropdownMenu/PartyAdminDropdownContents.tsx";
 import ApproveModal from "@/components/admin/party/Modal/ApproveModal.tsx";
 import RejectModal from "@/components/admin/party/Modal/RejectModal.tsx";
@@ -30,8 +30,8 @@ const adminRoutes: RouteObject = {
           handle: { header: { type: "adminBase", label: "주최 신청 관리", showBack: true } },
         },
         {
-          path: "application/:partyId",
-          element: <PartyApplicationDetailPageTsx />,
+          path: "applications/:partyId",
+          element: <PartyApplicationDetailPage />,
           handle: {
             header: {
               type: "adminClose",
@@ -40,15 +40,35 @@ const adminRoutes: RouteObject = {
               children: <PartyAdminDropdownContents />,
             },
           },
-          children: [
-            { path: "approve", element: <ApproveModal /> },
-            { path: "reject", element: <RejectModal /> },
-          ],
+        },
+        {
+          path: "applications/:partyId/approve",
+          element: <ApproveModal />,
+          handle: {
+            header: {
+              type: "adminClose",
+              showLabel: false,
+              to: -1,
+              children: <PartyAdminDropdownContents />,
+            },
+          },
+        },
+        {
+          path: "applications/:partyId/reject",
+          element: <RejectModal />,
+          handle: {
+            header: {
+              type: "adminClose",
+              showLabel: false,
+              to: -1,
+              children: <PartyAdminDropdownContents />,
+            },
+          },
         },
         {
           path: "manage",
           element: <PartyManagePage />,
-          handle: { header: { type: "adminBase", label: "주최 신청 관리", showBack: true } },
+          handle: { header: { type: "adminBase", label: "파티 관리", showBack: true } },
           children: [
             {
               path: "detail",

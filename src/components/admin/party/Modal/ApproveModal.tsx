@@ -1,10 +1,14 @@
+import { useParams } from "react-router-dom";
 import { Close } from "@/components/common/header";
 import { Button } from "@/components/ui/button.tsx";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
+import { useMutateApplicationStatus } from "@/hooks/admin/party/useMutateApplicationStatus.ts";
 
 export default function ApproveModal() {
   const navigate = useNavigate();
+  const { partyId } = useParams<{ partyId: string }>();
+
   const [thumbnail, setThumbnail] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const handleButtonClick = () => {
@@ -18,6 +22,8 @@ export default function ApproveModal() {
       setThumbnail(url);
     }
   };
+
+  const { mutate: mutateApplicationStatus } = useMutateApplicationStatus();
 
   return (
     <div className='fixed left-0 right-0 inset-0 z-[1001] flex min-h-max flex-col justify-between bg-white max-w-[430px] mx-auto top-0 h-full'>
@@ -55,7 +61,12 @@ export default function ApproveModal() {
       <div className='bg-white sticky bottom-0 flex items-center justify-center pt-5 w-full'>
         <Button
           type='button'
-          // onClick={() => navigate(location.pathname + "/info")}
+          onClick={() =>
+            mutateApplicationStatus({
+              id: partyId!,
+              action: "approve",
+            })
+          }
           theme='purple'
           variant='primary'
           className='h-[52px] mb-14 mx-5 w-full'

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { FilterHeader } from "@/components/common/FilterHeader.tsx";
 import type { AdminPartyFilter } from "@/types/adminTypes.ts";
-import { generateDummyParties, type PartyItem } from "@/utils/admin/dummy.ts";
-import PartyRow from "@/components/admin/party/AppliedPartyList/PartyRow.tsx";
 import { Outlet } from "react-router-dom";
+import { useGetPartyApplications } from "@/hooks/admin/party/useGetPartyApplications.ts";
+import PartyRow from "@/components/admin/party/PartyApplicationList/PartyRow.tsx";
 
 export default function PartyApplicationsPage() {
   const tabs: { label: string; value: AdminPartyFilter }[] = [
@@ -14,16 +14,21 @@ export default function PartyApplicationsPage() {
     { label: "취소", value: "CANCEL" },
   ];
 
+  const {
+    data,
+    // TODO: useContext로 isLoading 관리
+    // isLoading
+  } = useGetPartyApplications();
+
   const [filterType, setFilterType] = useState<AdminPartyFilter | undefined>("ALL");
-  const AdminPartyDummy: PartyItem[] = generateDummyParties(6);
 
   return (
     <div className='flex flex-col h-full'>
       <FilterHeader onChange={setFilterType} tabs={tabs} theme='purple' value={filterType} />
       <div className='p-5 flex flex-col gap-4 flex-1 overflow-y-auto w-full custom-scroll'>
-        <h4 className='font-bold text-base'>전체 {AdminPartyDummy.length}</h4>
+        <h4 className='font-bold text-base'>전체 {data?.length}</h4>
         <div>
-          {AdminPartyDummy.map((item) => (
+          {data?.map((item) => (
             <PartyRow {...item} />
           ))}
         </div>

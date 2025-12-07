@@ -1,5 +1,7 @@
 export type AdminPartyFilter = "ALL" | "PENDING" | "APPROVED" | "REJECTED" | "CANCEL";
 
+export type PartyManageFilter = "ALL" | "UPCOMING" | "ONGOING" | "COMPLETED" | "CANCELLED";
+
 export interface PartyDetailResponse {
   organizer: string;
   department: string;

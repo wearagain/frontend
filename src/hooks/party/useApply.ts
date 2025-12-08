@@ -2,10 +2,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   postPartyParticipant,
   getMyParticipations,
+  getMyHostApplications,
   getParticipationDetail,
   deleteParticipation,
 } from "@/apis/party/apply";
-import type { PartyParticipantResponse } from "@/types/apply";
+import type { PartyParticipantResponse, HostApplicationResponse } from "@/types/apply";
 import { useMe } from "@/hooks/auth/useMe";
 import { handleApiError } from "@/utils/handleApiError";
 import type { SelectedItem } from "@/types/clothingCategory";
@@ -85,6 +86,13 @@ export const useGetParticipantList = () => {
   return useQuery<PartyParticipantResponse[], Error>({
     queryKey: ["myParticipants"],
     queryFn: getMyParticipations,
+  });
+};
+
+export const useGetHostApplicationList = () => {
+  return useQuery<HostApplicationResponse[], Error>({
+    queryKey: ["myHostApplications"],
+    queryFn: getMyHostApplications,
   });
 };
 

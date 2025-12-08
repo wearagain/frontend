@@ -2,8 +2,7 @@ import { ApplyHeader } from "@/components/party/partyApplyList/ApplyHeader.tsx";
 import { ApplyList } from "@/components/party/partyApplyList/ApplyList.tsx";
 import { FilterHeader } from "@/components/common/FilterHeader.tsx";
 import { useNavigate, useSearchParams } from "react-router-dom";
-
-import { dummyParticipateData, dummyHostData } from "@/utils/apply/dummy.ts";
+import { useGetParticipantList, useGetHostApplicationList } from "@/hooks/party/useApply";
 
 export type ApplyStatus = "apply" | "canceled";
 export type ApplyTab = "participate" | "host";
@@ -28,10 +27,10 @@ export default function ApplyListPage() {
     setSearchParams({ tab: currentTab, status });
   };
 
-  // TODO: API 연결
-  const participateData = dummyParticipateData;
-  const hostData = dummyHostData;
+  const { data: participateData, isLoading: isParticipateLoading } = useGetParticipantList();
+  const { data: hostData, isLoading: isHostLoading } = useGetHostApplicationList();
 
+  const isLoading = currentTab === "participate" ? isParticipateLoading : isHostLoading;
   const filterTheme = currentTab === "participate" ? "mint" : "purple";
 
   const getFilteredData = () => {
@@ -61,14 +60,20 @@ export default function ApplyListPage() {
       <ApplyHeader currentTab={currentTab} setCurrentTab={setCurrentTab} />
       {/* filter */}
       <FilterHeader
-        className={'sticky top-[57px] min-h-fit bg-white'}
+        className={"sticky top-[57px] min-h-fit bg-white"}
         onChange={(v) => v && setCurrentStatus(v)}
         tabs={statusTabs}
         value={currentStatus}
         theme={filterTheme}
       />
       {/* 리스트 */}
-      <ApplyList type={currentTab} data={filteredData} onCardClick={handleCardClick} />
+      {isLoading ? (
+        <div className='flex items-center justify-center py-20'>
+          <p className='text-[#939396]'>로딩 중...</p>
+        </div>
+      ) : (
+        <ApplyList type={currentTab} data={filteredData} onCardClick={handleCardClick} />
+      )}
     </div>
   );
 }

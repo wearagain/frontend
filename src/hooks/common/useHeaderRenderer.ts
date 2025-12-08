@@ -1,7 +1,7 @@
 import { useMatches } from "react-router-dom";
 import { HeaderBase, HeaderBack, HeaderClose, HeaderTitle } from "@/layouts/components/header";
 
-export type HeaderType = "base" | "back" | "close" | "title" | "guide";
+export type HeaderType = "base" | "back" | "close" | "title" | "guide" | "none";
 
 export interface HeaderHandle {
   type: HeaderType;

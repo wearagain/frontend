@@ -19,6 +19,7 @@ import {
   CommunityBoardPage,
   CommunityPostPage,
   BoardDetailPage,
+  QrCheckinPage,
 } from "@/pages";
 
 import type { RouteObject } from "react-router-dom";
@@ -178,6 +179,13 @@ const userRoutes: RouteObject = {
       element: <MyPage />,
       handle: { header: { type: "base", label: "마이페이지", showBack: true } },
     }, // /mypage
+
+    // QR 체크인/스캔
+    {
+      path: "qr",
+      element: <QrCheckinPage />,
+      handle: { header: { type: "none" } },
+    }, // /qr?type=checkin or /qr?type=scan
   ],
 };
 

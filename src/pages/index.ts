@@ -19,6 +19,7 @@ import CommunityBoardPage from "./community/board/CommunityBoardPage";
 import CommunityExchange from "./community/CommunityExchangePage";
 import CommunityPostPage from "./community/board/CommunityPostPage";
 import BoardDetailPage from "./community/board/BoardDetailPage";
+import QrCheckinPage from "./qr-checkin/QrCheckinPage";
 
 export {
   NotFound,
@@ -42,4 +43,5 @@ export {
   CommunityExchange,
   CommunityPostPage,
   BoardDetailPage,
+  QrCheckinPage,
 };

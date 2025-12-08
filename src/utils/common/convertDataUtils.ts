@@ -21,7 +21,7 @@ export const trueFalseToYesNo = (value?: boolean) => {
 /**
  * 3. getDate or Time
  * */
-export const getDateTime = (value?: string | null, fallback = "yyyy.MM.dd HH:mm") => {
+export const getDateTime = (value?: string | null | Date, fallback = "yyyy.MM.dd HH:mm") => {
   if (!value) return "-";
 
   return format(new Date(value), fallback, {

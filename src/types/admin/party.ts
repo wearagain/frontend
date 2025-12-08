@@ -1,3 +1,5 @@
+import type { PartyAdminStatus } from "@/types/adminTypes.ts";
+
 export interface PartyApplicationResponse {
   id: string;
 
@@ -51,3 +53,21 @@ export type ApplicationStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED
 export type DeliveryStatus = "PENDING" | "PREPARING" | "IN_TRANSIT" | "DELIVERED" | "RETURNED";
 
 export type ApplicationAction = "approve" | "reject";
+
+export interface PartyManageResponse {
+  id: string;
+  title: string;
+  openAt: Date;
+  closeAt: Date | null;
+  address: string;
+  addressDetail: string | null;
+  maxAttendeeCnt: number;
+  currentAttendeeCnt: number;
+  status: PartyAdminStatus;
+  hostName: string;
+  isGroup: boolean;
+  isFull: boolean;
+  imageUrl: string | null;
+  xmap: number | null;
+  ymap: number | null;
+}

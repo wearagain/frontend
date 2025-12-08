@@ -1,4 +1,5 @@
 import type { ApplicationStatus, DeliveryStatus } from "@/types/admin/party.ts";
+import type { PartyAdminStatus } from "@/types/adminTypes.ts";
 
 export const PartyDetailMap: Record<string, string> = {
   name: "주최자",
@@ -60,4 +61,10 @@ export const GROUP3_KEYS = [
   "taxEmail",
 ] as const;
 
-export const HEADER_KEYS = ["id", "partyTitle", "appliedAt", "maxAttendeeCnt", "status"] as const;
+export const PartyStatusDescription: Record<PartyAdminStatus, string> = {
+  ALL: "전체",
+  UPCOMING: "진행예정",
+  ONGOING: "진행중",
+  COMPLETED: "진행완료",
+  CANCELLED: "취소",
+};

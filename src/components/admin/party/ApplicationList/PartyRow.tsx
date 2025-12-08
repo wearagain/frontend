@@ -1,6 +1,6 @@
 import type { PartyApplicationResponse } from "@/types/admin/party.ts";
-import PartyRowDetail from "@/components/admin/party/PartyApplicationList/PartyRowDetail.tsx";
-import PartyRowButtons from "@/components/admin/party/PartyApplicationList/PartyRowButtons.tsx";
+import PartyRowDetail from "@/components/admin/party/ApplicationList/PartyRowDetail.tsx";
+import PartyRowButtons from "@/components/admin/party/ApplicationList/PartyRowButtons.tsx";
 
 export default function PartyRow(items: PartyApplicationResponse) {
   return (

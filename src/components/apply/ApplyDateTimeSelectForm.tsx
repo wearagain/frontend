@@ -61,7 +61,7 @@ export default function ApplyDateTimeSelctorForm({
   return (
     <div className='flex flex-col min-h-full mb-32'>
       <div className='bg-white flex-shrink-0 sticky top-0 border-b-1 border-gray-100 z-10'>
-        <h2 className='text-lg font-semibold px-5 pt-6 mb-5'>
+        <h2 className='px-5 pt-6 mb-5'>
           파티에 참여할
           <br />
           날짜/시간을 선택해 주세요

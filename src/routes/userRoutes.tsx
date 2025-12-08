@@ -20,8 +20,14 @@ import {
   CommunityPostPage,
   BoardDetailPage,
   QrCheckinPage,
+  ExchangePage,
+  ExchangeListPage,
+  ExchangeRequestPage,
+  ClothDetailPage,
+  RequestInfoPage,
 } from "@/pages";
-
+import ChatPageWrapper from "@/pages/chat/ChatPageWrapper";
+import PartyChatPageWrapper from "@/pages/chat/PartyChatPageWrapper";
 import type { RouteObject } from "react-router-dom";
 
 const userRoutes: RouteObject = {
@@ -119,9 +125,48 @@ const userRoutes: RouteObject = {
             header: { type: "close", label: "글쓰기", onClose: () => window.history.back() },
           },
         },
+        {
+          path: "exchange",
+          element: <ExchangePage />,
+          handle: {
+            header: { type: "base", label: "수선의류 교환", showBack: true, to: "/home" },
+          },
+        },
+        {
+          path: "exchange/list",
+          element: <ExchangeListPage />,
+          handle: {
+            header: {
+              type: "base",
+              label: "수선의류 교환",
+              showBack: true,
+              to: "/community/exchange",
+            },
+          },
+        },
+        {
+          path: "exchange/list/:clothesId",
+          element: <ClothDetailPage />,
+          handle: {
+            header: { type: "base", label: "수선의류명", showBack: true },
+          },
+        },
+        {
+          path: "exchange/:clothesId/request",
+          element: <ExchangeRequestPage />,
+          handle: {
+            header: { type: "back", label: "교환하기" },
+          },
+        },
+        {
+          path: "exchange/:clothesId/request/info",
+          element: <RequestInfoPage />,
+          handle: {
+            header: { type: "backClose", label: "신청내역", to: "/community/exchange" },
+          },
+        },
       ],
     }, // /community
-
     // 티켓
     {
       path: "ticket",
@@ -146,7 +191,7 @@ const userRoutes: RouteObject = {
         {
           path: ":id/apply",
           element: <PartyApplyPage />,
-          handle: { header: { type: "title", label: "신청하기" } },
+          handle: { header: { type: "guide", label: "신청하기" } },
         }, // /party/:id/apply
         {
           path: ":id/apply/complete",
@@ -172,6 +217,24 @@ const userRoutes: RouteObject = {
       element: <PartyHostPage />,
       handle: { header: { type: "base", label: "주최하기", showBack: true } },
     }, // /host
+
+    // 일반 채팅 - 리스트와 개별 채팅방
+    {
+      path: "chat",
+      children: [
+        { index: true, element: <ChatPageWrapper /> }, // /chat
+        { path: ":roomId", element: <ChatPageWrapper /> }, // /chat/:roomId
+      ],
+    },
+
+    // 파티 채팅 - 리스트와 개별 채팅방
+    {
+      path: "party-chat",
+      children: [
+        { index: true, element: <PartyChatPageWrapper /> }, // /party-chat
+        { path: ":roomId", element: <PartyChatPageWrapper /> }, // /party-chat/:roomId
+      ],
+    },
 
     // 마이페이지
     {

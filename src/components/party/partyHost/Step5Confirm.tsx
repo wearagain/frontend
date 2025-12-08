@@ -47,7 +47,7 @@ export default function Step5Confirm({ onNext, onBack }: Step5Props) {
 
   return (
     <div className='pb-[220px]'>
-      <h2 className='text-lg font-semibold mb-4'>마지막으로 정보 확인 후 신청을 완료해 주세요</h2>
+      <h2 className='mb-4'>마지막으로 정보 확인 후 신청을 완료해 주세요</h2>
 
       <div className='space-y-6 mb-6'>
         {/* 주최자 정보 */}

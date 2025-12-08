@@ -6,8 +6,11 @@
 @theme inline {
   --color-mint-dark: #08b0b7;
   --color-mint-light: #3dc0c5;
+  --color-mint-lighter: #e0f2f1;
   --color-purple-dark: #642c8d;
   --color-purple-light: #7c31b4;
+  --color-purple-lighter: #F2EAF7;
+
 
   --header-height: 4rem;
 }
@@ -74,6 +77,10 @@ button {
   &:focus {
     @apply cursor-pointer;
   }
+}
+
+button:disabled {
+  cursor: not-allowed !important;
 }
 
 input,
@@ -168,6 +175,8 @@ textarea:focus {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -206,6 +215,22 @@ textarea:focus {
   @apply border-b-4 mb-5 border-gray-100;
 }
 
+.main-inner {
+  @apply pl-5;
+}
+
+.bottombar-p {
+  @apply pb-32
+}
+
+.bottombar-wrapper {
+  @apply fixed bottom-0 left-0 right-0 w-full pt-5 pb-14 bg-white
+}
+
+.bottombar {
+  @apply flex gap-4 mx-auto h-[52px] w-full px-5 max-w-[430px]
+}
+
 .custom-scroll::-webkit-scrollbar {
   display: none;
 }
@@ -213,4 +238,16 @@ textarea:focus {
 .custom-scroll {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
+}
+
+.dropdown-menu {
+  @apply whitespace-nowrap absolute bottom-0 right-0 translate-y-full bg-white border border-[#E4E4E4] rounded-[10px] px-2 py-2 text-sm shadow w-fit h-fit
+}
+
+.dropdown-menu-header {
+  @apply whitespace-nowrap absolute right-1 z-[9999] top-0 translate-y-1/2 bg-white border border-[#E4E4E4] rounded-[10px] px-2 py-2 text-sm shadow w-fit h-fit
+}
+
+.dropdown-menu-item {
+  @apply cursor-pointer px-2
 }

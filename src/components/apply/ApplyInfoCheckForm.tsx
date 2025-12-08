@@ -94,7 +94,7 @@ export default function ApplyInfoCheckForm({ onFinalSubmit, partyName, onBack, i
   return (
     <div className='flex flex-col min-h-full mb-32'>
       <div className='bg-white flex-shrink-0 sticky top-0 z-10'>
-        <h2 className='text-lg font-semibold px-5 pt-6 mb-5'>
+        <h2 className='px-5 pt-6 mb-5'>
           마지막으로 정보 확인 후
           <br />
           신청을 완료해 주세요

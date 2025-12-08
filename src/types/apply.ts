@@ -4,6 +4,14 @@
 
 // 신청 상태 타입
 export type ParticipantStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
+export type HostApplicationStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
+
+export const STATUS_MAP: Record<ParticipantStatus | HostApplicationStatus, string> = {
+  PENDING: "승인대기",
+  APPROVED: "승인완료",
+  REJECTED: "반려",
+  CANCELLED: "취소",
+};
 
 // Request DTO
 export interface ClothingItemRequest {
@@ -47,4 +55,44 @@ export interface PartyParticipantResponse {
 
   qrCode: string | null;
   qrExpiresAt: string | null;
+
+  // TODO: 백엔드 dto 추가 요청
+  partyTitle?: string;
+  partyAddress?: string;
+}
+
+export interface HostApplicationResponse {
+  id: string;
+  isGroup: boolean;
+  groupName: string;
+  userId: string;
+
+  name: string;
+  phone: string;
+  email: string;
+
+  openAt: string;
+  closeAt: string;
+  address: string;
+  addressDetail: string;
+
+  maxChangeCnt: number;
+  maxAttendeeCnt: number;
+
+  partyTitle: string;
+  partyDescription: string;
+  deliverAddress: string;
+  deliverAddressDetail: string;
+  desiredDate: string;
+
+  taxReceipt: boolean;
+  taxEmail: string;
+
+  status: HostApplicationStatus;
+  processMemo: string;
+  appliedAt: string;
+  processedAt: string;
+
+  xmap: number;
+  ymap: number;
 }

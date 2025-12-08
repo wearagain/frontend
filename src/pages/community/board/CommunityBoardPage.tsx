@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { BoardHeader } from "@/components/\bcommunity/board/boardList/BoardHeader";
-import { BoardList } from "@/components/\bcommunity/board/boardList/BoardList";
+import { BoardHeader } from "@/components/community/board/boardList/BoardHeader";
+import { BoardList } from "@/components/community/board/boardList/BoardList";
 import type { BoardType } from "@/types/board";
-import { GotoPostBtn } from "@/components/\bcommunity/board/boardList/GotoPostBtn";
+import { GotoPostBtn } from "@/components/community/board/boardList/GotoPostBtn";
 
 const CommunityBoardPage = () => {
   const [sort, setSort] = useState<"popular" | "latest">("latest");

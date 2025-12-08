@@ -1,124 +1,53 @@
 import { useEffect, useState } from "react";
 import HeaderContainer from "./HeaderContainer";
-import { Menu } from "@/assets/icons";
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Link, useLocation } from "react-router-dom";
-import { mainMenu } from "@/config/navMenu";
+import { useLocation } from "react-router-dom";
 import { useMe } from "@/hooks/auth/useMe";
-import { useSignout } from "@/hooks/auth/useAuth";
-import { ChevronLeft } from "@/assets/icons";
 import { useNavigate } from "react-router-dom";
+import { Back, Hamburger } from "@/components/common/header";
 
 interface HeaderProps {
   label?: string;
   showBack?: boolean;
   showLabel?: boolean;
+  to?: string;
 }
 
 export default function HeaderBase({
   label = "가치입다",
   showBack = false,
   showLabel = true,
+  to,
 }: HeaderProps) {
   const [open, setOpen] = useState(false);
+  const dummyTicket = 2;
+  const dummyCo2 = 12.5;
   const location = useLocation();
   const { data } = useMe();
-  const { mutate: signout, isPending } = useSignout();
 
   const navigate = useNavigate();
-
-  const handleSignout = () => {
-    if (isPending) return;
-    signout(undefined, {
-      onSettled: () => setOpen(false),
-    });
-  };
 
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
 
   const nickname = data?.nickname ?? null;
+  // const isHost = data?.isHost ?? false;
 
   return (
     <HeaderContainer>
       <div className='flex justify-between gap-2 items-center'>
-        {showBack && (
-          <button onClick={() => navigate(-1)}>
-            <ChevronLeft className='w-6 h-6' />
-          </button>
-        )}
+        {showBack && <Back onClick={() => (to ? navigate(to) : navigate(-1))} />}
 
         {showLabel && label && <h2 className='text-start'>{label}</h2>}
       </div>
-
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>
-          <button aria-label='메뉴 열기' className='border-0 bg-transparent'>
-            <Menu className='w-6 h-6' />
-          </button>
-        </SheetTrigger>
-
-        <SheetContent side='right' className='w-64 overflow-y-auto'>
-          <SheetHeader>
-            <SheetTitle className='text-lg font-semibold'>
-              {nickname ? (
-                <span className='text-gray-900'>{nickname}님</span>
-              ) : (
-                <Link to='/auth/signin' onClick={() => setOpen(false)}>
-                  로그인 하러가기
-                </Link>
-              )}
-            </SheetTitle>
-          </SheetHeader>
-
-          <nav className='flex flex-col gap-6 mt-6 ml-4 text-base font-medium pb-4'>
-            {mainMenu.map((category) => (
-              <div key={category.label} className='pb-4 border-b border-b-gray-300'>
-                {/* 상위 카테고리 */}
-                {category.path ? (
-                  <Link
-                    to={category.path}
-                    onClick={() => setOpen(false)}
-                    className='font-semibold text-lg hover:text-primary'
-                  >
-                    {category.icon && <category.icon className='inline-block w-5 h-5 mr-2' />}
-                    {category.label}
-                  </Link>
-                ) : (
-                  <div className='font-semibold text-lg'>
-                    {category.icon && <category.icon className='inline-block w-5 h-5 mr-2' />}
-                    {category.label}
-                  </div>
-                )}
-
-                {/* 하위 메뉴 */}
-                {category.children && (
-                  <ul className='ml-4 mt-2 flex flex-col gap-2 text-[15px]'>
-                    {category.children.map((child) => (
-                      <li key={child.path}>
-                        <Link
-                          to={child.path}
-                          onClick={() => setOpen(false)}
-                          className='hover:text-primary transition-colors'
-                        >
-                          {child.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-            <div
-              className='mt-4 cursor-pointer text-sm text-gray-500 hover:text-gray-800 transition'
-              onClick={handleSignout}
-            >
-              {isPending ? "로그아웃 중..." : "로그아웃"}
-            </div>
-          </nav>
-        </SheetContent>
-      </Sheet>
+      <Hamburger
+        open={open}
+        setOpen={setOpen}
+        nickname={nickname}
+        ticket={dummyTicket}
+        co2={dummyCo2}
+        isHost={false}
+      />
     </HeaderContainer>
   );
 }

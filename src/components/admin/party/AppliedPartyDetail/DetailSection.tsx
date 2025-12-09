@@ -4,6 +4,7 @@ import OrganizationDropdown from "@/components/admin/party/AppliedPartyDetail/Dr
 interface DetailSectionProps {
   title: string;
   data: Record<string, any>;
+  keys: readonly string[];
   labelWidth?: string;
   isOrganization?: boolean;
 }
@@ -11,6 +12,7 @@ interface DetailSectionProps {
 export default function DetailSection({
   title,
   data,
+  keys,
   labelWidth = "w-[45px]",
   isOrganization,
 }: DetailSectionProps) {
@@ -21,12 +23,17 @@ export default function DetailSection({
         {isOrganization && <OrganizationDropdown />}
       </div>
       <div className='flex flex-col gap-4'>
-        {Object.entries(data).map(([key, value]) => (
-          <div key={key} className='flex items-center gap-5'>
-            <h3 className={`font-semibold ${labelWidth}`}>{PartyDetailMap[key]}</h3>
-            <h4 className='font-medium text-base text-[#555558]'>{String(value)}</h4>
-          </div>
-        ))}
+        {keys.map((key) => {
+          const value = data[key];
+          if (value === undefined) return null;
+
+          return (
+            <div key={key} className='flex items-center gap-5'>
+              <h3 className={`font-semibold ${labelWidth}`}>{PartyDetailMap[key]}</h3>
+              <h4 className='font-medium text-base text-[#555558]'>{String(value)}</h4>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

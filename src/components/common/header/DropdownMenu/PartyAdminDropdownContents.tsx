@@ -6,13 +6,16 @@ export default function PartyAdminDropdownContents() {
 
   return (
     <div className='flex flex-col gap-2'>
-      <button className='dropdown-menu-item' onClick={() => navigate(`party/${id}/approved`)}>
+      <button
+        className='dropdown-menu-item'
+        onClick={() => navigate(`party/applications/${id}/approve`)}
+      >
         승인하기
       </button>
       <div className='border-b border-gray-300' />
       <button
         className='text-red-500 dropdown-menu-item'
-        onClick={() => navigate(`party/${id}/rejected`)}
+        onClick={() => navigate(`party/applications/${id}/reject`)}
       >
         반려하기
       </button>

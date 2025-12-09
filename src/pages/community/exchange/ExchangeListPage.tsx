@@ -19,7 +19,7 @@ const ExchangeListPage = () => {
   const [filterType, setFilterType] = useState<ClothFilterCategory | undefined>("ALL");
 
   return (
-    <div className='flex flex-col h-full gap-6'>
+    <div className='flex flex-col h-full'>
       <FilterHeader onChange={setFilterType} tabs={tabs} theme='mint' value={filterType} />
       <ClothColList items={items} />
     </div>

@@ -1,7 +1,9 @@
+import { useParams } from "react-router-dom";
 import { Close } from "@/components/common/header";
 import { Button } from "@/components/ui/button.tsx";
 import { useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
+import { useMutateApplicationStatus } from "@/hooks/admin/party/useMutateApplicationStatus.ts";
 
 interface FormData {
   reason: string;
@@ -9,15 +11,29 @@ interface FormData {
 
 export default function RejectModal() {
   const navigate = useNavigate();
-  const { control, handleSubmit } = useForm<FormData>({
+  const { partyId } = useParams<{ partyId: string }>();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     defaultValues: {
       reason: "",
     },
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log("폼 제출된 사유:", data.reason);
+  const onSubmit = (values: FormData) => {
+    mutateApplicationStatus({
+      id: partyId!,
+      action: "reject",
+      params: {
+        reason: values.reason,
+      },
+    });
   };
+
+  const { mutate: mutateApplicationStatus } = useMutateApplicationStatus();
 
   return (
     <div className='fixed left-0 right-0 inset-0 z-[1001] flex min-h-max flex-col justify-between bg-white max-w-[430px] mx-auto top-0 h-full'>
@@ -37,20 +53,25 @@ export default function RejectModal() {
             control={control}
             rules={{ required: "반려 사유를 입력해주세요" }}
             render={({ field }) => (
-              <textarea
-                {...field}
-                placeholder='반려 사유'
-                className='border border-gray-200 rounded-lg p-4 w-full min-h-[120px] resize-none overflow-y-auto text-start'
-                style={{ whiteSpace: "pre-wrap" }}
-              />
+              <>
+                <textarea
+                  {...field}
+                  placeholder='반려 사유'
+                  className='border border-gray-200 rounded-lg p-4 w-full min-h-[120px] resize-none overflow-y-auto text-start'
+                  style={{ whiteSpace: "pre-wrap" }}
+                />
+                {errors.reason && (
+                  <p className='text-red-500 text-sm mt-1'>{errors.reason.message}</p>
+                )}
+              </>
             )}
           />
         </div>
       </form>
       <div className='bg-white sticky bottom-0 flex items-center justify-center pt-5 w-full'>
         <Button
-          type='submit'
-          // onClick={() => navigate(location.pathname + "/info")}
+          type='button'
+          onClick={handleSubmit(onSubmit)}
           theme='purple'
           variant='primary'
           className='h-[52px] mb-14 mx-5 w-full'

@@ -19,7 +19,7 @@ export function FilterHeader<T extends string>({
   const appliedFilterTheme = filterTheme[theme];
 
   return (
-    <div className={`main-inner flex h-fit gap-x-[6px] overflow-x-auto no-scrollbar custom-scroll py-3 border-b border-[#E0E2E4] ${className}`}>
+    <div className={`main-inner min-h-max flex h-fit gap-x-[6px] overflow-x-auto no-scrollbar custom-scroll py-3 border-b border-[#E0E2E4] ${className}`}>
       {tabs.map(({ label, value: tabValue }) => (
         <Button
           key={label}

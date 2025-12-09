@@ -2,13 +2,15 @@ import { useState, useMemo, useEffect } from "react";
 import { useApplyStore } from "@/store/useApplyStore";
 
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { Button } from "../ui/button";
-import ConfirmModal from "@/components/apply/ConfirmModal";
-import TermsItem from "../signup/TermsItem";
-import AlertItem from "./AlertItem";
-import AppliedItem from "./AppliedItem";
+import { Button } from "../../ui/button";
+import TermsItem from "../../signup/TermsItem";
+import AlertItem from "./step4InfoCheck/AlertItem.tsx";
+import AppliedItem from "./step4InfoCheck/AppliedItem.tsx";
+import Modal from "@/components/ui/modal.tsx";
+import InfoModalContent
+  from "@/components/party/partyParticipate/step4InfoCheck/InfoModalContent.tsx";
 
-interface Props {
+interface InfoCheckProps {
   onFinalSubmit: () => void;
   partyName: string;
   onBack: () => void;
@@ -27,7 +29,7 @@ const formatDateTime = (date: Date | null | undefined, time: string | null): str
   return "날짜 및 시간 정보 없음";
 };
 
-export default function ApplyInfoCheckForm({ onFinalSubmit, partyName, onBack, isPending }: Props) {
+export default function Step4InfoCheck({ onFinalSubmit, partyName, onBack, isPending }: InfoCheckProps) {
   const { selectedItems, selectedDate, selectedTime, itemsInfo } = useApplyStore();
   useEffect(() => {
     if (selectedItems.length === 0) {
@@ -47,6 +49,7 @@ export default function ApplyInfoCheckForm({ onFinalSubmit, partyName, onBack, i
   });
 
   const totalItemsCount = selectedItems.reduce((sum: number, item) => sum + item.count, 0);
+  const participateDate = formatDateTime(selectedDate, selectedTime);
 
   const handleToggle = (key: keyof typeof checked) => {
     if (key === "all") {
@@ -92,21 +95,21 @@ export default function ApplyInfoCheckForm({ onFinalSubmit, partyName, onBack, i
   };
 
   return (
-    <div className='flex flex-col min-h-full mb-32'>
+    <div className='flex flex-col h-full overflow-hidden mb-24'>
       <div className='bg-white flex-shrink-0 sticky top-0 z-10'>
-        <h2 className='px-5 pt-6 mb-5'>
+        <h2 className='text-lg font-semibold px-5 pt-6 mb-5'>
           마지막으로 정보 확인 후
           <br />
           신청을 완료해 주세요
         </h2>
       </div>
 
-      <div className='flex-1 overflow-y-auto'>
+      <div className='flex-1 overflow-y-auto custom-scroll'>
         {/* 신청 확인 정보 */}
         <div className='pb-5 px-5'>
-          <h3 className='font-bold mt-5 mb-4'>신청 확인 정보</h3>
-          <p className='text-gray-700 font-semibold mb-5'>
-            {formatDateTime(selectedDate, selectedTime)}
+          <h3 className='mt-5 mb-4'>신청 확인 정보</h3>
+          <p className='text-[#222222] font-medium mb-5'>
+            {participateDate}
           </p>
           <AlertItem message='시간 상관 없이 방문 가능합니다' />
         </div>
@@ -118,11 +121,11 @@ export default function ApplyInfoCheckForm({ onFinalSubmit, partyName, onBack, i
             className='flex items-center justify-between cursor-pointer'
             onClick={() => setIsDetailsOpen((prev) => !prev)}
           >
-            <h3 className='font-bold'>신청 품목 정보 {totalItemsCount}</h3>
+            <h3 className='font-bold'>신청 품목 정보 <span className='text-[var(--color-mint-light)]'>{totalItemsCount}</span></h3>
             {isDetailsOpen ? (
-              <ChevronUp size={20} className='text-gray-500' />
+              <ChevronUp size={20}/>
             ) : (
-              <ChevronDown size={20} className='text-gray-500' />
+              <ChevronDown size={20}/>
             )}
           </div>
 
@@ -140,12 +143,12 @@ export default function ApplyInfoCheckForm({ onFinalSubmit, partyName, onBack, i
         </div>
 
         {/* 유의사항 */}
-        <div className='pt-5 px-5 pb-38 bg-gray-100'>
+        <div className='p-5 bg-[#F4F5F6]'>
           <h3 className='font-bold text-lg mb-3'>유의사항</h3>
-          <ul className='text-sm text-gray-600 space-y-2 list-disc list-inside'>
+          <ul className='text-sm text-[#595959] space-y-2 list-disc list-inside'>
             <li>
               가지고 나올 아이템은 친구에게 팔아도 괜찮을 만큼 관리 상태가 양호해야 합니다.
-              <ul className='text-sm text-gray-600 space-y-2 list-disc list-inside pl-6'>
+              <ul className='text-sm space-y-2 list-disc list-inside pl-6'>
                 <li>구멍이 난 곳이나 변색한 곳, 실밥이 뜯어진 곳은 없는지 확인하세요.</li>
                 <li>깨끗하게 세탁해서 가져오세요.</li>
               </ul>
@@ -157,7 +160,7 @@ export default function ApplyInfoCheckForm({ onFinalSubmit, partyName, onBack, i
       </div>
 
       {/* 약관 동의 */}
-      <div className='fixed bottom-0 left-0 right-0 bg-white px-5 pt-5 pb-14 drop-shadow-lg'>
+      <div className='flex-shrink-0 sticky bottom-0 bg-white px-5 pt-5 drop-shadow-lg'>
         <div className='mb-4'>
           <div className='flex flex-col gap-4'>
             <TermsItem
@@ -204,13 +207,18 @@ export default function ApplyInfoCheckForm({ onFinalSubmit, partyName, onBack, i
 
       {/* 확인 모달 */}
       {showConfirmModal && (
-        <ConfirmModal
-          onClose={() => setShowConfirmModal(false)}
-          onConfirm={handleConfirmSubmit}
-          partyName={partyName}
-          partyDate={formatDateTime(selectedDate, selectedTime)}
-          totalCount={totalItemsCount}
-        />
+        <Modal
+        header='해당 정보로 신청하겠습니까?'
+        confirmText='신청하기'
+        theme='mint'
+        onClose={() => setShowConfirmModal(false)}
+      confirmDisabled={!isValid}
+      onConfirm={handleConfirmSubmit}
+    >
+      <div className='flex flex-col gap-5'>
+        <InfoModalContent partyDate={participateDate} partyName={partyName} totalCount={totalItemsCount}/>
+      </div>
+    </Modal>
       )}
     </div>
   );

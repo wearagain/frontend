@@ -23,7 +23,7 @@ export interface ClothingItemRequest {
 
 // Response DTO
 export interface ClothingItemResponse extends ClothingItemRequest {
-  clothingNumber: string;
+  clothingNumber?: string;
 }
 
 // 신청 요청 바디
@@ -36,10 +36,30 @@ export interface PartyParticipantRequest {
   attendanceDate: string;
 }
 
+ // 교환 의류 관련
+export interface MyTakenClothingResponse {
+  voucherId: string;
+  takenClothingNumber: string;
+  originalClothingNumber: string;
+
+  takenPartyId: string;
+  takenPartyTitle: string;
+  takenAt: string;
+
+  category: string;
+  mainCategory: string;
+  subCategory: string;
+  description: string;
+  imageUrls: string[];
+}
+
 // 신청 상세 정보
 export interface PartyParticipantResponse {
   id: string; // Participant ID
   partyId: string;
+  partyTitle: string;
+  address: string;
+  addressDetail: string;
   userId: string;
 
   name: string;
@@ -55,10 +75,6 @@ export interface PartyParticipantResponse {
 
   qrCode: string | null;
   qrExpiresAt: string | null;
-
-  // TODO: 백엔드 dto 추가 요청
-  partyTitle?: string;
-  partyAddress?: string;
 }
 
 export interface HostApplicationResponse {

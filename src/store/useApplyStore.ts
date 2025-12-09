@@ -56,17 +56,26 @@ export const useApplyStore = create<ApplyState>()(
         }),
       removeItem: (itemId) =>
         set((state) => {
-          const [code] = itemId.split("-");
+          const [code, indexStr] = itemId.split("-");
+          const index = parseInt(indexStr, 10);
           const itemIndex = state.selectedItems.findIndex((item) => item.code === code);
 
           if (itemIndex === -1) return state;
 
           const newItems = [...state.selectedItems];
-          const currentCount = newItems[itemIndex].count;
+          const currentItem = newItems[itemIndex];
 
           let updatedItems: SelectedItem[];
-          if (currentCount > 1) {
-            newItems[itemIndex] = { ...newItems[itemIndex], count: currentCount - 1 };
+          if (currentItem.count > 1) {
+            const currentClothingNumbers =
+              currentItem.clothingNumbers ?? Array(currentItem.count).fill(null);
+            const newClothingNumbers = [...currentClothingNumbers];
+            newClothingNumbers.splice(index, 1);
+            newItems[itemIndex] = {
+              ...currentItem,
+              count: currentItem.count - 1,
+              clothingNumbers: newClothingNumbers,
+            };
             updatedItems = newItems;
           } else {
             updatedItems = newItems.filter((item) => item.code !== code);
@@ -96,6 +105,12 @@ export const useApplyStore = create<ApplyState>()(
         }
         if (state && typeof state.selectedDate === "string") {
           state.selectedDate = new Date(state.selectedDate);
+        }
+        if (state && Array.isArray(state.selectedItems)) {
+          state.selectedItems = state.selectedItems.map((item) => ({
+            ...item,
+            clothingNumbers: item.clothingNumbers ?? Array(item.count).fill(null),
+          }));
         }
       },
     }

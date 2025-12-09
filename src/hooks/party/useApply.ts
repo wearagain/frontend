@@ -2,10 +2,16 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   postPartyParticipant,
   getMyParticipations,
+  getMyHostApplications,
   getParticipationDetail,
   deleteParticipation,
+  getMyTakenClothes,
 } from "@/apis/party/apply";
-import type { PartyParticipantResponse } from "@/types/apply";
+import type {
+  PartyParticipantResponse,
+  HostApplicationResponse,
+  MyTakenClothingResponse,
+} from "@/types/apply";
 import { useMe } from "@/hooks/auth/useMe";
 import { handleApiError } from "@/utils/handleApiError";
 import type { SelectedItem } from "@/types/clothingCategory";
@@ -21,6 +27,14 @@ interface ApplyData {
   selectedDate: Date | null;
   selectedTime: string | null;
 }
+
+// 교환 의류 내역
+export const useGetMyTakenClothes = () => {
+  return useQuery<MyTakenClothingResponse[], Error>({
+    queryKey: ["myTakenClothes"],
+    queryFn: getMyTakenClothes,
+  });
+};
 
 export const useApplySubmit = (partyId: string) => {
   const { data: userData } = useMe();
@@ -85,6 +99,13 @@ export const useGetParticipantList = () => {
   return useQuery<PartyParticipantResponse[], Error>({
     queryKey: ["myParticipants"],
     queryFn: getMyParticipations,
+  });
+};
+
+export const useGetHostApplicationList = () => {
+  return useQuery<HostApplicationResponse[], Error>({
+    queryKey: ["myHostApplications"],
+    queryFn: getMyHostApplications,
   });
 };
 

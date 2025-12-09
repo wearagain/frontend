@@ -5,7 +5,7 @@ import MyPage from "./my/MyPage";
 import ApplyCompletePage from "./party/ApplyCompletePage";
 import ApplyListPage from "./party/ApplyListPage";
 import ApplyDetailPage from "./party/ApplyDetailPage";
-import PartyApplyPage from "./party/PartyApplyPage";
+import PartyParticipatePage from "./party/PartyParticipatePage.tsx";
 import PartyDetailPage from "./party/PartyDetailPage";
 import PartyHostPage from "./party/PartyHostPage";
 import PartyListPage from "./party/PartyListPage";
@@ -18,6 +18,7 @@ import SignupCompletePage from "./signup/SignupCompletePage";
 import CommunityBoardPage from "./community/board/CommunityBoardPage";
 import CommunityPostPage from "./community/board/CommunityPostPage";
 import BoardDetailPage from "./community/board/BoardDetailPage";
+import QrCheckinPage from "./qr-checkin/QrCheckinPage";
 import ExchangePage from "./community/exchange/ExchangePage.tsx";
 import ExchangeListPage from "./community/exchange/ExchangeListPage.tsx";
 import ClothDetailPage from "./community/exchange/ClothDetailPage.tsx";
@@ -31,7 +32,7 @@ export {
   TicketPage,
   PartyListPage,
   PartyDetailPage,
-  PartyApplyPage,
+  PartyParticipatePage,
   ApplyCompletePage,
   ApplyListPage,
   ApplyDetailPage,
@@ -45,6 +46,7 @@ export {
   CommunityBoardPage,
   CommunityPostPage,
   BoardDetailPage,
+  QrCheckinPage,
   ExchangePage,
   ExchangeListPage,
   ClothDetailPage,

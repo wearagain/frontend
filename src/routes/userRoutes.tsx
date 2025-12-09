@@ -6,7 +6,7 @@ import {
   ApplyCompletePage,
   ApplyListPage,
   ApplyDetailPage,
-  PartyApplyPage,
+  PartyParticipatePage,
   PartyDetailPage,
   PartyHostPage,
   PartyListPage,
@@ -19,6 +19,7 @@ import {
   CommunityBoardPage,
   CommunityPostPage,
   BoardDetailPage,
+  QrCheckinPage,
   ExchangePage,
   ExchangeListPage,
   ExchangeRequestPage,
@@ -188,12 +189,12 @@ const userRoutes: RouteObject = {
           handle: { header: { type: "base", label: "파티명", showBack: true } },
         }, // /party/:id
         {
-          path: ":id/apply",
-          element: <PartyApplyPage />,
+          path: ":id/participate",
+          element: <PartyParticipatePage />,
           handle: { header: { type: "guide", label: "신청하기" } },
         }, // /party/:id/apply
         {
-          path: ":id/apply/complete",
+          path: ":id/participate/complete",
           element: <ApplyCompletePage />,
           handle: { header: { type: "close" } },
         }, // /party/apply
@@ -241,6 +242,13 @@ const userRoutes: RouteObject = {
       element: <MyPage />,
       handle: { header: { type: "base", label: "마이페이지", showBack: true } },
     }, // /mypage
+
+    // QR 체크인/스캔
+    {
+      path: "qr",
+      element: <QrCheckinPage />,
+      handle: { header: { type: "none" } },
+    }, // /qr?type=checkin or /qr?type=scan
   ],
 };
 

@@ -17,7 +17,7 @@ export const ApplyList = ({ type, data = [], onCardClick }: ApplyListProps) => {
   }
 
   return (
-      <div className='flex flex-col'>
+      <div className='flex-1 flex-col overflow-y-auto custom-scroll'>
         {data.map((item) => (
             <ApplyCard
                 key={item.id}

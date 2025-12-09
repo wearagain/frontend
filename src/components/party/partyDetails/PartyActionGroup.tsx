@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export const PartyActionGroup = () => {
   const navigate = useNavigate();
   const goToApply = () => {
-    navigate("apply");
+    navigate("participate");
   };
 
   return (

@@ -23,7 +23,7 @@ export interface ClothingItemRequest {
 
 // Response DTO
 export interface ClothingItemResponse extends ClothingItemRequest {
-  clothingNumber: string;
+  clothingNumber?: string;
 }
 
 // 신청 요청 바디
@@ -34,6 +34,23 @@ export interface PartyParticipantRequest {
 
   clothingItems: ClothingItemRequest[];
   attendanceDate: string;
+}
+
+ // 교환 의류 관련
+export interface MyTakenClothingResponse {
+  voucherId: string;
+  takenClothingNumber: string;
+  originalClothingNumber: string;
+
+  takenPartyId: string;
+  takenPartyTitle: string;
+  takenAt: string;
+
+  category: string;
+  mainCategory: string;
+  subCategory: string;
+  description: string;
+  imageUrls: string[];
 }
 
 // 신청 상세 정보

@@ -1,11 +1,11 @@
 import { TriangleAlert } from "lucide-react";
 
-interface Props {
+interface AlertItemProps {
   message: string;
   className?: string;
 }
 
-export default function AlertItem({ message, className }: Props) {
+export default function AlertItem({ message, className }: AlertItemProps) {
   return (
     <div
       className={`flex items-center gap-2 rounded-lg bg-gray-100 py-2 px-3 w-full ${className || ""}`}

@@ -5,7 +5,7 @@ import MyPage from "./my/MyPage";
 import ApplyCompletePage from "./party/ApplyCompletePage";
 import ApplyListPage from "./party/ApplyListPage";
 import ApplyDetailPage from "./party/ApplyDetailPage";
-import PartyApplyPage from "./party/PartyApplyPage";
+import PartyParticipatePage from "./party/PartyParticipatePage.tsx";
 import PartyDetailPage from "./party/PartyDetailPage";
 import PartyHostPage from "./party/PartyHostPage";
 import PartyListPage from "./party/PartyListPage";
@@ -32,7 +32,7 @@ export {
   TicketPage,
   PartyListPage,
   PartyDetailPage,
-  PartyApplyPage,
+  PartyParticipatePage,
   ApplyCompletePage,
   ApplyListPage,
   ApplyDetailPage,

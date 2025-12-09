@@ -1,12 +1,12 @@
-import { type SelectedItem } from "@/types/clothingCategory";
+import { type SelectedItem } from "@/types/clothingCategory.ts";
 
-interface Props {
+interface AppliedItemProps {
   item: SelectedItem & { itemId: string; itemName: string };
   itemInfo: { images: string[]; description: string };
   showCode?: boolean;
 }
 
-export default function AppliedItem({ item, itemInfo, showCode }: Props) {
+export default function AppliedItem({ item, itemInfo, showCode }: AppliedItemProps) {
   const imageUrl = itemInfo.images?.[0];
   const descriptionText = itemInfo.description || "교환 이력 없음";
 

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import AlertItem from "@/components/apply/AlertItem";
-import AppliedItem from "@/components/apply/AppliedItem";
+import AlertItem from "@/components/party/partyParticipate/step4InfoCheck/AlertItem.tsx";
+import AppliedItem from "@/components/party/partyParticipate/step4InfoCheck/AppliedItem.tsx";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -99,7 +99,6 @@ export default function ApplyDetailPage() {
     <div className='flex flex-col justify-between h-full'>
       <div className='bg-white flex-shrink-0 sticky top-0 px-5 pt-2 pb-4 z-10'>
         <div className='flex items-center justify-between text-sm'>
-          {/* 해당 파티 상세정보로 이동하기 위해 파티 아이디 필요, 파티명과 단체여부, 주소를 확인하기 위해 파티 상세정보 api 호출해야함. 그럼 api 호출이 너무 많지 않나? */}
           <h2 className='text-xl font-bold mb-3'>파티명 - Title</h2>
           <StatusBadge status={status} />
         </div>

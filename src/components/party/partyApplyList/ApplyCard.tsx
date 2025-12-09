@@ -21,7 +21,7 @@ const ParticipateCard = ({
 }) => {
   const thumbnail = data.clothingItems[0]?.imageUrls[0] || defaultThumbnail;
   const partyTitle = data.partyTitle || "파티 정보 없음";
-  const partyAddress = data.partyAddress || "정보 없음";
+  const partyAddress = data.address || "정보 없음";
 
   return (
     <div className='px-5 py-4 cursor-pointer' onClick={onClick}>

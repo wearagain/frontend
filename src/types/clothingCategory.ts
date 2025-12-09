@@ -38,6 +38,7 @@ export interface SelectedItem {
   mainCategory: MainCategory;
   subCategory: string;
   count: number;
+  clothingNumbers: (string | null)[];
 }
 
 export const CLOTHING_CATEGORIES: Record<MainCategory, ClothingCategoryGroup> = {

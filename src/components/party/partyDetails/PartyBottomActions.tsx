@@ -9,7 +9,7 @@ export const PartyBottomActions = () => {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
 
-  const goToApply = () => navigate("apply");
+  const goToApply = () => navigate("participate");
 
   useEffect(() => {
     const observer = new IntersectionObserver(

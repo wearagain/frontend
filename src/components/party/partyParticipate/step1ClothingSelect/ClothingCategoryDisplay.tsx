@@ -3,7 +3,7 @@ import {
   CLOTHING_CATEGORIES,
   type MainCategory,
   type ClothingCategoryCode,
-} from "@/types/clothingCategory";
+} from "@/types/clothingCategory.ts";
 
 const getIconPath = (icon: string) => `/images/${icon}`;
 
@@ -25,9 +25,9 @@ export default function ClothingCategoryDisplay({ selectedItems, onItemToggle }:
   };
 
   return (
-    <div className='flex h-full overflow-hidden'>
+    <div className='flex h-full'>
       {/* 좌측 카테고리 */}
-      <div className='w-24 bg-gray-50 flex-shrink-0'>
+      <div className='sticky top-0 self-start h-full overflow-y-auto w-24 bg-[#F4F5F6] flex-shrink-0'>
         {categories.map((category) => (
           <button
             key={category}
@@ -35,7 +35,7 @@ export default function ClothingCategoryDisplay({ selectedItems, onItemToggle }:
             className={`w-full py-5 text-md font-medium transition-colors ${
               activeCategory === category
                 ? "bg-[var(--color-mint-light)] text-white font-semibold"
-                : "text-gray-700 hover:bg-gray-100"
+                : "text-[#222222] hover:bg-gray-100"
             }`}
           >
             {category}
@@ -44,10 +44,10 @@ export default function ClothingCategoryDisplay({ selectedItems, onItemToggle }:
       </div>
 
       {/* 우측 카테고리 */}
-      <div className='flex-1 overflow-y-auto'>
+      <div className='flex-1 pb-[64px] overflow-y-auto custom-scroll'>
         {categories.map((category) => (
           <div key={category} id={`category-${category}`} className='px-5 py-5'>
-            <h3 className='text-base font-bold mb-6'>{category}</h3>
+            <h3 className='text-base text-[#222222] font-bold mb-6'>{category}</h3>
             <div className='grid grid-cols-3 gap-3'>
               {CLOTHING_CATEGORIES[category].categories.map((item) => {
                 const isSelected = selectedItems.has(item.code);
@@ -62,7 +62,7 @@ export default function ClothingCategoryDisplay({ selectedItems, onItemToggle }:
                     <div
                       className={`w-16 h-16 rounded-xl flex items-center justify-center text-3xl relative ${
                         isSelected
-                          ? "ring-2 ring-[var(--color-mint-light)]"
+                          ? ""
                           : "hover:bg-[var(--color-mint-light)]"
                       }`}
                     >
@@ -73,7 +73,7 @@ export default function ClothingCategoryDisplay({ selectedItems, onItemToggle }:
                         </div>
                       )}
                     </div>
-                    <span className='text-sm text-gray-700'>{item.subCategory}</span>
+                    <span className='text-sm text-[#222222]'>{item.subCategory}</span>
                   </button>
                 );
               })}

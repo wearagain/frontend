@@ -68,3 +68,5 @@ export const PartyStatusDescription: Record<PartyAdminStatus, string> = {
   COMPLETED: "진행완료",
   CANCELLED: "취소",
 };
+
+export const CHANGEABLE_PARTY_STATUS = ["UPCOMING", "ONGOING"];

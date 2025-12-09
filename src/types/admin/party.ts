@@ -71,3 +71,7 @@ export interface PartyManageResponse {
   xmap: number | null;
   ymap: number | null;
 }
+
+export type ManageAction = "confirm" | "delete" | null;
+
+export type ManageBarStatus = "control" | "confirm" | "delete" | null;

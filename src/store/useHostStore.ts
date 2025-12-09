@@ -32,6 +32,7 @@ interface PartyHostState {
   deliverAddressDetail: string;
   desiredDate: string;
   taxReceipt: boolean;
+  taxId: string;
   taxEmail: string;
 
   // 상태 변경 함수
@@ -65,6 +66,7 @@ export const usePartyHostStore = create<PartyHostState>()(
       deliverAddressDetail: "",
       desiredDate: new Date().toISOString(),
       taxReceipt: true,
+      taxId: "",
       taxEmail: "",
 
       setField: (key, value) => set({ [key]: value } as Partial<PartyHostState>),
@@ -94,6 +96,7 @@ export const usePartyHostStore = create<PartyHostState>()(
           deliverAddressDetail: "",
           desiredDate: new Date().toISOString(),
           taxReceipt: true,
+          taxId: "",
           taxEmail: "",
         }),
     }),
@@ -123,6 +126,7 @@ export const usePartyHostStore = create<PartyHostState>()(
         deliverAddressDetail: state.deliverAddressDetail,
         desiredDate: state.desiredDate,
         taxReceipt: state.taxReceipt,
+        taxId: state.taxId,
         taxEmail: state.taxEmail,
       }),
     }

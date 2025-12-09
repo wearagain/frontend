@@ -214,9 +214,19 @@ const userRoutes: RouteObject = {
     // 주최
     {
       path: "host",
-      element: <PartyHostPage />,
-      handle: { header: { type: "base", label: "주최하기", showBack: true } },
-    }, // /host
+      children: [
+        {
+          index: true,
+          element: <PartyHostPage />,
+          handle: { header: { type: "base", label: "주최하기", showBack: true } },
+        }, // /host
+        {
+          path: "complete",
+          element: <ApplyCompletePage />,
+          handle: { header: { type: "close" } },
+        }, // /host/complete
+      ],
+    },
 
     // 일반 채팅 - 리스트와 개별 채팅방
     {

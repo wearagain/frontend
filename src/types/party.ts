@@ -83,23 +83,20 @@ export interface PartyHostRequest {
   name: string;
   phone: string;
   email: string;
-  openAt: Date;
-  closeAt: Date;
+  openAt: string;
+  closeAt: string;
   address: string;
   addressDetail: string;
+  xmap: number;
+  ymap: number;
   maxChangeCnt: number;
   maxAttendeeCnt: number;
   partyTitle: string;
   partyDescription: string;
   deliverAddress: string;
   deliverAddressDetail: string;
-  desiredDate: Date;
+  desiredDate: string; // ISO 8601 형식 (LocalDateTime)
   taxReceipt: boolean;
-  taxEmail: string;
-  xmap: number;
-  ymap: number;
-
-  // 백엔드에서 빠진 값
-  openTime?: string;
-  closeTime?: string;
+  taxEmail: string | null;
+  taxId: string | null;
 }

@@ -9,7 +9,7 @@ import {
   HeaderAdminClose,
 } from "@/layouts/components/header";
 
-export type HeaderType = "base" | "back" | "close" | "guide" | "backClose";
+export type HeaderType = "base" | "back" | "close" | "title" | "guide" | "backClose" | "none";
 export type HeaderAdminType = "adminBase" | "adminClose";
 
 export interface HeaderHandle {

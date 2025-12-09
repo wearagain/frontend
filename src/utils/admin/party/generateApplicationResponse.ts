@@ -19,9 +19,9 @@ export const getTimeFromTo = (from?: string | null, to?: string | null) => {
   return `${getDateTime(to, "a h시")} ~ ${getDateTime(to, "a h시")}`;
 };
 
-export const getAttendee = (value?: number) => {
+export const getUnitValue = (value?: number, unit: string = "명") => {
   if (value === null || value === undefined) return "-";
-  return `${value}명`;
+  return `${value}${unit}`;
 };
 
 export const generateApplicationResponse = (data: PartyApplicationResponse | null | undefined) => {
@@ -38,7 +38,8 @@ export const generateApplicationResponse = (data: PartyApplicationResponse | nul
     dateFromTo: getDateFromTo(data.openAt, data.closeAt),
     timeFromTo: getTimeFromTo(data?.openAt, data.closeAt),
 
-    maxAttendeeCnt: getAttendee(data.maxAttendeeCnt),
+    maxAttendeeCnt: getUnitValue(data.maxAttendeeCnt, "명"),
+    maxChangeCnt: getUnitValue(data.maxAttendeeCnt, "벌"),
     taxReceipt: trueFalseToYesNo(data.taxReceipt),
     desiredDate: getDateTime(data.desiredDate, "yyyy년 MM월 dd일"),
   };
@@ -46,6 +47,6 @@ export const generateApplicationResponse = (data: PartyApplicationResponse | nul
   const { openAt, closeAt, ...rest } = transformed;
 
   return Object.fromEntries(
-    Object.entries(rest).map(([key, value]) => [key, getNullToString(value)])
+    Object.entries(rest).map(([key, value]) => [key, getNullToString(value)]),
   );
 };

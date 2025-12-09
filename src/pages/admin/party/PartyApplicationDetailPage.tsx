@@ -24,7 +24,7 @@ export default function PartyApplicationDetailPage() {
         id={data.id}
         partyTitle={data.partyTitle}
         appliedAt={data.appliedAt}
-        maxAttendeeCnt={data.maxAttendeeCnt}
+        isGroup={data.isGroup}
         status={data.status}
       />
       <div className='divider' />

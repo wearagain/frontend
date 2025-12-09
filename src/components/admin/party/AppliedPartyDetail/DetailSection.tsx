@@ -28,8 +28,8 @@ export default function DetailSection({
           if (value === undefined) return null;
 
           return (
-            <div key={key} className='flex items-center gap-5'>
-              <h3 className={`font-semibold ${labelWidth}`}>{PartyDetailMap[key]}</h3>
+            <div key={key} className='flex items-start gap-5'>
+              <h3 className={`font-semibold ${labelWidth} shrink-0`}>{PartyDetailMap[key]}</h3>
               <h4 className='font-medium text-base text-[#555558]'>{String(value)}</h4>
             </div>
           );

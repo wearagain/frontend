@@ -18,6 +18,7 @@ import SignupCompletePage from "./signup/SignupCompletePage";
 import CommunityBoardPage from "./community/board/CommunityBoardPage";
 import CommunityPostPage from "./community/board/CommunityPostPage";
 import BoardDetailPage from "./community/board/BoardDetailPage";
+import QrCheckinPage from "./qr-checkin/QrCheckinPage";
 import ExchangePage from "./community/exchange/ExchangePage.tsx";
 import ExchangeListPage from "./community/exchange/ExchangeListPage.tsx";
 import ClothDetailPage from "./community/exchange/ClothDetailPage.tsx";
@@ -45,6 +46,7 @@ export {
   CommunityBoardPage,
   CommunityPostPage,
   BoardDetailPage,
+  QrCheckinPage,
   ExchangePage,
   ExchangeListPage,
   ClothDetailPage,

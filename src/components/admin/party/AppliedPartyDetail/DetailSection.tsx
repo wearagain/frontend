@@ -3,7 +3,7 @@ import OrganizationDropdown from "@/components/admin/party/AppliedPartyDetail/Dr
 
 interface DetailSectionProps {
   title: string;
-  data: Record<string, any>;
+  data: Record<string, any> | null;
   keys: readonly string[];
   labelWidth?: string;
   isOrganization?: boolean;
@@ -24,7 +24,7 @@ export default function DetailSection({
       </div>
       <div className='flex flex-col gap-4'>
         {keys.map((key) => {
-          const value = data[key];
+          const value = data?.[key];
           if (value === undefined) return null;
 
           return (

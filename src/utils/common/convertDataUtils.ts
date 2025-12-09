@@ -28,3 +28,22 @@ export const getDateTime = (value?: string | null | Date, fallback = "yyyy.MM.dd
     locale: ko,
   });
 };
+
+export const getDateFromTo = (from?: string | null, to?: string | null) => {
+  if (!from && to) return `~ ${getDateTime(to, "yyyy.MM.dd")}`;
+  if (from && !to) return `${getDateTime(from, "yyyy.MM.dd")} ~`;
+  if (!from && !to) return "-";
+  return `${getDateTime(from, "yyyy.MM.dd")} ~ ${getDateTime(to, "yyyy.MM.dd")}`;
+};
+
+export const getTimeFromTo = (from?: string | null, to?: string | null) => {
+  if (!from && to) return `~ ${getDateTime(to, "a h시")}`;
+  if (from && !to) return `${getDateTime(to, "a h시")} ~`;
+  if (!from && !to) return "-";
+  return `${getDateTime(to, "a h시")} ~ ${getDateTime(to, "a h시")}`;
+};
+
+export const getUnitValue = (value?: number, unit: string = "명") => {
+  if (value === null || value === undefined) return "-";
+  return `${value}${unit}`;
+};

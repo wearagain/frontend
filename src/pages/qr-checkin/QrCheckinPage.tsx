@@ -173,7 +173,7 @@ const QrCheckinPage = () => {
   const hasParties = parties.length > 0;
 
   const handleClose = () => {
-    navigate(-1);
+    navigate("/home");
   };
 
   const handleSelectParty = (party: CheckinParty) => {

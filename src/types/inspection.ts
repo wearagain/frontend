@@ -50,3 +50,31 @@ export interface InspectionItemRequest {
   reason?: string;
 }
 
+// 의류 아이템 검수 요청 타입
+export interface InspectClothingRequest {
+  participantId: string;
+  clothingNumber: string;
+  status: InspectionStatus;
+  reason: string;
+}
+
+// 교환권 정보
+export interface ExchangeVoucher {
+  voucherId: string;
+  qrCode: string;
+  issuedAt: string;
+}
+
+// 의류 아이템 검수 응답 타입
+export interface InspectClothingResponse {
+  participantId: string;
+  clothingNumber: string;
+  category: ClothingCategory;
+  description: string;
+  imageUrls: string[];
+  inspectionStatus: InspectionStatus;
+  inspectionReason: string | null;
+  inspectionAt: string;
+  inspectorId: string;
+  exchangeVoucher: ExchangeVoucher | null;
+}

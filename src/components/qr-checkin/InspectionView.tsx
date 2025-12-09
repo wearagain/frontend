@@ -2,8 +2,13 @@ import { useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RejectionReasonForm } from "./RejectionReasonForm";
-import { inspectClothingItem } from "@/apis/inspection/inspection";
-import type { InspectionScanResponse, InspectionClothingItem, InspectionStatus } from "@/types/inspection";
+import { useInspectClothing } from "@/hooks/inspection/useInspectClothing";
+import { getCategoryLabel } from "@/constants/inspectionConstants";
+import type {
+  InspectionScanResponse,
+  InspectionClothingItem,
+  InspectionStatus,
+} from "@/types/inspection";
 import defaultImage from "@/assets/images/default.png";
 
 interface InspectionViewProps {
@@ -18,44 +23,25 @@ export interface InspectionResult {
   reason?: string;
 }
 
-// 카테고리 한글 변환
-const getCategoryLabel = (category: string): string => {
-  const categoryMap: Record<string, string> = {
-    TOP_JACKET: "자켓",
-    TOP_COAT: "코트",
-    TOP_LONG_SLEEVE: "긴팔",
-    TOP_SHORT_SLEEVE: "반팔",
-    TOP_SLEEVELESS: "민소매",
-    TOP_OTHER: "기타 상의",
-    BOTTOM_PANTS: "바지",
-    BOTTOM_SKIRT: "치마",
-    DRESS_ONE_PIECE: "원피스",
-    DRESS_TWO_PIECE: "투피스",
-    ETC_SHOES: "신발",
-    ETC_BAG: "가방",
-    ETC_HAT: "모자",
-    ETC_ACCESSORY: "액세서리",
-    ETC_EYEWEAR: "안경",
-  };
-  return categoryMap[category] || category;
-};
-
 export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProps) => {
   // 각 아이템의 검수 상태 관리
   const [itemStatuses, setItemStatuses] = useState<Map<string, InspectionResult>>(new Map());
-  
+
   // 반려 사유 입력 폼 상태
   const [rejectionItem, setRejectionItem] = useState<InspectionClothingItem | null>(null);
-  
+
   // API 호출 중인 아이템
   const [loadingItem, setLoadingItem] = useState<string | null>(null);
+
+  // 검수 mutation hook
+  const inspectMutation = useInspectClothing();
 
   // 승인 처리 - API 호출
   const handleApprove = async (item: InspectionClothingItem) => {
     setLoadingItem(item.clothingNumber);
-    
+
     try {
-      await inspectClothingItem({
+      await inspectMutation.mutateAsync({
         participantId: data.participantId,
         clothingNumber: item.clothingNumber,
         status: "APPROVED",
@@ -90,7 +76,7 @@ export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProp
     setLoadingItem(rejectionItem.clothingNumber);
 
     try {
-      await inspectClothingItem({
+      await inspectMutation.mutateAsync({
         participantId: data.participantId,
         clothingNumber: rejectionItem.clothingNumber,
         status: "REJECTED",
@@ -141,10 +127,7 @@ export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProp
     <div className='fixed inset-0 z-50 bg-white flex flex-col'>
       {/* 헤더 */}
       <div className='flex items-center gap-2 p-4 border-b border-gray-100'>
-        <button
-          onClick={onClose}
-          className='p-1 hover:bg-gray-100 rounded-full transition-colors'
-        >
+        <button onClick={onClose} className='p-1 hover:bg-gray-100 rounded-full transition-colors'>
           <ChevronLeft size={24} className='text-gray-700' />
         </button>
         <h1 className='text-lg font-semibold'>검수하기</h1>
@@ -189,9 +172,7 @@ export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProp
                   </h3>
                   <p className='text-sm text-gray-500'>
                     의류코드{" "}
-                    <span className='text-[var(--color-purple-dark)]'>
-                      {item.clothingNumber}
-                    </span>
+                    <span className='text-[var(--color-purple-dark)]'>{item.clothingNumber}</span>
                   </p>
 
                   {/* 승인/반려 버튼 */}
@@ -203,8 +184,8 @@ export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProp
                         isApproved
                           ? "bg-[var(--color-purple-dark)] text-white border-[var(--color-purple-dark)]"
                           : isRejected || isLoading
-                          ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
-                          : "border-[var(--color-purple-dark)] text-[var(--color-purple-dark)] hover:bg-purple-50"
+                            ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+                            : "border-[var(--color-purple-dark)] text-[var(--color-purple-dark)] hover:bg-purple-50"
                       }`}
                     >
                       {isLoading ? "처리중..." : "승인"}
@@ -216,8 +197,8 @@ export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProp
                         isRejected
                           ? "bg-gray-700 text-white border-gray-700"
                           : isApproved || isLoading
-                          ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
-                          : "border-gray-300 text-gray-700 hover:bg-gray-50"
+                            ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+                            : "border-gray-300 text-gray-700 hover:bg-gray-50"
                       }`}
                     >
                       반려

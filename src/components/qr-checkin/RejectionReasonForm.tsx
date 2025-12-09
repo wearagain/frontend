@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getCategoryLabel } from "@/constants/inspectionConstants";
 import type { InspectionClothingItem } from "@/types/inspection";
 import defaultImage from "@/assets/images/default.png";
 
@@ -10,28 +11,6 @@ interface RejectionReasonFormProps {
   onSubmit: (reason: string) => void;
   isLoading?: boolean;
 }
-
-// 카테고리 한글 변환
-const getCategoryLabel = (category: string): string => {
-  const categoryMap: Record<string, string> = {
-    TOP_JACKET: "자켓",
-    TOP_COAT: "코트",
-    TOP_LONG_SLEEVE: "긴팔",
-    TOP_SHORT_SLEEVE: "반팔",
-    TOP_SLEEVELESS: "민소매",
-    TOP_OTHER: "기타 상의",
-    BOTTOM_PANTS: "바지",
-    BOTTOM_SKIRT: "치마",
-    DRESS_ONE_PIECE: "원피스",
-    DRESS_TWO_PIECE: "투피스",
-    ETC_SHOES: "신발",
-    ETC_BAG: "가방",
-    ETC_HAT: "모자",
-    ETC_ACCESSORY: "액세서리",
-    ETC_EYEWEAR: "안경",
-  };
-  return categoryMap[category] || category;
-};
 
 export const RejectionReasonForm = ({
   item,
@@ -53,10 +32,7 @@ export const RejectionReasonForm = ({
     <div className='fixed inset-0 z-50 bg-white flex flex-col'>
       {/* 헤더 */}
       <div className='flex items-center gap-2 p-4 border-b border-gray-100'>
-        <button
-          onClick={onBack}
-          className='p-1 hover:bg-gray-100 rounded-full transition-colors'
-        >
+        <button onClick={onBack} className='p-1 hover:bg-gray-100 rounded-full transition-colors'>
           <ChevronLeft size={24} className='text-gray-700' />
         </button>
         <h1 className='text-lg font-semibold'>검수하기</h1>
@@ -66,12 +42,8 @@ export const RejectionReasonForm = ({
       <div className='flex-1 overflow-y-auto p-4'>
         {/* 안내 메시지 */}
         <div className='mb-6'>
-          <h2 className='text-lg font-semibold text-gray-900'>
-            해당 의류를 반려합니다.
-          </h2>
-          <p className='text-lg font-semibold text-gray-900'>
-            사유를 입력해 주세요.
-          </p>
+          <h2 className='text-lg font-semibold text-gray-900'>해당 의류를 반려합니다.</h2>
+          <p className='text-lg font-semibold text-gray-900'>사유를 입력해 주세요.</p>
         </div>
 
         {/* 의류 정보 카드 */}
@@ -87,23 +59,17 @@ export const RejectionReasonForm = ({
             />
           </div>
           <div>
-            <h3 className='font-medium text-gray-900'>
-              {getCategoryLabel(item.category)} 1
-            </h3>
+            <h3 className='font-medium text-gray-900'>{getCategoryLabel(item.category)} 1</h3>
             <p className='text-sm text-gray-500'>
               의류코드{" "}
-              <span className='text-[var(--color-purple-dark)]'>
-                {item.clothingNumber}
-              </span>
+              <span className='text-[var(--color-purple-dark)]'>{item.clothingNumber}</span>
             </p>
           </div>
         </div>
 
         {/* 사유 입력 */}
         <div>
-          <label className='block text-sm font-medium text-gray-700 mb-2'>
-            사유
-          </label>
+          <label className='block text-sm font-medium text-gray-700 mb-2'>사유</label>
           <textarea
             value={reason}
             onChange={(e) => setReason(e.target.value)}
@@ -130,4 +96,3 @@ export const RejectionReasonForm = ({
     </div>
   );
 };
-

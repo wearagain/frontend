@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { ko } from "date-fns/locale/ko";
+import { Badge } from "@/components/ui/badge.tsx";
 
 export interface PartyDetailHeaderProps {
   id: string;
@@ -20,6 +21,19 @@ export default function PartyDetailHeader(
   const dateFormatted = format(new Date(appliedAt), "yyyy.MM.dd HH:mm", {
     locale: ko,
   });
+
+  const getBadgeStyle = (status: string)=> {
+    switch (status){
+      case "승인":
+        return "greenOutline";
+      case "반려":
+        return "redOutline";
+      case "취소":
+        return "secondary";
+      default:
+        return "normalOutline";
+    }
+  }
   return (
     <div className="p-5 flex justify-between">
       <div className="flex flex-col gap-1">
@@ -31,10 +45,7 @@ export default function PartyDetailHeader(
         </div>
         <p className="font-medium text-[#939396]">{dateFormatted} 신청</p>
       </div>
-      <p
-        className="flex mt-0.5 h-fit items-center gap-1 px-2 py-[2px] text-sm border rounded-full text-[#424242] border-[#E4E4E4] font-medium">
-        {status}
-      </p>
+      <Badge variant={getBadgeStyle(status)}>{status}</Badge>
     </div>
   );
 }

@@ -13,6 +13,7 @@ import ControlBottomBar from "@/components/admin/party/ManageBottom/ControlBotto
 import ActionBottomBar from "@/components/admin/party/ManageBottom/ActionBottomBar.tsx";
 import ManageModal from "@/components/admin/party/Modal/ManageModal.tsx";
 import type { ManageBarStatus, ManageAction } from "@/types/admin/party.ts";
+import { usePatchPartyStatus } from "@/hooks/admin/party/usePatchPartyStatus.ts";
 
 export interface ManageSelectedItem {
   nextStatus?: PartyStatus;
@@ -37,6 +38,8 @@ export default function PartyManagePage() {
 
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [modalAction, setModalAction] = useState<ManageAction>(null);
+
+  const { mutate: mutatePartyStatus } = usePatchPartyStatus();
 
   const modalInstance = { setOpenModal, setModalAction };
 
@@ -86,7 +89,21 @@ export default function PartyManagePage() {
         {renderBottomComponents()}
       </div>
 
-      {openModal && <ManageModal setOpenModal={setOpenModal} action={modalAction}  {...selected} />}
+      {openModal && <ManageModal
+        setOpenModal={setOpenModal}
+        action={modalAction} {...selected}
+        onConfirm={() => {
+          if (!selected.ids || !selected.nextStatus) return;
+          mutatePartyStatus({
+            id: selected.ids[0],
+            params: {
+              status: selected.nextStatus,
+            },
+            count: selected.ids.length,
+            nextStatus: selected.nextStatus,
+          });
+        }}
+      />}
     </StatusHandler>
   );
 }

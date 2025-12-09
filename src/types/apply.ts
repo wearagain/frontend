@@ -40,6 +40,9 @@ export interface PartyParticipantRequest {
 export interface PartyParticipantResponse {
   id: string; // Participant ID
   partyId: string;
+  partyTitle: string;
+  address: string;
+  addressDetail: string;
   userId: string;
 
   name: string;
@@ -55,10 +58,6 @@ export interface PartyParticipantResponse {
 
   qrCode: string | null;
   qrExpiresAt: string | null;
-
-  // TODO: 백엔드 dto 추가 요청
-  partyTitle?: string;
-  partyAddress?: string;
 }
 
 export interface HostApplicationResponse {

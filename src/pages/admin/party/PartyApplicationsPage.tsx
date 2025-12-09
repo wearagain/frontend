@@ -4,12 +4,12 @@ import { Outlet } from "react-router-dom";
 import { useGetPartyApplications } from "@/hooks/admin/party/useGetPartyApplications.ts";
 import PartyRow from "@/components/admin/party/ApplicationList/PartyRow.tsx";
 import StatusHandler from "@/components/common/StatusHandler.tsx";
-import { generateALLLabelValueObj } from "@/utils/common/generateLabelValueObj.tsx";
+import { generateLabelValueObjWithAll } from "@/utils/common/generateLabelValueObj.tsx";
 import { ApplicationStatusDescription } from "@/constants/adminConstants.ts";
 import type { ApplicationStatus, PartyApplicationResponse } from "@/types/admin/party.ts";
 
 export default function PartyApplicationsPage() {
-  const tabs = generateALLLabelValueObj(ApplicationStatusDescription);
+  const tabs = generateLabelValueObjWithAll(ApplicationStatusDescription);
 
   const {
     data,

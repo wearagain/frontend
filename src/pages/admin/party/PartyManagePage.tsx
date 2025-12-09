@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { FilterHeader } from "@/components/common/FilterHeader.tsx";
-import type { PartyAdminStatus } from "@/types/adminTypes.ts";
 import { useGetPartyManageList } from "@/hooks/admin/party/useGetPartyManageList.ts";
 import StatusHandler from "@/components/common/StatusHandler.tsx";
-import { generateLabelValueObj } from "@/utils/common/generateLabelValueObj.tsx";
+import { generateLabelValueObjWithAll } from "@/utils/common/generateLabelValueObj.tsx";
 import { CHANGEABLE_PARTY_STATUS, PartyStatusDescription } from "@/constants/adminConstants.ts";
 import { ManageSection } from "@/components/admin/party/ManageList/ManageSection.tsx";
 import PartyCardHeader from "@/components/admin/party/ManageList/PartyCardHeader.tsx";
@@ -26,9 +25,10 @@ export interface ManageModalProps {
 }
 
 export default function PartyManagePage() {
-  const tabs = generateLabelValueObj(PartyStatusDescription);
-  const [filterType, setFilterType] = useState<PartyAdminStatus | undefined>("ALL");
   const { data, groupedData, isLoading, isError, error } = useGetPartyManageList();
+
+  const tabs = generateLabelValueObjWithAll(PartyStatusDescription);
+  const [filterType, setFilterType] = useState<PartyStatus | "ALL">("ALL");
 
   const [activeSection, setActiveSection] = useState<PartyStatus | null>(null);
 
@@ -39,7 +39,7 @@ export default function PartyManagePage() {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [modalAction, setModalAction] = useState<ManageAction>(null);
 
-  const { mutate: mutatePartyStatus } = usePatchPartyStatus();
+  const { mutateAsync: mutatePartyStatus } = usePatchPartyStatus();
 
   const modalInstance = { setOpenModal, setModalAction };
 
@@ -66,25 +66,43 @@ export default function PartyManagePage() {
   return (
     <StatusHandler isLoading={isLoading} isError={isError} error={error}>
       <div className="flex flex-col h-full relative">
-        <FilterHeader onChange={setFilterType} tabs={tabs} theme="purple" value={filterType} />
+        <FilterHeader onChange={(v) => setFilterType(v ?? "ALL")} tabs={tabs} theme="purple" value={filterType} />
         <div className="flex-1 overflow-y-auto custom-scroll bottombar-p">
-          <PartyCardHeader title="ALL" total={data?.length ?? 0} className="py-5" />
-          {Object.entries(groupedData)?.map(([title, items]) => (
-            items.length != 0 &&
-            <span key={title}>
-              <div className="divider-compact" />
+          {filterType == "ALL" ? (
+            <>
+              <PartyCardHeader title={filterType} total={data?.length ?? 0} className="py-5" />
+              {Object.entries(groupedData)?.map(([title, items]) => (
+                items.length != 0 &&
+                <span key={title}>
+                <div className="divider-compact" />
+                <ManageSection
+                  header={title as PartyStatus}
+                  items={items}
+                  activeSection={activeSection}
+                  setActiveSection={setActiveSection}
+                  setSelected={setSelected}
+                  setBottombarStatus={setBottombarStatus}
+                  canSelect={CHANGEABLE_PARTY_STATUS.includes(title)}
+                  modalInstance={modalInstance}
+                />
+              </span>
+              ))}
+            </>
+          ) : (
+            <>
               <ManageSection
-                header={title as PartyStatus}
-                items={items}
+                header={filterType}
+                items={groupedData[filterType]}
                 activeSection={activeSection}
                 setActiveSection={setActiveSection}
                 setSelected={setSelected}
                 setBottombarStatus={setBottombarStatus}
-                canSelect={CHANGEABLE_PARTY_STATUS.includes(title)}
+                canSelect={CHANGEABLE_PARTY_STATUS.includes(filterType)}
                 modalInstance={modalInstance}
               />
-            </span>
-          ))}
+            </>
+          )
+          }
         </div>
         {renderBottomComponents()}
       </div>
@@ -92,16 +110,17 @@ export default function PartyManagePage() {
       {openModal && <ManageModal
         setOpenModal={setOpenModal}
         action={modalAction} {...selected}
-        onConfirm={() => {
+        onConfirm={async () => {
           if (!selected.ids || !selected.nextStatus) return;
-          mutatePartyStatus({
-            id: selected.ids[0],
-            params: {
+          try {
+            await mutatePartyStatus({
+              id: selected.ids[0],
               status: selected.nextStatus,
-            },
-            count: selected.ids.length,
-            nextStatus: selected.nextStatus,
-          });
+              count: selected.ids.length,
+            });
+            setOpenModal(false);
+          } catch {
+          }
         }}
       />}
     </StatusHandler>

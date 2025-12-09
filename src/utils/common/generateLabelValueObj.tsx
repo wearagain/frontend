@@ -8,7 +8,7 @@ export const generateLabelValueObj = <T extends string>(
 };
 
 
-export const generateALLLabelValueObj = <T extends string>(
+export const generateLabelValueObjWithAll = <T extends string>(
   record: Record<T, string>
 ): { label: string; value: T | "ALL" }[] => {
   const arr = (Object.entries(record) as [T, string][]).map(([key, value]) => ({

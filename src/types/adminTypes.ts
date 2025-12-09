@@ -1,1 +1,0 @@
-export type PartyAdminStatus = "ALL" | "UPCOMING" | "ONGOING" | "COMPLETED" | "CANCELLED";

@@ -1,9 +1,9 @@
 import { Play } from "lucide-react";
 import { PartyStatusDescription } from "@/constants/adminConstants.ts";
-import type { PartyAdminStatus } from "@/types/adminTypes.ts";
+import type { PartyStatus } from "@/types/party.ts";
 
 interface PartyCardHeaderProps {
-  title: PartyAdminStatus;
+  title: PartyStatus | "ALL";
   total: number;
   className?: string;
   setAccordian?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,7 +18,7 @@ export default function PartyCardHeader({ title, total, className, setAccordian 
       >
         <Play fill="#222222" stroke="#222222" className="w-3" />
       </button>}
-      <h4>{PartyStatusDescription[title]}</h4>
+      <h4>{title == "ALL" ? "전체" : PartyStatusDescription[title]}</h4>
       <h4>{total}</h4>
     </div>
   );

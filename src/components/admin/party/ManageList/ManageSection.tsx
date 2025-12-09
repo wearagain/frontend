@@ -57,6 +57,10 @@ export const ManageSection = (
     setCheckedStates(new Array(items.length).fill(next));
   };
 
+  useEffect(() => {
+    setCheckedStates(new Array(items.length).fill(false));
+  }, [items.length]);
+
   /** 다른 섹션 클릭 시, check 상태 초기화 */
   useEffect(() => {
     if (activeSection !== header) {

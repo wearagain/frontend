@@ -1,4 +1,4 @@
-import type { PartyAdminStatus } from "@/types/adminTypes.ts";
+import type { PartyStatus } from "@/types/party.ts";
 
 export interface PartyApplicationResponse {
   id: string;
@@ -63,7 +63,7 @@ export interface PartyManageResponse {
   addressDetail: string | null;
   maxAttendeeCnt: number;
   currentAttendeeCnt: number;
-  status: PartyAdminStatus;
+  status: PartyStatus;
   hostName: string;
   isGroup: boolean;
   isFull: boolean;

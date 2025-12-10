@@ -182,13 +182,13 @@ export default function Step4Delivery({ onNext, onBack }: Step4Props) {
             </div>
           </div>
 
-          {/* 세금계산서 정보 (예일 때만 표시) */}
+          {/* 세금계산서 정보 */}
           {taxReceipt && (
             <>
               <div className='flex flex-col gap-2'>
                 <Label>사업자번호</Label>
                 <Input
-                  placeholder='000-00-00000'
+                  placeholder='사업자번호'
                   value={taxId}
                   onChange={(e) => setTaxId(e.target.value)}
                   onBlur={() => handleBlur("taxId")}

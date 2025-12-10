@@ -172,7 +172,7 @@ export const validateStep4 = (
       if (!data.taxId.trim()) {
         errors.taxId = "사업자번호를 입력해주세요.";
       } else if (!isValidTaxId(data.taxId)) {
-        errors.taxId = "10자리를 입력해주세요.";
+        errors.taxId = "사업자번호 형식이 올바르지 않습니다. (00-000-00000)";
       }
     }
 

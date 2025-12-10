@@ -1,3 +1,4 @@
+import { CircleX } from "lucide-react";
 import { useEffect } from "react";
 import Modal from "@/components/ui/modal";
 import { Input } from "@/components/ui/input";
@@ -139,12 +140,24 @@ export default function PartyEditModal({
         {/* 소개 */}
         <div className='flex flex-col gap-2'>
           <Label>소개</Label>
-          <textarea
-            className='w-full rounded-lg border border-[#E4E4E4] bg-white px-4 py-4 text-base font-medium outline-none resize-none h-24'
-            placeholder='파티 소개'
-            value={data.partyDescription}
-            onChange={(e) => onChange({ ...data, partyDescription: e.target.value })}
-          />
+          <div className='relative w-full'>
+            <textarea
+              className='w-full rounded-lg border border-[#E4E4E4] focus-visible:border-[#222222] bg-white px-4 py-4 pr-10 text-base font-medium outline-none resize-none h-24'
+              placeholder='파티 소개'
+              value={data.partyDescription}
+              onChange={(e) => onChange({ ...data, partyDescription: e.target.value })}
+            />
+            {data.partyDescription && (
+              <button
+                type='button'
+                aria-label='소개 입력값 삭제'
+                onClick={() => onChange({ ...data, partyDescription: "" })}
+                className='absolute right-3 top-3 text-white'
+              >
+                <CircleX size={18} fill='#939396' />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </Modal>

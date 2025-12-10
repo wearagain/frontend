@@ -29,3 +29,17 @@ export const formatDateTimeKR = (dateString: string) => {
     hour: "numeric",
   });
 };
+
+export const formatDateTimeFullKR = (dateString: string) => {
+  if (!dateString) return "-";
+  const date = new Date(dateString);
+  return date.toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+};

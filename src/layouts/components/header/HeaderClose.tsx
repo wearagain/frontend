@@ -1,16 +1,18 @@
 import HeaderContainer from "./HeaderContainer";
-import { X } from "@/assets/icons";
+import { Close } from "@/components/common/header";
 
 interface HeaderCloseProps {
   onClose?: () => void;
+  label?: string;
 }
 
-export default function HeaderClose({ onClose }: HeaderCloseProps) {
+export default function HeaderClose({ onClose, label }: HeaderCloseProps) {
   return (
-    <HeaderContainer className='justify-end'>
-      <button onClick={onClose}>
-        <X className='w-6 h-6' />
-      </button>
+    <HeaderContainer>
+      <div className='flex items-center h-7 w-full'>
+        {label && <h2 className='ml-2 text-lg font-semibold'>{label}</h2>}
+        <Close onClose={() => onClose} />
+      </div>
     </HeaderContainer>
   );
 }

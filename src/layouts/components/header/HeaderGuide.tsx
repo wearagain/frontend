@@ -1,19 +1,16 @@
-import { Outlet, useLocation } from "react-router-dom";
-import { getHeaderByPath } from "@/config/headerConfig";
-import { HeaderBack } from "@/layouts/components/header";
+import HeaderContainer from "./HeaderContainer";
+import { useNavigate } from "react-router-dom";
+import { Back, ServiceInfo } from "@/components/common/header";
 
-export default function RootLayout() {
-  const { pathname } = useLocation();
-  const config = getHeaderByPath(pathname);
-  const HeaderComponent = config?.component || HeaderBack;
-  const headerProps = config?.props ?? {};
+export default function HeaderGuide() {
+  const navigate = useNavigate();
 
   return (
-    <div className='flex flex-col min-h-screen max-w-[430px] mx-auto'>
-      <HeaderComponent {...headerProps} />
-      <main className='flex-1'>
-        <Outlet />
-      </main>
-    </div>
+    <HeaderContainer>
+      <div className='items-center flex justify-between w-full h-[28px]'>
+        <Back onClick={() => navigate(-1)} />
+        <ServiceInfo />
+      </div>
+    </HeaderContainer>
   );
 }

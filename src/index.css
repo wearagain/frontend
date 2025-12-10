@@ -6,22 +6,31 @@
 @theme inline {
   --color-mint-dark: #08b0b7;
   --color-mint-light: #3dc0c5;
+  --color-mint-lighter: #e0f2f1;
   --color-purple-dark: #642c8d;
   --color-purple-light: #7c31b4;
+  --color-purple-lighter: #F2EAF7;
+
 
   --header-height: 4rem;
 }
 
 @font-face {
   font-family: "Pretendard";
-  font-weight: 400;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff/Pretendard-Regular.woff")
-    format("woff");
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css") format("woff2");
+}
+
+
+:root {
+  --font-body: Pretendard;
 }
 
 * {
-  @apply box-border font-[Pretendard-Regular];
+  box-sizing: border-box;
+  font-family: var(--font-body), system-ui, sans-serif;;
 }
 
 html,
@@ -29,8 +38,12 @@ body {
   @apply w-full h-screen bg-white text-black m-0 mx-auto overflow-x-hidden;
 }
 
+main {
+  @apply overflow-x-hidden
+}
+
 #root {
-  @apply w-full h-full bg-white text-black m-0 mx-auto overflow-x-hidden;
+  @apply w-full h-full bg-white text-[#222222] m-0 mx-auto overflow-x-hidden;
 }
 
 h1,
@@ -38,6 +51,23 @@ h2,
 span,
 div {
   @apply select-none;
+}
+
+h1 {
+  @apply text-2xl font-bold
+}
+
+h2 {
+  @apply text-xl font-bold
+}
+
+h3 {
+  @apply text-base font-semibold
+}
+
+
+p {
+  @apply text-[14px]
 }
 
 button {
@@ -49,6 +79,10 @@ button {
   }
 }
 
+button:disabled {
+  cursor: not-allowed !important;
+}
+
 input,
 input:focus,
 textarea,
@@ -58,7 +92,6 @@ textarea:focus {
 }
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -142,6 +175,8 @@ textarea:focus {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -180,6 +215,43 @@ textarea:focus {
   @apply border-b-4 mb-5 border-gray-100;
 }
 
-.middle-point {
-  @apply w-1 h-1 rounded-full bg-gray-400;
+.divider-compact {
+  @apply border-b-4 border-gray-100;
+}
+
+.main-inner {
+  @apply pl-5;
+}
+
+.bottombar-p {
+  @apply pb-32
+}
+
+.bottombar-wrapper {
+  @apply fixed bottom-0 left-0 right-0 w-full pt-5 pb-14 bg-white
+}
+
+.bottombar {
+  @apply flex gap-4 mx-auto h-[52px] w-full px-5 max-w-[430px]
+}
+
+.custom-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-scroll {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.dropdown-menu {
+  @apply whitespace-nowrap absolute bottom-0 right-0 translate-y-full bg-white border border-[#E4E4E4] rounded-[10px] px-2 py-2 text-sm shadow w-fit h-fit
+}
+
+.dropdown-menu-header {
+  @apply whitespace-nowrap absolute right-1 z-[9999] top-0 translate-y-1/2 bg-white border border-[#E4E4E4] rounded-[10px] px-2 py-2 text-sm shadow w-fit h-fit
+}
+
+.dropdown-menu-item {
+  @apply cursor-pointer px-2
 }

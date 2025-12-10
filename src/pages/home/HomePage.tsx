@@ -28,7 +28,7 @@ const HomePage = () => {
       <MenuTab userRole='USER' />
       <div className='divider' />
       <div className='p-5'>
-        <Button className='w-full h-12 font-semibold'>다시입다연구소 알아보기</Button>
+        <Button onClick={() => {}} className='w-full'>다시입다연구소 알아보기</Button>
         <DonationCard />
       </div>
       <MagazineCardList />

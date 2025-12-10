@@ -74,7 +74,11 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
     if (status === "PENDING" || status === "APPROVED") {
       return (
         <div className='flex gap-2'>
-          <Button theme='purpleOutlined' onClick={() => navigate("/party/help")} className='w-14'>
+          <Button
+            theme='purpleOutlined'
+            onClick={() => navigate("/party/help", { state: { partyTitle } })}
+            className='w-14'
+          >
             <Headset size={20} />
           </Button>
           <Button theme='purple' onClick={() => setShowCancelModal(true)} className='w-full'>
@@ -84,7 +88,11 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
       );
     } else if (status === "REJECTED") {
       return (
-        <Button theme='purple' onClick={() => navigate("/party/help")} className='w-full'>
+        <Button
+          theme='purple'
+          onClick={() => navigate("/party/help", { state: { partyTitle } })}
+          className='w-full'
+        >
           문의하기
         </Button>
       );
@@ -173,9 +181,7 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
       </main>
 
       {/* 하단 버튼 */}
-      <div className='flex-shrink-0 sticky bottom-0 bg-white px-5 pt-4 pb-8'>
-        {renderActionButton()}
-      </div>
+      <div className='shrink-0 sticky bottom-0 bg-white px-5 pt-4 pb-8'>{renderActionButton()}</div>
 
       {/* 취소 확인 모달 */}
       {showCancelModal && (

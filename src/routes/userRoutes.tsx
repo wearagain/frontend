@@ -25,6 +25,7 @@ import {
   ExchangeRequestPage,
   ClothDetailPage,
   RequestInfoPage,
+  PartyHelpPage,
 } from "@/pages";
 import ChatPageWrapper from "@/pages/chat/ChatPageWrapper";
 import PartyChatPageWrapper from "@/pages/chat/PartyChatPageWrapper";
@@ -183,6 +184,11 @@ const userRoutes: RouteObject = {
           element: <PartyListPage />,
           handle: { header: { type: "base", label: "참여하기", showBack: true } },
         }, // /party
+        {
+          path: "help",
+          element: <PartyHelpPage />,
+          handle: { header: { type: "base", label: "문의하기", showBack: true } },
+        }, // /party/help
         {
           path: ":id",
           element: <PartyDetailPage />,

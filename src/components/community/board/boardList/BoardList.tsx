@@ -1,16 +1,17 @@
 import { useRef, useEffect } from "react";
 import { useGetBoardList } from "@/hooks/board/useGetBoardList.ts";
 import { BoardCard } from "./BoardCard.tsx";
-import type { BoardListResponse } from "@/types/board.ts";
+import type { BoardListResponse, BoardType, BoardSort } from "@/types/board.ts";
 
 interface BoardListProps {
-  boardType?: "FREE" | "QNA" | "INFO";
-  sort?: "popular" | "latest";
+  boardType?: BoardType;
+  sort: BoardSort;
   keyword?: string;
 }
 
-export const BoardList = ({ boardType }: BoardListProps) => {
+export const BoardList = ({ boardType, sort }: BoardListProps) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status, error } = useGetBoardList({
+    sort,
     boardType,
     size: 20,
   });

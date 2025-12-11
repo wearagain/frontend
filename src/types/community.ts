@@ -10,7 +10,7 @@ export interface ExchangeThumbnailResponse {
 
 export interface ThumbnailItem {
   id: string;
-  thumbnailUrl: string;
+  thumbnailUrl: string | null;
   name: string;
   likeCount: number;
   isLikedByUser: boolean;
@@ -19,7 +19,7 @@ export interface ThumbnailItem {
 export interface RepairClothsResponse {
   clothesId: string;
   isLikedByUser: boolean;
-  thumbnailUrl: string;
+  thumbnailUrl: string | null;
   repairerName: string;
   name: string;
   likeCount: number;

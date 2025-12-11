@@ -36,7 +36,7 @@ export function useHeader(): HeaderRule | null {
 
   if (!header) return null;
 
-  const componentMap: Record<HeaderType | HeaderAdminType, React.FC<any>> = {
+  const componentMap: Record<HeaderType | HeaderAdminType, React.FC<any> | null> = {
     base: HeaderBase,
     back: HeaderBack,
     close: HeaderClose,
@@ -44,6 +44,8 @@ export function useHeader(): HeaderRule | null {
     backClose: HeaderBackClose,
     adminBase: HeaderAdmin,
     adminClose: HeaderAdminClose,
+    none: null,
+    title: null,
   };
 
   const Component = componentMap[header.type];

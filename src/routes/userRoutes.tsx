@@ -25,6 +25,7 @@ import {
   ExchangeRequestPage,
   ClothDetailPage,
   RequestInfoPage,
+  PartyHelpPage,
 } from "@/pages";
 import ChatPageWrapper from "@/pages/chat/ChatPageWrapper";
 import PartyChatPageWrapper from "@/pages/chat/PartyChatPageWrapper";
@@ -184,6 +185,11 @@ const userRoutes: RouteObject = {
           handle: { header: { type: "base", label: "참여하기", showBack: true } },
         }, // /party
         {
+          path: "help",
+          element: <PartyHelpPage />,
+          handle: { header: { type: "base", label: "문의하기", showBack: true } },
+        }, // /party/help
+        {
           path: ":id",
           element: <PartyDetailPage />,
           handle: { header: { type: "base", label: "파티명", showBack: true } },
@@ -214,9 +220,19 @@ const userRoutes: RouteObject = {
     // 주최
     {
       path: "host",
-      element: <PartyHostPage />,
-      handle: { header: { type: "base", label: "주최하기", showBack: true } },
-    }, // /host
+      children: [
+        {
+          index: true,
+          element: <PartyHostPage />,
+          handle: { header: { type: "base", label: "주최하기", showBack: true } },
+        }, // /host
+        {
+          path: "complete",
+          element: <ApplyCompletePage />,
+          handle: { header: { type: "close" } },
+        }, // /host/complete
+      ],
+    },
 
     // 일반 채팅 - 리스트와 개별 채팅방
     {

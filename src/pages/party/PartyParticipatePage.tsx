@@ -4,6 +4,7 @@ import { useGetParty } from "@/hooks/party/useGetParty";
 import { useApplyStore } from "@/store/useApplyStore";
 import { useApplySubmit } from "@/hooks/party/useApply";
 import { type SelectedItem } from "@/types/clothingCategory";
+import StatusHandler from "@/components/common/StatusHandler.tsx";
 
 import Step1ClothingSelect from "@/components/party/partyParticipate/Step1ClothingSelect";
 import Step2ClothingInfo from "@/components/party/partyParticipate/Step2ClothingInfo";
@@ -48,7 +49,7 @@ export default function PartyParticipatePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { id: partyId } = useParams<{ id: string }>();
-  const { data: partyData, status } = useGetParty(partyId!);
+  const { data: partyData, isLoading, isError, error } = useGetParty(partyId!);
 
   const {
     selectedItems,
@@ -153,49 +154,47 @@ export default function PartyParticipatePage() {
   // 다음 버튼 표시 여부
   const showNextButton = step === 2 || step === 3;
 
-  // 로딩 상태
-  if (status === "pending" || !partyData) {
-    return <div className='p-5'>로딩중...</div>;
-  }
-
   return (
-      <>
+    <StatusHandler isLoading={isLoading || !partyData} isError={isError} error={error}>
       <ProgressBar currentStep={step} />
-    <div className='fixed inset-y-[64px] h-full right-0 left-0 bg-white flex flex-col max-w-[430px] top-[64px] mx-auto'>
-      {step === 1 && (
-        <Step1ClothingSelect maxItemLimit={partyData.maxChangeCnt} onNext={handleCategorySubmit} />
-      )}
+      <div className='fixed inset-y-[64px] h-full right-0 left-0 bg-white flex flex-col max-w-[430px] top-[64px] mx-auto'>
+        {step === 1 && partyData && (
+          <Step1ClothingSelect
+            maxItemLimit={partyData.maxChangeCnt}
+            onNext={handleCategorySubmit}
+          />
+        )}
 
-      {step === 2 && (
-        <Step2ClothingInfo
-          maxItemLimit={partyData.maxChangeCnt}
-          onBack={handleGoBack}
-          onSetIsValid={setStep2Valid}
-        />
-      )}
+        {step === 2 && partyData && (
+          <Step2ClothingInfo
+            maxItemLimit={partyData.maxChangeCnt}
+            onBack={handleGoBack}
+            onSetIsValid={setStep2Valid}
+          />
+        )}
 
-      {step === 3 && (
-        <Step3DateTimeSelect
-          onSetIsValid={setStep3Valid}
-          onUpdateTempDateTime={handleDateTimeUpdate}
-          openAt={partyData.openAt}
-          closeAt={partyData.closeAt}
-          initialDate={selectedDate}
-          initialTime={selectedTime}
-        />
-      )}
+        {step === 3 && partyData && (
+          <Step3DateTimeSelect
+            onSetIsValid={setStep3Valid}
+            onUpdateTempDateTime={handleDateTimeUpdate}
+            openAt={partyData.openAt}
+            closeAt={partyData.closeAt}
+            initialDate={selectedDate}
+            initialTime={selectedTime}
+          />
+        )}
 
-      {step === 4 && (
-        <Step4InfoCheck
-          onFinalSubmit={handleFinalSubmit}
-          partyName={partyData.title}
-          onBack={handleGoToFirst}
-          isPending={isPending}
-        />
-      )}
+        {step === 4 && partyData && (
+          <Step4InfoCheck
+            onFinalSubmit={handleFinalSubmit}
+            partyName={partyData.title}
+            onBack={handleGoToFirst}
+            isPending={isPending}
+          />
+        )}
 
-      {showNextButton && <NextButton onClick={handleGoNext} disabled={isNextDisabled} />}
-    </div>
-      </>
+        {showNextButton && <NextButton onClick={handleGoNext} disabled={isNextDisabled} />}
+      </div>
+    </StatusHandler>
   );
 }

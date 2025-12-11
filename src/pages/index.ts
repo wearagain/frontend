@@ -8,6 +8,7 @@ import ApplyDetailPage from "./party/ApplyDetailPage";
 import PartyParticipatePage from "./party/PartyParticipatePage.tsx";
 import PartyDetailPage from "./party/PartyDetailPage";
 import PartyHostPage from "./party/PartyHostPage";
+import PartyHelpPage from "./party/PartyHelpPage";
 import PartyListPage from "./party/PartyListPage";
 import SigninMainPage from "./auth/SigninMainPage";
 import ResetPasswordPage from "./auth/ResetPasswordPage";
@@ -37,6 +38,7 @@ export {
   ApplyListPage,
   ApplyDetailPage,
   PartyHostPage,
+  PartyHelpPage,
   MyPage,
   SigninMainPage,
   ResetPasswordPage,

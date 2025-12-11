@@ -123,7 +123,7 @@ export const useCancelParticipation = () => {
     mutationKey: ["cancelParticipation"],
     mutationFn: (participantId: string) => deleteParticipation(participantId),
 
-    onSuccess: (data, participantId) => {
+    onSuccess: (_data, participantId) => {
       alert(`신청 ${participantId} 취소가 완료되었습니다.`);
       queryClient.invalidateQueries({ queryKey: ["participant", participantId] });
       queryClient.invalidateQueries({ queryKey: ["myParticipants"] });

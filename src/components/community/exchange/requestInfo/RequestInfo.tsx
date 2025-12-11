@@ -31,6 +31,15 @@ export default function RequestInfo({
         <h4 className='text-medium text-base'>{place}</h4>
         <h5 className='text-medium text-sm text-[#939396]'>{formatted}</h5>
       </div>
+      {items && items.length > 0 && (
+        <div className='flex flex-col gap-2'>
+          {items.map((item, index) => (
+            <div key={index} className='text-sm'>
+              {item.name} ({item.code})
+            </div>
+          ))}
+        </div>
+      )}
       <div className='flex items-center gap-2 bg-[#F4F5F6] h-[40px] p-5 rounded-[10px]'>
         <img src='/icons/warnTriangle.svg' alt='' />
         <h5 className='text-medium text-sm text-[#939396]'>

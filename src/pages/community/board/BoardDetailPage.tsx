@@ -16,7 +16,11 @@ const BoardDetailPage = () => {
 
   if (isLoading || !data) return <div />;
 
-  const { board } = data;
+  // API 응답을 원래 구조에 맞게 매핑
+  const board = {
+    ...data,
+    createdAt: data.createdDate, // 원래 코드에서 createdAt을 사용하므로 매핑
+  };
 
   const handleSubmit = () => {
     console.log("댓글 등록:", comment);

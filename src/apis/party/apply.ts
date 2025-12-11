@@ -16,7 +16,7 @@ export const postPartyParticipant = async (partyId: string, payload: PartyPartic
   return data;
 };
 
-  // 교환 의류 내역
+// 교환 의류 내역
 export const getMyTakenClothes = async (): Promise<MyTakenClothingResponse[]> => {
   const { data } = await axiosInstance.get("/api/inspection/my-taken-clothes");
   return data;
@@ -48,9 +48,10 @@ export const getHostApplicationDetail = async (
 };
 
 // 신청 취소 관련
-export const deleteParticipation = async (
-  participantId: string
-): Promise<PartyParticipantResponse> => {
-  const { data } = await axiosInstance.delete(`/api/parties/participants/${participantId}`);
-  return data;
+export const deleteParticipation = async (participantId: string): Promise<void> => {
+  await axiosInstance.delete(`/api/parties/participants/${participantId}`);
+};
+
+export const deleteHostApplication = async (applicationId: string): Promise<void> => {
+  await axiosInstance.delete(`/api/party/applications/${applicationId}`);
 };

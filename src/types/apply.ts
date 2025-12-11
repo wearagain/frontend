@@ -6,12 +6,19 @@
 export type ParticipantStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
 export type HostApplicationStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
 
-export const STATUS_MAP: Record<ParticipantStatus | HostApplicationStatus, string> = {
+export const STATUS_MAP: Record<ParticipantStatus, string> = {
   PENDING: "승인대기",
   APPROVED: "승인완료",
   REJECTED: "반려",
   CANCELLED: "취소",
 };
+
+export const STATUS_TABS: { label: string; value: ParticipantStatus }[] = [
+  { label: "승인대기", value: "PENDING" },
+  { label: "승인완료", value: "APPROVED" },
+  { label: "반려", value: "REJECTED" },
+  { label: "취소", value: "CANCELLED" },
+];
 
 // Request DTO
 export interface ClothingItemRequest {
@@ -36,7 +43,7 @@ export interface PartyParticipantRequest {
   attendanceDate: string;
 }
 
- // 교환 의류 관련
+// 교환 의류 관련
 export interface MyTakenClothingResponse {
   voucherId: string;
   takenClothingNumber: string;
@@ -100,15 +107,27 @@ export interface HostApplicationResponse {
   deliverAddress: string;
   deliverAddressDetail: string;
   desiredDate: string;
+  deliveryStatus?: string;
+  deliveryMemo?: string;
+  trackingNumber?: string;
+  courierName?: string;
+  deliveryStatusUpdatedAt?: string;
 
   taxReceipt: boolean;
   taxEmail: string;
+  taxId?: string;
 
   status: HostApplicationStatus;
   processMemo: string;
   appliedAt: string;
   processedAt: string;
 
-  xmap: number;
-  ymap: number;
+  xMap?: number;
+  yMap?: number;
 }
+
+/**
+ * 배송 관련
+ */
+
+// TODO: 배송 STATUS 추가

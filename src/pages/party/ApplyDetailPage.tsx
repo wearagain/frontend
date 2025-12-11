@@ -43,6 +43,11 @@ export default function ApplyDetailPage() {
   const navigate = useNavigate();
   const [isDetailsOpen, setIsDetailsOpen] = useState(true);
 
+  if (!id) {
+    navigate("/party/apply");
+    return null;
+  }
+
   const { data, isLoading } = useGetParticipation(id);
   if (isLoading || !data) return <div></div>;
 

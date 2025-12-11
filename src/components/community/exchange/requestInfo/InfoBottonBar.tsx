@@ -3,9 +3,14 @@ import { Button } from "@/components/ui/button.tsx";
 interface InfoBottomBarProps {
   onConfirm: () => void;
   onCancel: () => void;
+  isCancelPending?: boolean;
 }
 
-export default function InfoBottomBar({ onConfirm, onCancel }: InfoBottomBarProps) {
+export default function InfoBottomBar({
+  onConfirm,
+  onCancel,
+  isCancelPending,
+}: InfoBottomBarProps) {
   return (
     <div className='bottombar-wrapper'>
       <div className='bottombar'>
@@ -15,6 +20,7 @@ export default function InfoBottomBar({ onConfirm, onCancel }: InfoBottomBarProp
           theme='cancel'
           variant='primary'
           className='flex-1 h-full'
+          disabled={isCancelPending}
         >
           교환 취소
         </Button>

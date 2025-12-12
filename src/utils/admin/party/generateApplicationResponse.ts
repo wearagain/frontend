@@ -5,7 +5,7 @@ import {
 import {
   getDateFromTo,
   getDateTime,
-  getNullToString,
+  convertUndefinedToNull,
   getTimeFromTo, getUnitValue,
   trueFalseToYesNo,
 } from "@/utils/common/convertDataUtils.ts";
@@ -20,8 +20,8 @@ export const generateApplicationResponse = (data: PartyApplicationResponse | nul
 
     isGroup: data.isGroup ? "단체" : "개인",
 
-    status: data.status ? ApplicationStatusDescription[data.status] : "-",
-    deliveryStatus: data.deliveryStatus ? DeliveryStatusDescription[data.deliveryStatus] : "-",
+    status: data?.status && ApplicationStatusDescription?.[data.status],
+    deliveryStatus: data.deliveryStatus && DeliveryStatusDescription[data.deliveryStatus],
 
     dateFromTo: getDateFromTo(data.openAt, data.closeAt),
     timeFromTo: getTimeFromTo(data?.openAt, data.closeAt),
@@ -35,6 +35,6 @@ export const generateApplicationResponse = (data: PartyApplicationResponse | nul
   const { openAt, closeAt, ...rest } = transformed;
 
   return Object.fromEntries(
-    Object.entries(rest).map(([key, value]) => [key, getNullToString(value)]),
+    Object.entries(rest).map(([key, value]) => [key, convertUndefinedToNull(value)]),
   );
 };

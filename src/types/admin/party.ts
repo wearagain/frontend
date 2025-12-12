@@ -25,7 +25,6 @@ export interface PartyApplicationResponse {
 
   deliverAddress: string;
   deliverAddressDetail: string | null;
-
   desiredDate: string;
 
   taxReceipt: boolean;
@@ -72,6 +71,50 @@ export interface PartyManageResponse {
   ymap: number | null;
 }
 
+export interface PartyManageDetail {
+  id: string;
+  applicationId: string;
+
+  isGroup: boolean;
+
+  hostId: string;
+  hostName: string;
+  hostEmail: string;
+
+  openAt: string;
+  closeAt: string;
+
+  address: string;
+  addressDetail: string | null;
+
+  maxChangeCnt: number;
+  maxAttendeeCnt: number;
+
+  title: string;
+  description: string;
+
+  currentAttendeeCnt: number;
+  status: PartyStatus;
+
+  imageUrl: string | null;
+  xmap: number | null;
+  ymap: number | null;
+}
+
+
 export type ManageAction = "confirm" | "delete" | null;
 
 export type ManageBarStatus = "control" | "confirm" | "delete" | null;
+
+
+export interface DeliveryStatusUpdateRequest {
+  deliveryStatus: DeliveryStatus;
+  deliveryMemo?: string;
+  trackingNumber?: string;
+  courierName?: string
+}
+
+export interface TaxUpdateRequest {
+  taxId: string;
+  name: string;
+}

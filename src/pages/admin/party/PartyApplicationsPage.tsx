@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { FilterHeader } from "@/components/common/FilterHeader.tsx";
 import { Outlet } from "react-router-dom";
-import { useGetPartyApplications } from "@/hooks/admin/party/useGetPartyApplications.ts";
-import PartyRow from "@/components/admin/party/ApplicationList/PartyRow.tsx";
+import { useGetPartyApplications } from "@/hooks/admin/party/applications/useGetPartyApplications.ts";
+import PartyRow from "@/components/admin/party/applications/ApplicationList/PartyRow.tsx";
 import StatusHandler from "@/components/common/StatusHandler.tsx";
 import { generateLabelValueObjWithAll } from "@/utils/common/generateLabelValueObj.tsx";
 import { ApplicationStatusDescription } from "@/constants/adminConstants.ts";

@@ -1,16 +1,16 @@
 import { useParams } from "react-router-dom";
-import PartyDetailHeader from "@/components/admin/party/AppliedPartyDetail/PartyDetailHeader.tsx";
-import PartyDetailBottomBar from "@/components/admin/party/AppliedPartyDetail/PartyDetailBottomBar.tsx";
-import { useGetPartyApplicationDetail } from "@/hooks/admin/party/useGetPartyApplicationDetail.ts";
-import DetailSection from "@/components/admin/party/AppliedPartyDetail/DetailSection.tsx";
+import PartyDetailHeader from "@/components/admin/party/applications/AppliedPartyDetail/PartyDetailHeader.tsx";
+import PartyDetailBottomBar from "@/components/admin/party/applications/AppliedPartyDetail/PartyDetailBottomBar.tsx";
+import { useGetPartyApplicationDetail } from "@/hooks/admin/party/applications/useGetPartyApplicationDetail.ts";
+import DetailSection from "@/components/admin/party/applications/AppliedPartyDetail/DetailSection.tsx";
 import { Outlet } from "react-router-dom";
-import { GROUP1_KEYS, GROUP2_KEYS, GROUP3_KEYS } from "@/constants/adminConstants.ts";
+import { GROUP1_KEYS, GROUP2_KEYS, GROUP3_KEYS, SINGLE_KEYS } from "@/constants/adminConstants.ts";
 import StatusHandler from "@/components/common/StatusHandler.tsx";
 
 export default function PartyApplicationDetailPage() {
-  const { partyId } = useParams<{ partyId: string }>();
+  const { applicationId } = useParams<{ applicationId: string }>();
 
-  const { data, isLoading, isError, error } = useGetPartyApplicationDetail(partyId ?? "");
+  const { data, isLoading, isError, error } = useGetPartyApplicationDetail(applicationId ?? "");
 
   return (
     <StatusHandler isLoading={isLoading} isError={isError} error={error}>
@@ -23,7 +23,8 @@ export default function PartyApplicationDetailPage() {
           status={data?.status}
         />
         <div className="divider" />
-        <DetailSection title="주최자 정보" data={data} keys={GROUP1_KEYS} isOrganization />
+        <DetailSection title="주최자 정보" data={data}
+                       keys={data?.isGroup == "단체" ? GROUP1_KEYS : SINGLE_KEYS} headerButtonType="host" />
         <div className="divider" />
         <DetailSection title="파티 정보" data={data} keys={GROUP2_KEYS} labelWidth="w-[92px]" />
         <div className="divider" />

@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import { FilterHeader } from "@/components/common/FilterHeader.tsx";
-import { useGetPartyManageList } from "@/hooks/admin/party/useGetPartyManageList.ts";
+import { useGetPartyManageList } from "@/hooks/admin/party/manage/useGetPartyManageList.ts";
 import StatusHandler from "@/components/common/StatusHandler.tsx";
 import { generateLabelValueObjWithAll } from "@/utils/common/generateLabelValueObj.tsx";
 import { CHANGEABLE_PARTY_STATUS, PartyStatusDescription } from "@/constants/adminConstants.ts";
-import { ManageSection } from "@/components/admin/party/ManageList/ManageSection.tsx";
-import PartyCardHeader from "@/components/admin/party/ManageList/PartyCardHeader.tsx";
+import { ManageSection } from "@/components/admin/party/manage/ManageList/ManageSection.tsx";
+import PartyCardHeader from "@/components/admin/party/manage/ManageList/PartyCardHeader.tsx";
 import type { PartyStatus } from "@/types/party.ts";
-import AddPartyButton from "@/components/admin/party/ManageBottom/AddPartyButton.tsx";
-import ControlBottomBar from "@/components/admin/party/ManageBottom/ControlBottomBar.tsx";
-import ActionBottomBar from "@/components/admin/party/ManageBottom/ActionBottomBar.tsx";
-import ManageModal from "@/components/admin/party/Modal/ManageModal.tsx";
+import AddPartyButton from "@/components/admin/party/manage/ManageBottom/AddPartyButton.tsx";
+import ControlBottomBar from "@/components/admin/party/manage/ManageBottom/ControlBottomBar.tsx";
+import ActionBottomBar from "@/components/admin/party/manage/ManageBottom/ActionBottomBar.tsx";
+import ManageModal from "@/components/admin/party/modal/ManageModal.tsx";
 import type { ManageBarStatus, ManageAction } from "@/types/admin/party.ts";
-import { usePatchPartyStatus } from "@/hooks/admin/party/usePatchPartyStatus.ts";
+import { usePatchPartyStatus } from "@/hooks/admin/party/manage/usePatchPartyStatus.ts";
 
 export interface ManageSelectedItem {
   nextStatus?: PartyStatus;

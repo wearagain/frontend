@@ -4,7 +4,7 @@ import { ko } from "date-fns/locale/ko";
 /**
  * 1. null 처리
  * */
-export const getNullToString = (value: any, fallback = "-") => {
+export const convertUndefinedToNull = (value: any, fallback = null) => {
   if (value === null || value === undefined || value === "") return fallback;
   return value;
 };

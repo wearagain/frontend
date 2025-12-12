@@ -12,6 +12,7 @@ export const PartyDetailMap: Record<string, string> = {
   timeFromTo: "시간",
   address: "장소",
   maxAttendeeCnt: "최대 참석자 수",
+  currentAttendeeCnt: "참여 신청자",
   maxChangeCnt: "최대 의류 수량",
   partyDescription: "소개",
 
@@ -41,12 +42,16 @@ export const DeliveryStatusDescription: Record<DeliveryStatus, string> = {
 
 export const GROUP1_KEYS = ["name", "groupName", "phone", "email"] as const;
 
+export const SINGLE_KEYS = ["name", "phone", "email"] as const;
+
+
 export const GROUP2_KEYS = [
   "isGroup",
   "dateFromTo",
   "timeFromTo",
   "address",
   "maxAttendeeCnt",
+  "currentAttendeeCnt",
   "maxChangeCnt",
   "partyDescription",
 ] as const;
@@ -69,3 +74,11 @@ export const PartyStatusDescription: Record<PartyStatus, string> = {
 };
 
 export const CHANGEABLE_PARTY_STATUS = ["UPCOMING", "ONGOING"];
+
+export const SIDE_BUTTON_TEXT: Record<string, string> = {
+  currentAttendeeCnt: "참여자 보기",
+  deliverAddress: "주소 복사",
+  taxReceipt: "발행 처리",
+  taxId: "복사",
+};
+

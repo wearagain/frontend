@@ -75,6 +75,10 @@ export const PartyStatusDescription: Record<PartyStatus, string> = {
 
 export const CHANGEABLE_PARTY_STATUS = ["UPCOMING", "ONGOING"];
 
+
+export const CHANGEABLE_ORDER_STATUS = ["NULL", "PENDING", "PREPARING", "IN_TRANSIT"];
+
+
 export const SIDE_BUTTON_TEXT: Record<string, string> = {
   currentAttendeeCnt: "참여자 보기",
   deliverAddress: "주소 복사",

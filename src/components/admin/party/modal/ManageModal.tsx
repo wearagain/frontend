@@ -1,9 +1,11 @@
 import Modal from "@/components/ui/modal.tsx";
 import { PartyStatusDescription } from "@/constants/adminConstants.ts";
-import type { ManageSelectedItem } from "@/pages/admin/party/PartyManagePage.tsx";
 import type { ManageAction } from "@/types/admin/party.ts";
+import type { PartyStatus } from "@/types/party.ts";
 
-interface ManageModalProps extends ManageSelectedItem {
+interface ManageModalProps {
+  ids?: string[];                       // 선택된 id
+  nextStatus?: PartyStatus;
   action: ManageAction;
   setOpenModal: (v: boolean) => void;
   onConfirm?: () => void;

@@ -1,6 +1,5 @@
 import {
   ApplicationStatusDescription,
-  DeliveryStatusDescription,
 } from "@/constants/adminConstants.ts";
 import {
   getDateFromTo,
@@ -21,7 +20,6 @@ export const generateApplicationResponse = (data: PartyApplicationResponse | nul
     isGroup: data.isGroup ? "단체" : "개인",
 
     status: data?.status && ApplicationStatusDescription?.[data.status],
-    deliveryStatus: data.deliveryStatus && DeliveryStatusDescription[data.deliveryStatus],
 
     dateFromTo: getDateFromTo(data.openAt, data.closeAt),
     timeFromTo: getTimeFromTo(data?.openAt, data.closeAt),

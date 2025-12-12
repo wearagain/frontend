@@ -10,6 +10,7 @@ import PartyManageDetailPage from "@/pages/admin/party/PartyManageDetailPage.tsx
 import PartyOrdersPage from "@/pages/admin/party/PartyOrdersPage.tsx";
 import PartyParticipantsPage from "@/pages/admin/party/PartyParticipantsPage.tsx";
 import PartyDetailDropdownContents from "@/components/common/header/DropdownMenu/PartyDetailDropdownContents.tsx";
+import PartyOrderDetailPage from "@/pages/admin/party/PartyOrderDetailPage.tsx";
 
 const adminRoutes: RouteObject = {
   path: "/admin",
@@ -84,7 +85,19 @@ const adminRoutes: RouteObject = {
         {
           path: "orders",
           element: <PartyOrdersPage />,
-          handle: { header: { type: "adminBase", label: "주최 신청 관리", showBack: true } },
+          handle: { header: { type: "adminBase", label: "결제/배송 관리", showBack: true } },
+        },
+        {
+          path: "orders/:applicationId",
+          element: <PartyOrderDetailPage />,
+          handle: {
+            header: {
+              type: "adminClose",
+              showLabel: false,
+              to: -1,
+              children: <PartyDetailDropdownContents />,
+            },
+          },
         },
         {
           path: "participants",

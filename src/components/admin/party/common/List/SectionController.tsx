@@ -1,10 +1,11 @@
 import { Checkbox } from "@/components/ui/checkbox.tsx";
-import type { ManageModalProps } from "@/pages/admin/party/PartyManagePage.tsx";
+import type { AdminPartyModalProps } from "@/types/admin/party.ts";
 
-interface SectionControllerProps extends ManageModalProps {
+interface SectionControllerProps extends AdminPartyModalProps {
   checked: boolean | "indeterminate";
   onCheckedChange: () => void;
   isActive: boolean;
+  isOrder?: boolean;
 }
 
 export default function SectionController(
@@ -12,8 +13,9 @@ export default function SectionController(
     checked,
     onCheckedChange,
     isActive,
-    setModalAction,
-    setOpenModal,
+    setModalAction = () => {},
+    setOpenModal = () => {},
+    isOrder = false
   }: SectionControllerProps,
 ) {
 
@@ -45,6 +47,7 @@ export default function SectionController(
             setOpenModal(true);
           }}
           disabled={!isActive}
+          className={isOrder? "hidden" : ""}
         >
           삭제
         </button>

@@ -6,7 +6,7 @@ import { PartyStatusDescription } from "@/constants/adminConstants.ts";
 import type { PartyManageResponse } from "@/types/admin/party.ts";
 
 
-export const PartyCard = (item: PartyManageResponse) => {
+export const ManageCard = (item: PartyManageResponse) => {
   const {
     id,
     title,

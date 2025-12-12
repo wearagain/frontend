@@ -118,3 +118,14 @@ export interface TaxUpdateRequest {
   taxId: string;
   name: string;
 }
+
+export interface SelectedItemStatus<TStatus extends string> {
+  nextStatus?: TStatus;
+  ids?: string[];
+}
+
+export interface AdminPartyModalProps {
+  setOpenModal?: (v: boolean) => void;
+  setModalAction?: React.Dispatch<React.SetStateAction<ManageAction>>;
+}
+

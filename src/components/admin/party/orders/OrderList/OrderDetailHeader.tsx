@@ -4,27 +4,31 @@ import type { PartyStatus } from "@/types/party.ts";
 import { PartyStatusDescription } from "@/constants/adminConstants.ts";
 import type { DeliveryStatus } from "@/types/admin/party.ts";
 
-export interface ManageDetailHeaderProps {
+export interface OrderDetailHeaderProps {
   id: string;
   title: string;
-  openAt: string;
+  appliedAt: string;
   isGroup: boolean;
-  status: PartyStatus;
+  partyStatus: PartyStatus;
   deliveryStatus: DeliveryStatus | null;
 }
 
-export default function ManageDetailHeader(
+export default function OrderDetailHeader(
   {
     id,
     title,
-    openAt,
+    appliedAt,
     isGroup,
-    status,
+    partyStatus,
     deliveryStatus,
-  }: ManageDetailHeaderProps) {
+  }: OrderDetailHeaderProps) {
 
   const getBadgeStyle = (status: string | null) => {
     switch (status) {
+      case "승인":
+        return "greenOutline";
+      case "반려":
+        return "redOutline";
       case "취소":
         return "redOutline";
       case "반송":
@@ -33,6 +37,7 @@ export default function ManageDetailHeader(
         return "normalOutline";
     }
   };
+
 
   return (
     <div className="p-5 flex justify-between relative">
@@ -43,10 +48,10 @@ export default function ManageDetailHeader(
           <p className="text-[#D9D9D9]">·</p>
           <p>{isGroup}</p>
         </div>
-        <p className="font-medium text-[#939396]">{getDateTime(openAt)} 생성</p>
+        <p className="font-medium text-[#939396]">{getDateTime(appliedAt)} 생성</p>
       </div>
       <div className="flex sticky top-0 right-5 gap-2">
-        <Badge variant={getBadgeStyle(status)}>{PartyStatusDescription[status]}</Badge>
+        <Badge variant={getBadgeStyle(partyStatus)}>{PartyStatusDescription[partyStatus]}</Badge>
         {deliveryStatus && <Badge variant={getBadgeStyle(deliveryStatus)}>{deliveryStatus}</Badge>}
       </div>
     </div>

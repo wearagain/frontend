@@ -1,35 +1,60 @@
 import { useState, useEffect } from "react";
-import type { ManageBarStatus, PartyManageResponse } from "@/types/admin/party.ts";
-import { PartyCard } from "@/components/admin/party/manage/ManageList/PartyCard.tsx";
-import PartyCardHeader from "@/components/admin/party/manage/ManageList/PartyCardHeader.tsx";
-import type { PartyStatus } from "@/types/party.ts";
-import SectionController from "@/components/admin/party/manage/ManageList/SectionController.tsx";
+import type {
+  AdminPartyModalProps,
+  PartyApplicationResponse,
+  PartyManageResponse,
+  SelectedItemStatus,
+} from "@/types/admin/party.ts";
+import PartyCardHeader from "@/components/admin/party/common/List/PartyCardHeader.tsx";
+import SectionController from "@/components/admin/party/common/List/SectionController.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
-import type { ManageModalProps, ManageSelectedItem } from "@/pages/admin/party/PartyManagePage.tsx";
-import { getNextPartyStatus } from "@/utils/admin/party/getNextStatus.ts";
 
-interface ManageSectionProps {
-  items: PartyManageResponse[];
-  header: PartyStatus;
-  activeSection: PartyStatus | null;
-  setActiveSection: (v: PartyStatus | null) => void;
-  setSelected: React.Dispatch<React.SetStateAction<ManageSelectedItem>>;
-  setBottombarStatus: React.Dispatch<React.SetStateAction<ManageBarStatus>>;
+export interface PartySectionProps<
+  TStatus extends string,
+  TAction extends string | null,
+  TItem extends PartyManageResponse |  PartyApplicationResponse
+> {
+  items:  (TItem)[];
+  header: TStatus;
   canSelect: boolean;
-  modalInstance: ManageModalProps;
+
+  activeSection: TStatus | null;
+  setActiveSection: (v: TStatus | null) => void;
+
+  setSelected: React.Dispatch<React.SetStateAction<SelectedItemStatus<TStatus>>>;
+  setBottombarStatus: React.Dispatch<React.SetStateAction<TAction | null>>;
+  checkedAction: TAction;
+
+  modalInstance?: AdminPartyModalProps;
+
+  getNextStatus: (status: TStatus | null) => TStatus | undefined;
+  descriptionMap: Partial<Record<TStatus, string>>;
+
+  children: (item: TItem) => React.ReactNode;
+
+  isOrder?: boolean;
 }
 
-export const ManageSection = (
+export const PartySection = <
+  TStatus extends string,
+  TAction extends string | null,
+  TItem extends PartyManageResponse |  PartyApplicationResponse
+>(
   {
     items,
     header,
+    canSelect,
     activeSection,
     setActiveSection,
     setSelected,
     setBottombarStatus,
-    canSelect,
+    checkedAction,
     modalInstance,
-  }: ManageSectionProps) => {
+    getNextStatus,
+    descriptionMap,
+    children,
+    isOrder
+  }: PartySectionProps<TStatus, TAction, TItem>) => {
 
   /** 아코디언 */
   const [accordian, setAccordian] = useState<boolean>(false);
@@ -68,17 +93,18 @@ export const ManageSection = (
     }
   }, [activeSection]);
 
+
   /** active 섹션 기준으로 bottombar 업데이트 */
   useEffect(() => {
     if (activeSection !== header) return;
 
     const hasChecked = checkedStates.some(Boolean);
 
-    setBottombarStatus(hasChecked ? "control" : null);
+    setBottombarStatus(hasChecked ? checkedAction : null);
 
     setSelected(prev => ({
       ...prev,
-      nextStatus: getNextPartyStatus(activeSection),
+      nextStatus: getNextStatus(activeSection),
       ids: items
         .filter((_, idx) => checkedStates[idx])
         .map(i => i.id),
@@ -89,7 +115,8 @@ export const ManageSection = (
   return (
     items.length != 0 &&
     <div className={`w-full max-w-full ${!accordian && "mb-2"}`}>
-      <PartyCardHeader setAccordian={setAccordian} title={header} total={items.length} className="py-5" />
+      <PartyCardHeader descriptionMap={descriptionMap} setAccordian={setAccordian} title={header} total={items.length}
+                       className="py-5" />
 
       <span className={accordian ? "hidden" : "block"}>
         {canSelect &&
@@ -97,6 +124,7 @@ export const ManageSection = (
             checked={parentChecked}
             onCheckedChange={clickParentCheckbox}
             isActive={header == activeSection}
+            isOrder={isOrder}
             {...modalInstance} />}
 
         {items.map((item, index) =>
@@ -111,7 +139,7 @@ export const ManageSection = (
                 onCheckedChange={() => clickCheckbox(index)}
               />
             }
-            <PartyCard {...item} />
+            {children(item)}
           </div>,
         )}
         </span>

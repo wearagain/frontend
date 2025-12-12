@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button.tsx";
-import type { ManageModalProps, ManageSelectedItem } from "@/pages/admin/party/PartyManagePage.tsx";
 import { PartyStatusDescription } from "@/constants/adminConstants.ts";
-import type { ManageAction } from "@/types/admin/party.ts";
+import type { AdminPartyModalProps, ManageAction } from "@/types/admin/party.ts";
+import type { PartyStatus } from "@/types/party.ts";
 
-interface ActionBottomBarProps extends ManageSelectedItem, ManageModalProps {
+interface ActionBottomBarProps extends AdminPartyModalProps {
+  ids?: string[];
+  nextStatus?: PartyStatus;
   action: ManageAction;
 }
 

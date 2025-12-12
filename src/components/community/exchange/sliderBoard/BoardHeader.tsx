@@ -9,7 +9,9 @@ export default function BoardHeader({ label }: HeaderProps) {
 
   const clickMore = () => {
     const currentPath = window.location.pathname;
-    navigate(currentPath + "/list");
+    // private 보드인지 public 보드인지 판단
+    const isPrivate = label.includes("선공개") || label.includes("후원자");
+    navigate(currentPath + "/list?isPublic=" + (isPrivate ? "false" : "true"));
   };
 
   return (

@@ -1,230 +1,360 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { usePostParty } from "@/hooks/party/usePostPartyHost";
 import { usePartyHostStore } from "@/store/useHostStore";
 import { formatDate } from "@/utils/formatDate";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { partyHostValidation } from "@/utils/validations/partyHostValidation.ts";
+import TermsItem from "@/components/signup/TermsItem";
+import Modal from "@/components/ui/modal";
+
+import InfoRow from "./step5Confirm/InfoRow";
+import InfoSection from "./step5Confirm/InfoSection";
+import ConfirmModalContent from "./step5Confirm/ConfirmModalContent";
+import HostEditModal from "./step5Confirm/HostEditModal";
+import PartyEditModal from "./step5Confirm/PartyEditModal";
+import DeliveryEditModal from "./step5Confirm/DeliveryEditModal";
 
 interface Step5Props {
   onNext: () => void;
-  onBack: () => void;
 }
 
-export default function Step5Confirm({ onNext, onBack }: Step5Props) {
+export default function Step5Confirm({ onNext }: Step5Props) {
   const store = usePartyHostStore();
   const { mutate: postParty, isPending } = usePostParty();
 
-  const [agreements, setAgreements] = useState({
-    terms: false,
+  // 약관 동의 상태
+  const [checked, setChecked] = useState({
+    all: false,
+    service: false,
     privacy: false,
     notice: false,
   });
-  const [isExpanded, setIsExpanded] = useState(true);
 
-  const allAgreed = Object.values(agreements).every(Boolean);
+  // 확인 모달 상태
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  const toggleAgreement = (key: keyof typeof agreements) =>
-    setAgreements((prev) => ({ ...prev, [key]: !prev[key] }));
+  // 수정 모달 상태
+  const [showHostModal, setShowHostModal] = useState(false);
+  const [showPartyModal, setShowPartyModal] = useState(false);
+  const [showDeliveryModal, setShowDeliveryModal] = useState(false);
+
+  // 수정 데이터 상태
+  const [editHostData, setEditHostData] = useState({
+    name: store.name,
+    groupName: store.groupName,
+    phone: store.phone,
+    email: store.email,
+  });
+
+  const [editPartyData, setEditPartyData] = useState({
+    openAt: store.openAt,
+    closeAt: store.closeAt,
+    openTime: store.openTime || "",
+    closeTime: store.closeTime || "",
+    address: store.address,
+    addressDetail: store.addressDetail,
+    maxAttendeeCnt: store.maxAttendeeCnt,
+    maxChangeCnt: store.maxChangeCnt,
+    partyDescription: store.partyDescription,
+  });
+
+  const [editDeliveryData, setEditDeliveryData] = useState({
+    deliverAddress: store.deliverAddress,
+    deliverAddressDetail: store.deliverAddressDetail,
+    desiredDate: store.desiredDate,
+    taxReceipt: store.taxReceipt,
+    taxId: store.taxId,
+    taxEmail: store.taxEmail,
+  });
+
+  const allAgreed = checked.service && checked.privacy && checked.notice;
+
+  const handleToggle = (key: keyof typeof checked) => {
+    if (key === "all") {
+      const newState = !checked.all;
+      setChecked({
+        all: newState,
+        service: newState,
+        privacy: newState,
+        notice: newState,
+      });
+    } else {
+      const updated = { ...checked, [key]: !checked[key] };
+      const allChecked = updated.service && updated.privacy && updated.notice;
+      setChecked({ ...updated, all: allChecked });
+    }
+  };
 
   const openDate = formatDate(store.openAt);
   const closeDate = formatDate(store.closeAt);
   const desiredDate = formatDate(store.desiredDate);
 
-  const handleSubmit = () => {
+  // 신청하기 버튼 클릭 시 확인 모달 표시
+  const handleSubmitClick = () => {
     if (!allAgreed) {
-      alert("모든 필수 약관에 동의해야 신청이 가능합니다.");
       return;
     }
 
+    // 최종 유효성 검증 (각 Step에서 이미 검증되었지만 안전을 위해)
+    const validation = partyHostValidation({
+      isGroup: store.isGroup,
+      groupName: store.groupName,
+      name: store.name,
+      phone: store.phone,
+      email: store.email,
+      openAt: store.openAt,
+      closeAt: store.closeAt,
+      address: store.address,
+      maxChangeCnt: store.maxChangeCnt,
+      maxAttendeeCnt: store.maxAttendeeCnt,
+      partyTitle: store.partyTitle,
+      deliverAddress: store.deliverAddress,
+      desiredDate: store.desiredDate,
+      taxReceipt: store.taxReceipt,
+      taxEmail: store.taxEmail,
+      taxId: store.taxId,
+    });
+
+    if (!validation.isValid) {
+      console.warn("유효성 검증 실패:", validation.errors);
+      return;
+    }
+
+    setShowConfirmModal(true);
+  };
+
+  // 최종 제출
+  const handleConfirmSubmit = () => {
     postParty(undefined, {
       onSuccess: () => {
-        alert("파티 주최 신청이 완료되었습니다!");
+        setShowConfirmModal(false);
+        store.reset(); // 신청 성공 시 store 초기화
         onNext();
       },
     });
   };
 
+  // 주최자 정보 수정
+  const handleEditHost = () => {
+    setEditHostData({
+      name: store.name,
+      groupName: store.groupName,
+      phone: store.phone,
+      email: store.email,
+    });
+    setShowHostModal(true);
+  };
+
+  const handleSaveHost = () => {
+    store.setField("name", editHostData.name);
+    store.setField("groupName", editHostData.groupName);
+    store.setField("phone", editHostData.phone);
+    store.setField("email", editHostData.email);
+    setShowHostModal(false);
+  };
+
+  // 파티 정보 수정
+  const handleEditParty = () => {
+    setEditPartyData({
+      openAt: store.openAt,
+      closeAt: store.closeAt,
+      openTime: store.openTime || "",
+      closeTime: store.closeTime || "",
+      address: store.address,
+      addressDetail: store.addressDetail,
+      maxAttendeeCnt: store.maxAttendeeCnt,
+      maxChangeCnt: store.maxChangeCnt,
+      partyDescription: store.partyDescription,
+    });
+    setShowPartyModal(true);
+  };
+
+  const handleSaveParty = () => {
+    store.setField("openAt", editPartyData.openAt);
+    store.setField("closeAt", editPartyData.closeAt);
+    store.setField("openTime", editPartyData.openTime);
+    store.setField("closeTime", editPartyData.closeTime);
+    store.setField("address", editPartyData.address);
+    store.setField("addressDetail", editPartyData.addressDetail);
+    store.setField("maxAttendeeCnt", editPartyData.maxAttendeeCnt);
+    store.setField("maxChangeCnt", editPartyData.maxChangeCnt);
+    store.setField("partyDescription", editPartyData.partyDescription);
+    setShowPartyModal(false);
+  };
+
+  // 배송 및 결제 정보 수정
+  const handleEditDelivery = () => {
+    setEditDeliveryData({
+      deliverAddress: store.deliverAddress,
+      deliverAddressDetail: store.deliverAddressDetail,
+      desiredDate: store.desiredDate,
+      taxReceipt: store.taxReceipt,
+      taxId: store.taxId,
+      taxEmail: store.taxEmail,
+    });
+    setShowDeliveryModal(true);
+  };
+
+  const handleSaveDelivery = () => {
+    store.setField("deliverAddress", editDeliveryData.deliverAddress);
+    store.setField("deliverAddressDetail", editDeliveryData.deliverAddressDetail);
+    store.setField("desiredDate", editDeliveryData.desiredDate);
+    store.setField("taxReceipt", editDeliveryData.taxReceipt);
+    store.setField("taxId", editDeliveryData.taxId);
+    store.setField("taxEmail", editDeliveryData.taxEmail);
+    setShowDeliveryModal(false);
+  };
+
   return (
-    <div className='pb-[220px]'>
-      <h2 className='mb-4'>마지막으로 정보 확인 후 신청을 완료해 주세요</h2>
+    <div className='flex flex-col h-full overflow-hidden mb-24'>
+      {/* 헤더 */}
+      <div className='bg-white shrink-0 sticky top-0 z-10'>
+        <h2 className='text-lg font-semibold px-5 pt-6 mb-5'>
+          마지막으로 정보 확인 후
+          <br />
+          신청을 완료해 주세요
+        </h2>
+      </div>
 
-      <div className='space-y-6 mb-6'>
+      {/* 정보 영역 */}
+      <div className='flex-1 overflow-y-auto custom-scroll'>
         {/* 주최자 정보 */}
-        <div className='bg-white border-t border-gray-200 p-4'>
-          <div className='flex justify-between items-center mb-3'>
-            <h3 className='font-semibold text-gray-900'>주최자 정보</h3>
-            <button className='text-sm text-gray-500 hover:text-gray-700'>수정</button>
-          </div>
-
-          <div className='flex text-sm'>
-            <div className='flex flex-col text-gray-600 gap-1 w-[100px] shrink-0'>
-              <span>주최자</span>
-              <span>소속</span>
-              <span>연락처</span>
-              <span>이메일</span>
-            </div>
-
-            <div className='flex flex-col gap-1 text-gray-900'>
-              <span>{store.name || "미입력"}</span>
-              <span>{store.groupName || "미입력"}</span>
-              <span>{store.phone || "미입력"}</span>
-              <span>{store.email || "미입력"}</span>
-            </div>
-          </div>
-        </div>
+        <InfoSection title='주최자 정보' onEdit={handleEditHost}>
+          <InfoRow label='주최자' value={store.name} />
+          <InfoRow label='소속' value={store.groupName} />
+          <InfoRow label='연락처' value={store.phone} />
+          <InfoRow label='이메일' value={store.email} />
+        </InfoSection>
+        <div className='divider' />
 
         {/* 파티 정보 */}
-        <div className='bg-white border-t border-gray-200 p-4'>
-          <div className='flex justify-between items-center mb-3'>
-            <h3 className='font-semibold text-gray-900'>파티 정보</h3>
-            <button className='text-sm text-gray-500 hover:text-gray-700'>수정</button>
-          </div>
-
-          <div className='flex text-sm'>
-            <div className='flex flex-col text-gray-600 gap-1 w-[110px] shrink-0'>
-              <span>날짜</span>
-              <span>시간</span>
-              <span>장소</span>
-              <span>최대 참석자 수</span>
-              <span>최대 의류 수량</span>
-              <span>소개</span>
-            </div>
-            <div className='flex flex-col gap-1 text-gray-900'>
-              <span>
-                {openDate} ~ {closeDate}
-              </span>
-              <span>
-                {store.openTime || "미입력"} ~ {store.closeTime || "미입력"}
-              </span>
-              <span className='whitespace-pre-line max-w-[230px]'>
-                {store.address || "주소 미입력"}
-                {store.addressDetail && ` ${store.addressDetail}`}
-              </span>
-              <span>{store.maxAttendeeCnt || 0}명</span>
-              <span>{store.maxChangeCnt || 0}벌</span>
-              <span className='whitespace-pre-line max-w-[230px]'>
-                {store.partyDescription || "파티 소개가 없습니다."}
-              </span>
-            </div>
-          </div>
-        </div>
+        <InfoSection title='파티 정보' onEdit={handleEditParty}>
+          <InfoRow label='날짜' value={`${openDate} ~ ${closeDate}`} />
+          <InfoRow label='시간' value={`${store.openTime} ~ ${store.closeTime}`} />
+          <InfoRow
+            label='장소'
+            value={`${store.address}${store.addressDetail ? ` ${store.addressDetail}` : ""}`}
+          />
+          <InfoRow label='최대 참석자 수' value={`${store.maxAttendeeCnt}명`} />
+          <InfoRow label='최대 의류 수량' value={`${store.maxChangeCnt}벌`} />
+          <InfoRow label='소개' value={store.partyDescription} />
+        </InfoSection>
+        <div className='divider' />
 
         {/* 배송 및 결제 */}
-        <div className='bg-white border-t border-gray-200 p-4'>
-          <div className='flex justify-between items-center mb-3'>
-            <h3 className='font-semibold text-gray-900'>배송 및 결제</h3>
-            <button className='text-sm text-gray-500 hover:text-gray-700'>수정</button>
-          </div>
-
-          <div className='flex text-sm'>
-            <div className='flex flex-col text-gray-600 gap-1 w-[120px] shrink-0'>
-              <span>주소</span>
-              <span>희망 배송일</span>
-              <span>세금계산서 발행</span>
-              {store.taxReceipt && <span>발행 이메일</span>}
-            </div>
-            <div className='flex flex-col gap-1 text-gray-900'>
-              <span className='whitespace-pre-line max-w-[230px]'>
-                {store.deliverAddress || "미입력"}
-                {store.deliverAddressDetail && ` ${store.deliverAddressDetail}`}
-              </span>
-              <span>{desiredDate || "미입력"}</span>
-              <span>{store.taxReceipt ? "예" : "아니오"}</span>
-              {store.taxReceipt && <span>{store.taxEmail || "미입력"}</span>}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 하단 고정 영역 */}
-      <div className='fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white px-4 pb-4 pt-3 border-t border-gray-200'>
-        <div className='border-b border-gray-100 pb-3 mb-3'>
-          <div
-            className='flex justify-between items-center cursor-pointer select-none'
-            onClick={() => setIsExpanded((prev) => !prev)}
-          >
-            <h4 className='text-sm font-medium'>약관 동의</h4>
-            {isExpanded ? (
-              <ChevronDown className='w-4 h-4 text-gray-500' />
-            ) : (
-              <ChevronUp className='w-4 h-4 text-gray-500' />
-            )}
-          </div>
-
-          {isExpanded && (
-            <div className='mt-2'>
-              <div className='flex items-center gap-2 mb-3 pb-3 border-b border-gray-100'>
-                <Checkbox
-                  id='checkAll'
-                  checked={allAgreed}
-                  onCheckedChange={() => {
-                    const newValue = !allAgreed;
-                    setAgreements({
-                      terms: newValue,
-                      privacy: newValue,
-                      notice: newValue,
-                    });
-                  }}
-                />
-                <label htmlFor='checkAll' className='text-sm font-medium'>
-                  아래 내용에 전체 동의합니다.
-                </label>
-              </div>
-
-              <div className='flex items-center gap-2 mb-1'>
-                <Checkbox
-                  id='check1'
-                  checked={agreements.terms}
-                  onCheckedChange={() => toggleAgreement("terms")}
-                />
-                <label htmlFor='check1' className='text-sm'>
-                  [필수] 서비스 이용약관 동의
-                </label>
-              </div>
-
-              <div className='flex items-center gap-2 mb-1'>
-                <Checkbox
-                  id='check2'
-                  checked={agreements.privacy}
-                  onCheckedChange={() => toggleAgreement("privacy")}
-                />
-                <label htmlFor='check2' className='text-sm'>
-                  [필수] 개인정보 수집 및 이용 동의
-                </label>
-              </div>
-
-              <div className='flex items-center gap-2 mb-1'>
-                <Checkbox
-                  id='check3'
-                  checked={agreements.notice}
-                  onCheckedChange={() => toggleAgreement("notice")}
-                />
-                <label htmlFor='check3' className='text-sm'>
-                  [필수] 주최 주의사항 동의
-                </label>
-              </div>
-            </div>
+        <InfoSection title='배송 및 결제' onEdit={handleEditDelivery}>
+          <InfoRow
+            label='주소'
+            value={`${store.deliverAddress}${store.deliverAddressDetail ? ` ${store.deliverAddressDetail}` : ""}`}
+          />
+          <InfoRow label='희망 배송일' value={desiredDate} />
+          <InfoRow label='세금계산서 발행' value={store.taxReceipt ? "예" : "아니요"} />
+          {store.taxReceipt && (
+            <>
+              <InfoRow label='사업자번호' value={store.taxId} />
+              <InfoRow label='발행 이메일' value={store.taxEmail} />
+            </>
           )}
+        </InfoSection>
+      </div>
+
+      {/* 약관 동의 및 버튼 */}
+      <div className='shrink-0 sticky bottom-0 bg-white px-5 pt-5 drop-shadow-lg'>
+        <div className='mb-4'>
+          <div className='flex flex-col gap-4'>
+            <TermsItem
+              label='아래 내용에 전체 동의합니다'
+              checked={checked.all}
+              onToggle={() => handleToggle("all")}
+            />
+
+            <div className='flex flex-col gap-3'>
+              <TermsItem
+                label='서비스 이용약관 동의'
+                required
+                checked={checked.service}
+                onToggle={() => handleToggle("service")}
+                showLink
+              />
+              <TermsItem
+                label='개인정보 수집 및 이용 동의'
+                required
+                checked={checked.privacy}
+                onToggle={() => handleToggle("privacy")}
+                showLink
+              />
+              <TermsItem
+                label='주최 고지사항 동의'
+                required
+                checked={checked.notice}
+                onToggle={() => handleToggle("notice")}
+                showLink
+              />
+            </div>
+          </div>
         </div>
 
-        <div className='flex gap-2'>
-          <Button onClick={onBack} className='w-1/2 bg-gray-300 text-gray-700'>
-            이전
-          </Button>
-          <Button
-            onClick={handleSubmit}
-            disabled={!allAgreed || isPending}
-            className={`w-1/2 ${
-              allAgreed
-                ? "bg-(--color-purple-light) hover:opacity-90"
-                : "bg-gray-200 text-gray-400 cursor-not-allowed"
-            }`}
-          >
-            {isPending ? "신청 중..." : "신청하기"}
-          </Button>
-        </div>
+        <Button
+          theme='purple'
+          onClick={handleSubmitClick}
+          disabled={!allAgreed || isPending}
+          className='w-full h-12 text-base font-semibold'
+        >
+          {isPending ? "신청중" : "신청하기"}
+        </Button>
       </div>
+
+      {/* 확인 모달 */}
+      {showConfirmModal && (
+        <Modal
+          header='해당 정보로 신청하겠습니까?'
+          confirmText='신청하기'
+          closeText='아니요'
+          theme='purple'
+          onClose={() => setShowConfirmModal(false)}
+          onConfirm={handleConfirmSubmit}
+          confirmDisabled={isPending}
+        >
+          <ConfirmModalContent
+            partyDate={`${openDate} ~ ${closeDate}`}
+            partyTime={`${store.openTime} ~ ${store.closeTime}`}
+            partyAddress={`${store.address}${store.addressDetail ? ` ${store.addressDetail}` : ""}`}
+            maxAttendeeCnt={store.maxAttendeeCnt}
+            maxChangeCnt={store.maxChangeCnt}
+            description={store.partyDescription}
+          />
+        </Modal>
+      )}
+
+      {/* 주최자 정보 수정 모달 */}
+      {showHostModal && (
+        <HostEditModal
+          data={editHostData}
+          onChange={setEditHostData}
+          onClose={() => setShowHostModal(false)}
+          onConfirm={handleSaveHost}
+        />
+      )}
+
+      {/* 파티 정보 수정 모달 */}
+      {showPartyModal && (
+        <PartyEditModal
+          data={editPartyData}
+          onChange={setEditPartyData}
+          onClose={() => setShowPartyModal(false)}
+          onConfirm={handleSaveParty}
+        />
+      )}
+
+      {/* 배송 및 결제 정보 수정 모달 */}
+      {showDeliveryModal && (
+        <DeliveryEditModal
+          data={editDeliveryData}
+          onChange={setEditDeliveryData}
+          onClose={() => setShowDeliveryModal(false)}
+          onConfirm={handleSaveDelivery}
+        />
+      )}
     </div>
   );
 }

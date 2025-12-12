@@ -29,40 +29,47 @@ export default function Step1SelectScale({ onNext }: Step1Props) {
   };
 
   return (
-    <div>
-      <h2 className='mb-4'>주최 규모를 선택해 주세요</h2>
+    <div className='flex flex-col h-screen'>
+      <header className='bg-white flex-shrink-0 border-b-1 sticky top-0 border-[#E0E2E4] z-10'>
+        <h2 className='text-lg font-semibold px-5 pt-6 mb-5'>
+          주최 규모를
+          <br />
+          선택해 주세요
+        </h2>
+      </header>
 
-      <div className='grid grid-cols-2 gap-4 mb-6'>
+      <main className='flex-1 overflow-y-auto'>
+      <div className='grid grid-cols-2 gap-4 p-5'>
         {/* 단체 선택 */}
         <div
           className={`flex flex-col items-center justify-center border rounded-2xl py-8 cursor-pointer transition-colors ${
-            selected === "단체" ? "border-gray-700 bg-gray-50" : "border-gray-200"
+            selected === "단체" ? "border-(--color-purple-light) bg-[#F2EAF7]" : "border-[#E0E2E4] bg-white"
           }`}
           onClick={() => handleSelect("단체")}
         >
           <Users
-            className={`w-10 h-10 mb-2 ${selected === "단체" ? "text-gray-700" : "text-gray-400"}`}
+            className={`w-10 h-10 mb-2 ${selected === "단체" ? "text-(--color-purple-light)" : "text-[#939396]"}`}
           />
-          <div className='font-medium'>단체</div>
-          <p className='text-xs text-gray-500 mt-1'>기업 또는 지역 단체</p>
+          <div className='font-bold'>단체</div>
+          <p className='text-sm font-medium text-[#939396] mt-1'>기업 또는 지역 단체</p>
         </div>
 
         {/* 개인 선택 */}
         <div
           className={`flex flex-col items-center justify-center border rounded-2xl py-8 cursor-pointer transition-colors ${
-            selected === "개인" ? "border-gray-700 bg-gray-50" : "border-gray-200"
+            selected === "개인" ? "border-(--color-purple-light) bg-[#F2EAF7]" : "border-[#E0E2E4] bg-white"
           }`}
           onClick={() => handleSelect("개인")}
         >
           <User
-            className={`w-10 h-10 mb-2 ${selected === "개인" ? "text-gray-700" : "text-gray-400"}`}
+            className={`w-10 h-10 mb-2 ${selected === "개인" ? "text-(--color-purple-light)" : "text-[#939396]"}`}
           />
-          <div className='font-medium'>개인</div>
-          <p className='text-xs text-gray-500 mt-1'>20인 이하 소규모</p>
+          <div className='font-bold'>개인</div>
+          <p className='text-sm font-medium text-[#939396] mt-1'>20인 이하 소규모</p>
         </div>
       </div>
 
-      <section className='mb-6'>
+      <section className='p-5'>
         <p className='font-semibold mb-2'>툴킷 구성</p>
         <ul className='text-sm text-gray-600 list-disc ml-5 space-y-1'>
           <li>GoodBye&Hello 태그</li>
@@ -72,11 +79,12 @@ export default function Step1SelectScale({ onNext }: Step1Props) {
         </ul>
       </section>
 
-      <div className='fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto w-full flex gap-2 bg-white border-t border-gray-100 px-4 py-3'>
-        <Button disabled={!selected} onClick={handleNext} className='w-full'>
+      <div className='flex-shrink-0 sticky bottom-0 bg-white px-5 pt-4 pb-8'>
+        <Button theme="purple" disabled={!selected} onClick={handleNext} className='w-full'>
           주최 신청하기
         </Button>
       </div>
+      </main>
     </div>
   );
 }

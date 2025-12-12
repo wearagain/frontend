@@ -3,9 +3,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { usePartyHostStore } from "@/store/useHostStore";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { loadDaumPostcode } from "@/utils/loadDaumPostcode";
 import { generatePartyTitle } from "@/utils/generatePartyTitle";
+import { validateStep3 } from "@/utils/validations/partyHostValidation.ts";
+import type { Step3Errors } from "@/utils/validations/partyHostValidation.ts";
+import { ArrowRight, CalendarDays, Clock3, CircleX } from "lucide-react";
 
 interface Step3Props {
   onNext: () => void;
@@ -37,6 +40,24 @@ export default function Step3PartyInfo({ onNext, onBack }: Step3Props) {
   const [, setPartyTitle] = useState(store.partyTitle);
   const [partyDescription, setPartyDescription] = useState(store.partyDescription);
 
+  // 터치 상태
+  const [touched, setTouched] = useState({
+    openAt: false,
+    closeAt: false,
+    address: false,
+    maxAttendeeCnt: false,
+    maxChangeCnt: false,
+  });
+
+  // 실시간 유효성 검증
+  const errors: Step3Errors = useMemo(() => {
+    return validateStep3({ openAt, closeAt, address, maxAttendeeCnt, maxChangeCnt }, touched);
+  }, [openAt, closeAt, address, maxAttendeeCnt, maxChangeCnt, touched]);
+
+  const handleBlur = (field: keyof typeof touched) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+  };
+
   useEffect(() => {
     loadDaumPostcode().catch((err) => console.error(err));
   }, []);
@@ -44,6 +65,7 @@ export default function Step3PartyInfo({ onNext, onBack }: Step3Props) {
   const handleAddressSelect = (selectedAddress: string) => {
     setAddress(selectedAddress);
     setAddressDetail("");
+    setTouched((prev) => ({ ...prev, address: true }));
 
     if (window.kakao?.maps) {
       const geocoder = new window.kakao.maps.services.Geocoder();
@@ -75,6 +97,24 @@ export default function Step3PartyInfo({ onNext, onBack }: Step3Props) {
   };
 
   const handleNext = () => {
+    // 모든 필드 터치 처리
+    setTouched({
+      openAt: true,
+      closeAt: true,
+      address: true,
+      maxAttendeeCnt: true,
+      maxChangeCnt: true,
+    });
+
+    const allErrors = validateStep3(
+      { openAt, closeAt, address, maxAttendeeCnt, maxChangeCnt },
+      { openAt: true, closeAt: true, address: true, maxAttendeeCnt: true, maxChangeCnt: true }
+    );
+
+    if (Object.keys(allErrors).length > 0) {
+      return;
+    }
+
     const generatedTitle = generatePartyTitle(address, store.groupName);
     setPartyTitle(generatedTitle);
 
@@ -93,35 +133,78 @@ export default function Step3PartyInfo({ onNext, onBack }: Step3Props) {
   };
 
   return (
-    <div>
-      <h2 className='mb-4'>파티 주최를 위한 정보를 입력해 주세요</h2>
+    <div className='flex flex-col h-screen'>
+      <header className='bg-white shrink-0 border-b sticky top-0 border-[#E0E2E4] z-10'>
+        <h2 className='text-lg font-semibold px-5 pt-6 mb-5'>
+          파티 주최를 위한 정보를
+          <br />
+          입력해 주세요
+        </h2>
+      </header>
 
-      <div className='space-y-6 mb-6'>
-        <div className='p-4 bg-white'>
-          <h3 className='font-semibold mb-3'>파티 정보</h3>
+      <main className='flex-1 overflow-y-auto custom-scroll'>
+        <div className='h-fit shrink-0 px-5 pt-5 mb-14 space-y-4'>
+          <h3 className='font-semibold mb-5'>파티 정보</h3>
 
           <div className='flex flex-col gap-4'>
             {/* 날짜 */}
             <div className='flex flex-col gap-2'>
               <Label>날짜</Label>
-              <div className='flex items-center gap-2'>
-                <Input type='date' value={openAt} onChange={(e) => setOpenAt(e.target.value)} />
-                <span>→</span>
-                <Input type='date' value={closeAt} onChange={(e) => setCloseAt(e.target.value)} />
+              <div className='w-full rounded-lg border border-[#E4E4E4] bg-white px-4 py-4 text-base font-medium outline-none resize-none flex items-center'>
+                <div className='flex items-center gap-2 flex-1'>
+                  <CalendarDays size={20} className='text-[#222222]' />
+                  <Input
+                    type='date'
+                    value={openAt}
+                    onChange={(e) => setOpenAt(e.target.value)}
+                    onBlur={() => handleBlur("openAt")}
+                    className={`border-0 bg-transparent px-0 py-0 text-base font-medium placeholder:text-[#939396] focus-visible:ring-0 focus-visible:ring-offset-0 appearance-none [-webkit-appearance:none] [-moz-appearance:textfield] [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden [&::-webkit-clear-button]:hidden ${errors.openAt ? "text-[#F23F3F]" : "text-[#222222]"}`}
+                    placeholder='시작 날짜'
+                  />
+                </div>
+                <ArrowRight size={18} className='text-[#222222] shrink-0 mr-2' />
+                <div className='flex items-center gap-2 flex-1'>
+                  <CalendarDays size={20} className='text-[#222222]' />
+                  <Input
+                    type='date'
+                    value={closeAt}
+                    onChange={(e) => setCloseAt(e.target.value)}
+                    onBlur={() => handleBlur("closeAt")}
+                    className={`border-0 bg-transparent px-0 py-0 text-base font-medium placeholder:text-[#939396] focus-visible:ring-0 focus-visible:ring-offset-0 appearance-none [-webkit-appearance:none] [-moz-appearance:textfield] [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden [&::-webkit-clear-button]:hidden ${errors.closeAt ? "text-[#F23F3F]" : "text-[#222222]"}`}
+                    placeholder='종료 날짜'
+                  />
+                </div>
               </div>
+              {(errors.openAt || errors.closeAt) && (
+                <span className='text-[#F23F3F] text-xs'>{errors.openAt || errors.closeAt}</span>
+              )}
             </div>
 
             {/* 시간 */}
             <div className='flex flex-col gap-2'>
               <Label>시간</Label>
-              <div className='flex items-center gap-2'>
-                <Input type='time' value={openTime} onChange={(e) => setOpenTime(e.target.value)} />
-                <span>→</span>
-                <Input
-                  type='time'
-                  value={closeTime}
-                  onChange={(e) => setCloseTime(e.target.value)}
-                />
+              <div className='w-full rounded-lg border border-[#E4E4E4] bg-white px-4 py-4 text-base font-medium outline-none resize-none flex items-center gap-2'>
+                <div className='flex items-center gap-2 flex-1'>
+                  <Clock3 size={20} className='text-[#222222]' />
+                  <Input
+                    type='time'
+                    value={openTime}
+                    onChange={(e) => setOpenTime(e.target.value)}
+                    className='border-0 bg-transparent px-0 py-0 text-base font-medium placeholder:text-[#939396] focus-visible:ring-0 focus-visible:ring-offset-0 text-[#222222] appearance-none [-webkit-appearance:none] [-moz-appearance:textfield] [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden [&::-webkit-clear-button]:hidden'
+                    placeholder='시작 시간'
+                  />
+                </div>
+                <ArrowRight size={18} className='text-[#222222] shrink-0' />
+                <div className='flex items-center gap-2 flex-1'>
+                  <Clock3 size={20} className='text-[#222222]' />
+                  <Input
+                    type='time'
+                    value={closeTime}
+                    onChange={(e) => setCloseTime(e.target.value)}
+                    className='border-0 bg-transparent px-0 py-0 text-base font-medium placeholder:text-[#939396] focus-visible:ring-0 focus-visible:ring-offset-0 text-[#222222] appearance-none [-webkit-appearance:none] [-moz-appearance:textfield] [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden [&::-webkit-clear-button]:hidden'
+                    placeholder='종료 시간'
+                  />
+                </div>
               </div>
             </div>
 
@@ -133,15 +216,14 @@ export default function Step3PartyInfo({ onNext, onBack }: Step3Props) {
                   placeholder='주소'
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
+                  onBlur={() => handleBlur("address")}
+                  className={errors.address ? "border-red-500" : ""}
                 />
-                <Button
-                  type='button'
-                  onClick={openPostcode}
-                  className='bg-(--color-purple-light) hover:opacity-90 text-sm w-24 h-[42px] whitespace-nowrap'
-                >
+                <Button type='button' theme={"purple"} onClick={openPostcode} className='w-1/3'>
                   검색
                 </Button>
               </div>
+              {errors.address && <span className='text-red-500 text-xs'>{errors.address}</span>}
               <Input
                 placeholder='상세 주소'
                 value={addressDetail}
@@ -156,42 +238,64 @@ export default function Step3PartyInfo({ onNext, onBack }: Step3Props) {
                 <Input
                   placeholder='인원'
                   type='number'
-                  min={0}
+                  min={1}
                   value={maxAttendeeCnt}
                   onChange={(e) => setMaxAttendeeCnt(e.target.value)}
+                  onBlur={() => handleBlur("maxAttendeeCnt")}
+                  className={errors.maxAttendeeCnt ? "border-red-500" : ""}
                 />
+                {errors.maxAttendeeCnt && (
+                  <span className='text-red-500 text-xs'>{errors.maxAttendeeCnt}</span>
+                )}
               </div>
               <div className='flex flex-col gap-2'>
                 <Label>최대 교환 의류 수</Label>
                 <Input
                   placeholder='수량'
                   type='number'
-                  min={0}
+                  min={1}
                   value={maxChangeCnt}
                   onChange={(e) => setMaxChangeCnt(e.target.value)}
+                  onBlur={() => handleBlur("maxChangeCnt")}
+                  className={errors.maxChangeCnt ? "border-red-500" : ""}
                 />
+                {errors.maxChangeCnt && (
+                  <span className='text-red-500 text-xs'>{errors.maxChangeCnt}</span>
+                )}
               </div>
             </div>
 
             {/* 소개 */}
             <div className='flex flex-col gap-2'>
               <Label>소개</Label>
-              <textarea
-                className='w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none resize-none min-h-[100px]'
-                placeholder='파티 소개'
-                value={partyDescription}
-                onChange={(e) => setPartyDescription(e.target.value)}
-              />
+              <div className='relative w-full mb-5'>
+                <textarea
+                  className='w-full rounded-lg border border-[#E4E4E4] focus-visible:border-[#222222] bg-white px-4 py-4 pr-10 text-base font-medium outline-none resize-none h-fit'
+                  placeholder='파티 소개'
+                  value={partyDescription}
+                  onChange={(e) => setPartyDescription(e.target.value)}
+                />
+                {partyDescription && (
+                  <button
+                    type='button'
+                    aria-label='소개 입력값 삭제'
+                    onClick={() => setPartyDescription("")}
+                    className='absolute right-3 top-3 text-white'
+                  >
+                    <CircleX size={18} fill='#939396' />
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </main>
 
-      <div className='fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto w-full flex gap-2 bg-white border-t border-gray-100 px-4 py-3'>
-        <Button onClick={onBack} className='w-1/2 bg-gray-300 text-gray-700'>
+      <div className='flex shrink-0 sticky bottom-0 bg-white px-5 pt-4 pb-8 gap-2'>
+        <Button theme={"purple"} variant={"muted"} onClick={onBack} className='w-1/3'>
           이전
         </Button>
-        <Button onClick={handleNext} className='w-1/2'>
+        <Button theme={"purple"} onClick={handleNext} className='w-2/3'>
           다음
         </Button>
       </div>

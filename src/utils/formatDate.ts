@@ -1,31 +1,21 @@
-export const formatDate = (isoDate: string): string => {
-  if (!isoDate) return "-";
+import { getDateTime } from "@/utils/common/convertDataUtils.ts"
 
-  const date = new Date(isoDate);
-  if (Number.isNaN(date.getTime())) return "-";
-
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-
-  return `${year}.${month}.${day}`;
+/** yyyy.MM.dd */
+export const formatDate = (value?: string | Date | null): string => {
+  return getDateTime(value, "yyyy.MM.dd");
 };
 
-export const formatDateKR = (dateString: string) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+/** yyyy년 M월 d일 */
+export const formatDateKR = (value?: string | Date | null): string => {
+  return getDateTime(value, "yyyy년 M월 d일");
 };
 
-export const formatDateTimeKR = (dateString: string) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-  });
+/** yyyy년 M월 d일 HH시 */
+export const formatDateTimeKR = (value?: string | Date | null): string => {
+  return getDateTime(value, "yyyy년 M월 d일 HH시");
+};
+
+/** yyyy년 M월 d일(E) HH:mm */
+export const formatDateTimeFullKR = (value?: string | Date | null): string => {
+  return getDateTime(value, "yyyy년 M월 d일(E) HH:mm");
 };

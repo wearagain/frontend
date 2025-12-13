@@ -12,6 +12,7 @@ import ManageModal from "@/components/admin/party/manage/Modal/ManageModal.tsx";
 import type { ManageAction, SelectedItemStatus } from "@/types/admin/party.ts";
 import { usePatchPartyStatus } from "@/hooks/admin/party/manage/usePatchPartyStatus.ts";
 import ManageList from "@/components/admin/party/manage/ManageList/ManageList.tsx";
+// import { useDeletePartyApplication } from "@/hooks/admin/party/applications/useDeletePartyApplication.ts";
 
 
 export default function PartyManagePage() {
@@ -28,6 +29,7 @@ export default function PartyManagePage() {
   const [action, setAction] = useState<ManageAction | null>(null);
 
   const { mutateAsync: mutatePartyStatus } = usePatchPartyStatus();
+  // const { mutateAsync: deleteParty } = useDeletePartyApplication(data?.applicationId ?? "");
 
   const modalInstance = { setOpenModal, setAction };
 

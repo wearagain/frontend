@@ -5,7 +5,7 @@ import {
 } from "@/constants/adminConstants.ts";
 import type {
   DeliveryStatus,
-  OrderAction, PartyApplicationResponse,
+  OrderAction, OrderResponse
 } from "@/types/admin/party.ts";
 import { getNextDeliveryStatus } from "@/utils/admin/party/getNextStatus.ts";
 import { OrderCard } from "@/components/admin/party/orders/OrderList/OrderCard.tsx";
@@ -14,7 +14,7 @@ import { OrderSection } from "@/components/admin/party/orders/OrderList/OrderSec
 interface OrderListProps {
   total: number;
 
-  groupedData: Record<DeliveryStatus, PartyApplicationResponse[]>,
+  groupedData: Record<DeliveryStatus, OrderResponse[]>,
 
   modalInstance?: {
     setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -36,7 +36,7 @@ export default function OrderList(
     descriptionMap: DeliveryStatusDescription,
     getNextStatus: getNextDeliveryStatus,
     checkedAction: "confirm" as OrderAction,
-    children: (item: PartyApplicationResponse) => <OrderCard {...item} />,
+    children: (item: OrderResponse) => <OrderCard {...item} />,
   };
 
   return (
@@ -55,7 +55,7 @@ export default function OrderList(
                 <div className="divider-compact" />
                 <OrderSection
                   header={title as DeliveryStatus}
-                  items={items as PartyApplicationResponse[]}
+                  items={items as OrderResponse[]}
                   canSelect={!title || CHANGEABLE_ORDER_STATUS.includes(title)}
                   {...sectionProps}
                   {...props}
@@ -67,7 +67,7 @@ export default function OrderList(
         <>
           <OrderSection
             header={filterType}
-            items={groupedData[filterType] as PartyApplicationResponse[]}
+            items={groupedData[filterType] as OrderResponse[]}
             canSelect={CHANGEABLE_ORDER_STATUS.includes(filterType)}
             {...sectionProps}
             {...props}

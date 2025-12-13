@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import type { DeliveryStatus } from "@/types/admin/party.ts";
-import { getPartyApplications } from "@/apis/admin/party/applications/getPartyApplications.ts";
+import { getOrders } from "@/apis/admin/party/orders/getOrders.ts";
 
 export const useGetPartyOrderList = () => {
   const query = useQuery({
     queryKey: ["admin", "party", "orders"],
-    queryFn: getPartyApplications,
+    queryFn: getOrders,
   });
 
   const groupedData = query.data?.reduce<Record<DeliveryStatus | 'NULL', typeof query.data>>(
@@ -32,6 +32,5 @@ export const useGetPartyOrderList = () => {
     'NULL': [],
   };
 
-  console.log(groupedData);
   return { ...query, groupedData };
 };

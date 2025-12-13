@@ -3,10 +3,10 @@ import defaultThumbnail from "@/assets/images/default.png";
 import { useNavigate } from "react-router";
 import { getDateTime } from "@/utils/common/convertDataUtils.ts";
 import { DeliveryStatusDescription } from "@/constants/adminConstants.ts";
-import type { PartyApplicationResponse } from "@/types/admin/party.ts";
+import type { OrderResponse } from "@/types/admin/party.ts";
 
 
-export const OrderCard = (item: PartyApplicationResponse) => {
+export const OrderCard = (item: OrderResponse) => {
   const {
     id,
     partyTitle,

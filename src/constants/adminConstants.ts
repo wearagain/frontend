@@ -53,7 +53,7 @@ export const GROUP2_KEYS = [
   "maxAttendeeCnt",
   "currentAttendeeCnt",
   "maxChangeCnt",
-  "partyDescription",
+  "description",
 ] as const;
 
 export const GROUP3_KEYS = [

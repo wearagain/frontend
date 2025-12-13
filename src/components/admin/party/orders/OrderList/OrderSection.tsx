@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type {
-  AdminPartyModalProps, DeliveryStatus, OrderAction, PartyApplicationResponse,
+  AdminPartyModalProps, DeliveryStatus, OrderAction, OrderResponse,
 } from "@/types/admin/party.ts";
 import PartyCardHeader from "@/components/admin/party/common/SectionList/PartyCardHeader.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
@@ -8,7 +8,7 @@ import SectionController from "@/components/admin/party/orders/OrderList/Section
 import { useOrderSelectionStore } from "@/store/useOrderSelectionStore.ts";
 
 interface OrderSectionProps {
-  items: PartyApplicationResponse[];
+  items: OrderResponse[];
   header: DeliveryStatus;
   canSelect: boolean;
 
@@ -19,7 +19,7 @@ interface OrderSectionProps {
   getNextStatus: (status: DeliveryStatus) => DeliveryStatus;
   descriptionMap: Partial<Record<DeliveryStatus, string>>;
 
-  children: (item: PartyApplicationResponse) => React.ReactNode;
+  children: (item: OrderResponse) => React.ReactNode;
 
   isOrder?: boolean;
 }

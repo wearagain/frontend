@@ -109,6 +109,70 @@ export interface PartyManageDetail {
   ymap: number | null;
 }
 
+export interface ClothingItem {
+  clothingNumber: string;
+  mainCategory: string;
+  subCategory: string;
+  description: string;
+  imageUrls: string[];
+}
+
+export interface PartyParticipantsResponse {
+  id: string;
+  partyId: string;
+  partyTitle: string;
+  address: string;
+  addressDetail: string;
+  userId: string;
+  name: string;
+  phone: string;
+  email: string;
+  clothingItems: ClothingItem[];
+  attendanceDate: string;
+  status: ApplicationStatus
+  appliedAt: string;
+  processedAt: string;
+  qrCode: string;
+  qrExpiresAt: string;
+}
+
+export interface OrderResponse {
+  id: string;
+  // partyId: string;
+  partyTitle: string;
+  price: number;
+  desiredDate: string;
+  maxAttendeeCnt: number;
+  deliveryStatus: DeliveryStatus;
+  imgUrl: string;
+}
+
+export interface OrderDetailResponse {
+  appliedAt: string;
+  isGroup: boolean;
+  name: string;
+  groupName: string;
+  phone: string;
+  email: string;
+  partyTitle: string;
+  partyStatus: PartyStatus;
+  partyId: string;
+  openAt: string;
+  closeAt: string;
+  address: string;
+  maxAttendeeCnt: number;
+  currentAttendeeCnt: number;
+  maxChangeCnt: number;
+  description: string;
+  deliveryStatus: DeliveryStatus;
+  price: number;
+  deliveryAddress: string;
+  desiredDate: string;
+  trackingNumber: string;
+  taxReceipt: boolean;
+  taxId: string;
+}
+
 
 export type ManageAction = "control" | "confirm" | "delete";
 

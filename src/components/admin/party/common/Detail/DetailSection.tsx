@@ -1,8 +1,8 @@
 import { PartyDetailMap, SIDE_BUTTON_TEXT } from "@/constants/adminConstants.ts";
 import HostInfoDropdown from "@/components/admin/party/common/HostInfoDropdown.tsx";
 import PayDeliveryButton from "@/components/admin/party/common/PayDeliveryButton.tsx";
-import { getSideButton } from "@/utils/admin/party/getSideButtons.ts";
 import { generateDetailValues, type PartyDetailKey } from "@/utils/admin/party/generateDetailValues.ts";
+import { useSideButtonHandlers } from "@/hooks/admin/party/common/useSideButtonHandlers.ts";
 
 interface DetailSectionProps {
   title: string;
@@ -39,6 +39,8 @@ export default function DetailSection(
     }
   };
 
+  const getSideButton = useSideButtonHandlers();
+
   return (
     <div className="flex flex-col gap-5 px-5 pb-5">
       <div className="flex items-center justify-between">
@@ -64,7 +66,11 @@ export default function DetailSection(
 
               {isDetail && SIDE_BUTTON_TEXT[key] &&
                 <button
-                  onClick={() => headerButtonProps?.[key] ? getSideButton[key]?.(headerButtonProps?.[key]): getSideButton[key]?.(value)}
+                  onClick={() => {
+                    if (key in getSideButton) {
+                      (getSideButton as Record<string, Function>)[key]?.(headerButtonProps?.[key] ?? value);
+                    }
+                  }}
                   className="min-w-max font-regular text-sm underline text-[#939396]"
                 >
                   {SIDE_BUTTON_TEXT[key]}

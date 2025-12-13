@@ -1,25 +1,24 @@
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { generateLabelValueObjWithAll } from "@/utils/common/generateLabelValueObj.tsx";
 import { ApplicationStatusDescription } from "@/constants/adminConstants.ts";
-import type { ApplicationStatus, PartyParticipantsResponse } from "@/types/admin/party.ts";
+import type { ApplicationStatus, PartyApplicationResponse } from "@/types/admin/party.ts";
 import StatusHandler from "@/components/common/StatusHandler.tsx";
 import { FilterHeader } from "@/components/common/FilterHeader.tsx";
-import { useGetPartyParticipants } from "@/hooks/admin/party/participants/useGetPartyParticipants.ts";
-import ParticipantRow from "@/components/admin/party/participants/ParticipantsList/ParticipantRow.tsx";
+import PartyRow from "@/components/admin/party/applications/ApplicationList/PartyRow.tsx";
+import { useGetPartyApplications } from "@/hooks/admin/party/applications/useGetPartyApplications.ts";
 
-export default function PartyParticipantsPage() {
+export default function PartyParticipantDetailPage() {
   const tabs = generateLabelValueObjWithAll(ApplicationStatusDescription);
 
-  const {partyId} = useParams<{partyId: string}>();
   const {
     data,
     isLoading, isError, error,
-  } = useGetPartyParticipants(partyId ?? "");
+  } = useGetPartyApplications();
 
   const [filterType, setFilterType] = useState<ApplicationStatus | "ALL">("ALL");
 
-  const [filteredData, setFilteredData] = useState<PartyParticipantsResponse[] | undefined>(data);
+  const [filteredData, setFilteredData] = useState<PartyApplicationResponse[] | undefined>(data);
 
   const handleChangeFilter = (type: ApplicationStatus | "ALL") => {
     setFilterType(type);
@@ -40,7 +39,7 @@ export default function PartyParticipantsPage() {
             className="font-bold text-base">{filterType == "ALL" ? "전체" : ApplicationStatusDescription[filterType]} {filteredData?.length ?? ""}</h4>
           <div>
             {filteredData?.map((item) => (
-              <ParticipantRow {...item} />
+              <PartyRow {...item} />
             ))}
           </div>
         </div>

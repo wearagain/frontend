@@ -12,6 +12,9 @@ import PartyParticipantsPage from "@/pages/admin/party/PartyParticipantsPage.tsx
 import PartyDetailDropdownContents from "@/components/common/header/DropdownMenu/PartyDetailDropdownContents.tsx";
 import PartyOrderDetailPage from "@/pages/admin/party/PartyOrderDetailPage.tsx";
 import TrackingModal from "@/components/admin/party/orders/Modal/TrackingModal.tsx";
+import PartyParticipantDetailPage from "@/pages/admin/party/PartyParticipantDetailPage.tsx";
+import PartyParticipantDropdownContents
+  from "@/components/common/header/DropdownMenu/PartyParticipantDropdownContents.tsx";
 
 const adminRoutes: RouteObject = {
   path: "/admin",
@@ -112,9 +115,21 @@ const adminRoutes: RouteObject = {
           },
         },
         {
-          path: "participants",
+          path: "manage/:partyId/participants",
           element: <PartyParticipantsPage />,
-          handle: { header: { type: "adminBase", label: "주최 신청 관리", showBack: true } },
+          handle: { header: { type: "adminBase", label: "참여 신청자 관리", showBack: true } },
+        },
+        {
+          path: "manage/:partyId/participants/detail",
+          element: <PartyParticipantDetailPage />,
+          handle: {
+            header: {
+              type: "adminClose",
+              showLabel: false,
+              to: -1,
+              children: <PartyParticipantDropdownContents />,
+            },
+          },
         },
       ],
     },

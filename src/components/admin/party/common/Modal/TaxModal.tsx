@@ -1,10 +1,10 @@
 import Modal from "@/components/ui/modal.tsx";
-import type { PartyApplicationResponse, TaxUpdateRequest } from "@/types/admin/party.ts";
+import type { OrderDetailResponse, TaxUpdateRequest } from "@/types/admin/party.ts";
 import TaxModalContent from "@/components/admin/party/common/Modal/ModalContents/TaxModalContent.tsx";
 
 interface TaxModalProps {
   setOpenModal: (v: boolean) => void;
-  data: PartyApplicationResponse | undefined;
+  data: OrderDetailResponse | undefined;
   mutate: (params: TaxUpdateRequest) => Promise<void>;
 }
 

@@ -1,15 +1,16 @@
 import Modal from "@/components/ui/modal.tsx";
 import { DeliveryStatusDescription } from "@/constants/adminConstants.ts";
 import type {
-  PartyApplicationResponse,
+  OrderDetailResponse,
   PatchDeliveryStatusParams,
 } from "@/types/admin/party.ts";
 import { getNextDeliveryStatus } from "@/utils/admin/party/getNextStatus.ts";
 
 interface DeliveryModalProps {
   setOpenModal: (v: boolean) => void;
-  data: PartyApplicationResponse | undefined;
+  data: OrderDetailResponse | undefined;
   mutate: (params: PatchDeliveryStatusParams) => Promise<void>;
+  applicationId: string | undefined;
 }
 
 export default function DeliveryModal(
@@ -17,6 +18,7 @@ export default function DeliveryModal(
     setOpenModal,
     data,
     mutate,
+    applicationId,
   }: DeliveryModalProps) {
 
   const nextStatus = getNextDeliveryStatus(data?.deliveryStatus);
@@ -26,15 +28,12 @@ export default function DeliveryModal(
   const handleConfirm = async () => {
       try {
 
-        if (!data?.id) return alert("ID가 필요합니다.");
+        if (!applicationId) return alert("ID가 필요합니다.");
 
         const queryBody: PatchDeliveryStatusParams = {
-          applicationId: data.id,
+          applicationId: applicationId,
           params: {
             deliveryStatus: nextStatus,
-            deliveryMemo: data?.deliveryMemo,
-            trackingNumber: data?.trackingNumber,
-            courierName: data?.courierName,
           },
         };
 

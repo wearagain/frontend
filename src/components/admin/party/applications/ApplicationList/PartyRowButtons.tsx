@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { ApplicationStatus } from "@/types/admin/party.ts";
 
 interface PartyRowButtonsProps {
-  status: ApplicationStatus | null;
+  status: ApplicationStatus;
   id: string;
 }
 
@@ -25,7 +25,7 @@ export default function PartyRowButtons({ status, id }: PartyRowButtonsProps) {
   const navigate = useNavigate();
   return (
     <div className="min-w-max flex gap-2">
-      {!status ?
+      {status == "PENDING" ?
         (<>
             <Button
               type="button"

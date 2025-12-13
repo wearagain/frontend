@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button.tsx";
 
-export default function PartyDetailBottomBar() {
+export default function ApplicationDetailBottomBar() {
   const navigate = useNavigate();
   return (
     <div className='bottombar-wrapper'>
@@ -19,7 +19,6 @@ export default function PartyDetailBottomBar() {
         <Button
           type='button'
           onClick={() => navigate(`reject`)}
-          // onClick={() => navigate(`/community/exchange/${id}/request`)}
           theme='purple'
           variant='primary'
           className='flex-1 h-full min-h-[52px]'

@@ -25,20 +25,18 @@ export default function DetailHeader(
 
   const getBadgeStyle = (status: string | null) => {
     switch (status) {
-      case "승인":
+      case "APPROVED":
         return "greenOutline";
-      case "반려":
+      case "REJECTED":
         return "redOutline";
-      case "취소":
+      case "CANCELLED":
         return "redOutline";
-      case "반송":
+      case "RETURNED":
         return "redOutline";
       default:
         return "normalOutline";
     }
   };
-
-  console.log("applied at", appliedAt)
 
   return (
     <div className="p-5 flex justify-between relative">

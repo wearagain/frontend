@@ -11,7 +11,7 @@ interface FormData {
 
 export default function RejectModal() {
   const navigate = useNavigate();
-  const { partyId } = useParams<{ applicationId: string }>();
+  const { applicationId } = useParams<{ applicationId: string }>();
 
   const {
     control,
@@ -25,7 +25,7 @@ export default function RejectModal() {
 
   const onSubmit = (values: FormData) => {
     mutateApplicationStatus({
-      id: partyId!,
+      id: applicationId!,
       action: "reject",
       params: {
         reason: values.reason,

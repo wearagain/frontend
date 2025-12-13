@@ -7,7 +7,7 @@ import { useMutateApplicationStatus } from "@/hooks/admin/party/applications/use
 
 export default function ApproveModal() {
   const navigate = useNavigate();
-  const { partyId } = useParams<{ partyId: string }>();
+  const { applicationId } = useParams<{ applicationId: string }>();
 
   const [thumbnail, setThumbnail] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -63,7 +63,7 @@ export default function ApproveModal() {
           type='button'
           onClick={() =>
             mutateApplicationStatus({
-              id: partyId!,
+              id: applicationId!,
               action: "approve",
             })
           }

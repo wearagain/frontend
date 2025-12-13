@@ -11,7 +11,7 @@ function PartyCardList() {
   return (
     <div className='py-5'>
       <div className='flex justify-between items-center px-5 mb-5'>
-        <h2>진행중인 파티</h2>
+        <h2>모집중인 파티</h2>
         <p
           onClick={handlePartyNavigation}
           className='text-[#939396] cursor-pointer hover:underline'

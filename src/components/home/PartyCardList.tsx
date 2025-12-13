@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import PartyCard from "./PartyCard";
+import { homePartyCards } from "@/utils/home/dummy";
+import { PartyStatusDescription } from "@/constants/homeConstants.ts";
 
 function PartyCardList() {
   const navigate = useNavigate();
@@ -7,23 +9,28 @@ function PartyCardList() {
     navigate("/party");
   };
   return (
-    <div className='px-5'>
-      <div className='flex justify-between pb-5'>
-        <h2 className='text-lg font-bold'>진행중인 파티</h2>
-        {/*PartyListPage로 이동 */}
-        <p onClick={handlePartyNavigation} className='text-gray-500 cursor-pointer'>
+    <div className='py-5'>
+      <div className='flex justify-between items-center px-5 mb-5'>
+        <h2>진행중인 파티</h2>
+        <p
+          onClick={handlePartyNavigation}
+          className='text-[#939396] cursor-pointer hover:underline'
+        >
           전체보기
         </p>
       </div>
-      <div className='pb-5 flex'>
-        {/* api 연결 필요, 최근 파티 여러개 슬라이드 -> Map 사용 예정 */}
-        <PartyCard
-          title={"광진 능동파티"}
-          participants={10}
-          date={"2025년 11월 3일"}
-          status={"진행예정"}
-          thumbnailSrc={""}
-        />
+      <div className='px-5 flex gap-3 min-h-[100px] snap-x pr-4 snap-mandatory overflow-x-auto w-full custom-scroll'>
+        {homePartyCards.map((party) => (
+          <PartyCard
+            key={party.title}
+            title={party.title}
+            participants={party.currentAttendees}
+            date={party.date}
+            status={PartyStatusDescription[party.status]}
+            thumbnailSrc={party.thumbnailSrc}
+            onClick={handlePartyNavigation}
+          />
+        ))}
       </div>
     </div>
   );

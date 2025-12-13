@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import DonationCard from "@/components/home/DonatioinCard";
-import MagazineCardList from "@/components/home/MagazineCardList";
+import MagazineList from "@/components/home/NewsLetterList.tsx";
 import MenuTab from "@/components/home/MenuTab";
 import NoticeList from "@/components/home/NoticeList";
 import PartyCardList from "@/components/home/PartyCardList";
 import ProfileSection from "@/components/home/ProfileSection";
-import { Button } from "@/components/ui/button";
+import RedirectHome from "@/components/home/RedirectHome";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ const HomePage = () => {
     navigate("/auth/signin");
   };
   return (
-    <div>
+    <div className='flex flex-col h-full overflow-y-auto custom-scroll'>
       <ProfileSection
         isLoggedIn={true}
         userProfile={{
@@ -23,15 +22,11 @@ const HomePage = () => {
         }}
         toLogIn={handleLoginNavigation}
       />
-      <div className='divider' />
+      <div className='divider-compact' />
       <PartyCardList />
       <MenuTab userRole='USER' />
-      <div className='divider' />
-      <div className='p-5'>
-        <Button onClick={() => {}} className='w-full'>다시입다연구소 알아보기</Button>
-        <DonationCard />
-      </div>
-      <MagazineCardList />
+      <MagazineList />
+      <RedirectHome />
       <NoticeList />
     </div>
   );

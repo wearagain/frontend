@@ -1,7 +1,7 @@
-import { ProfileIcon, Ticket } from "@/assets/icons";
-import { Leaf } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { ProfileIcon } from "@/assets/icons";
 
-interface Props {
+interface ProfileProps {
   isLoggedIn: boolean;
   userProfile: {
     nickname: string;
@@ -11,11 +11,13 @@ interface Props {
   toLogIn: () => void;
 }
 
-function ProfileSection({ isLoggedIn, userProfile, toLogIn }: Props) {
+function ProfileSection({ isLoggedIn, userProfile, toLogIn }: ProfileProps) {
+  const navigate = useNavigate();
+
   if (!isLoggedIn) {
     return (
       <div className='p-5'>
-        <div onClick={toLogIn} className='text-gray-500 cursor-pointer'>
+        <div onClick={toLogIn} className='text-[#555558] cursor-pointer'>
           로그인을 해주세요
         </div>
       </div>
@@ -24,19 +26,12 @@ function ProfileSection({ isLoggedIn, userProfile, toLogIn }: Props) {
   return (
     <div className='p-5 flex space-x-3'>
       <ProfileIcon className='w-12 h-12' />
-      <div className='flex flex-col w-full'>
-        <h2 className='font-bold text-lg cursor-pointer'>{userProfile.nickname} 님</h2>
-        <div className='flex justify-between'>
-          <div className='flex items-center space-x-1 cursor-pointer'>
-            <Ticket className='w-4 h-4' />
-            <span className='text-gray-500 text-sm'>보유티켓</span>
-            <span className='text-sm font-bold'>{userProfile.ticket}</span>
-          </div>
-          <div className='flex items-center space-x-1 cursor-pointer'>
-            <Leaf className='w-4 h-4' />
-            <span className='text-gray-500 text-sm'>CO2 절감량</span>
-            <span className='text-sm font-bold'>{userProfile.impact}kg</span>
-          </div>
+      <div className='flex flex-col justify-between w-full'>
+        <h3>{userProfile.nickname} 님</h3>
+        <div className='flex items-center gap-1 text-[#555558] text-sm font-normal'>
+          <p className='cursor-pointer hover:underline' onClick={() => {navigate("/qr")}}>보유 티켓 <span className='font-bold'>{userProfile.ticket}</span></p>
+          <div className='w-0.5 h-0.5 rounded-full bg-[#D9D9D9]'/>
+          <p className='cursor-pointer hover:underline' onClick={() => {navigate("/impact/receipt")}}>CO<sub>2</sub> 절감 <span className='font-bold'>{userProfile.impact}kg</span></p>
         </div>
       </div>
     </div>

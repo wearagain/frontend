@@ -2,10 +2,11 @@ import { PartyDetailMap, SIDE_BUTTON_TEXT } from "@/constants/adminConstants.ts"
 import HostInfoDropdown from "@/components/admin/party/common/HostInfoDropdown.tsx";
 import PayDeliveryButton from "@/components/admin/party/common/PayDeliveryButton.tsx";
 import { getSideButton } from "@/utils/admin/party/getSideButtons.ts";
+import { generateDetailValues, type PartyDetailKey } from "@/utils/admin/party/generateDetailValues.ts";
 
 interface DetailSectionProps {
   title: string;
-  data: Record<string, any> | null;
+  data: Record<string, any> | undefined;
   keys: readonly string[];
   labelWidth?: string;
   headerButtonType?: "host" | "payDelivery";
@@ -18,7 +19,7 @@ interface DetailSectionProps {
 export default function DetailSection(
   {
     title,
-    data,
+    data = [],
     keys,
     labelWidth = "w-[45px]",
     headerButtonType,
@@ -46,8 +47,12 @@ export default function DetailSection(
       </div>
       <div className="flex flex-col gap-4">
         {keys.map((key) => {
-          const value = data?.[key];
-          if (value === undefined) return null;
+          const rawValue = data?.[key];
+
+          const value =
+            generateDetailValues[key as PartyDetailKey]
+              ? generateDetailValues[key as PartyDetailKey]!(data)
+              : rawValue;
 
           return (
             <div className='flex justify-between items-start gap-5'>
@@ -59,7 +64,7 @@ export default function DetailSection(
 
               {isDetail && SIDE_BUTTON_TEXT[key] &&
                 <button
-                  onClick={() => headerButtonProps?.[key] ? getSideButton[key]?.(headerButtonProps?.[key]): getSideButton[key]?.(headerButtonProps?.[key])}
+                  onClick={() => headerButtonProps?.[key] ? getSideButton[key]?.(headerButtonProps?.[key]): getSideButton[key]?.(value)}
                   className="min-w-max font-regular text-sm underline text-[#939396]"
                 >
                   {SIDE_BUTTON_TEXT[key]}

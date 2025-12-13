@@ -1,10 +1,10 @@
-import PartyCardHeader from "@/components/admin/party/common/List/PartyCardHeader.tsx";
+import PartyCardHeader from "@/components/admin/party/common/SectionList/PartyCardHeader.tsx";
 import {
   CHANGEABLE_ORDER_STATUS,
   CHANGEABLE_PARTY_STATUS,
   DeliveryStatusDescription,
 } from "@/constants/adminConstants.ts";
-import { PartySection } from "@/components/admin/party/common/List/PartySection.tsx";
+import { PartySection } from "@/components/admin/party/common/SectionList/PartySection.tsx";
 import type {
   DeliveryStatus,
   ManageAction,

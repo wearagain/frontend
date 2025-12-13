@@ -8,7 +8,7 @@ import {
 import type { ManageBarStatus, ManageAction, DeliveryStatus, SelectedItemStatus } from "@/types/admin/party.ts";
 import { useGetPartyOrderList } from "@/hooks/admin/party/orders/useGetPartyOrderList.ts";
 import OrderList from "@/components/admin/party/orders/OrderList/OrderList.tsx";
-import ActionBottomBar from "@/components/admin/party/orders/OrderList/ActionBottomBar.tsx";
+import ActionBottomBar from "@/components/admin/party/orders/OrderListBottom/ActionBottomBar.tsx";
 
 
 export interface ManageModalProps {

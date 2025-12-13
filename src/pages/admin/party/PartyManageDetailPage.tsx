@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import ManageDetailHeader from "@/components/admin/party/manage/ManageDetail/ManageDetailHeader.tsx";
-import DetailSection from "@/components/admin/party/applications/AppliedPartyDetail/DetailSection.tsx";
 import { Outlet } from "react-router-dom";
-import { GROUP1_KEYS, GROUP2_KEYS, GROUP3_KEYS, SINGLE_KEYS } from "@/constants/adminConstants.ts";
+import DetailSection from "@/components/admin/party/common/Detail/DetailSection.tsx";
 import StatusHandler from "@/components/common/StatusHandler.tsx";
+import DeliveryModal from "@/components/admin/party/common/Modal/DeliveryModal.tsx";
+import TaxModal from "@/components/admin/party/common/Modal/TaxModal.tsx";
+import DetailHeader from "@/components/admin/party/common/Detail/DetailHeader.tsx";
 import { useGetPartyManageDetail } from "@/hooks/admin/party/manage/useGetPartyManageDetail.ts";
 import { useGetPartyApplicationDetail } from "@/hooks/admin/party/applications/useGetPartyApplicationDetail.ts";
-import DeliveryModal from "@/components/admin/party/manage/modal/DeliveryModal.tsx";
-import { getNextDeliveryStatus } from "@/utils/admin/party/getNextStatus.ts";
 import { usePatchDeliveryStatus } from "@/hooks/admin/party/applications/usePatchDeliveryStatus.ts";
-import TaxModal from "@/components/admin/party/manage/modal/TaxModal.tsx";
 import { usePatchTax } from "@/hooks/admin/party/manage/usePatchTax.ts";
+import { GROUP1_KEYS, GROUP2_KEYS, GROUP3_KEYS, SINGLE_KEYS } from "@/constants/adminConstants.ts";
 
 export default function PartyManageDetailPage() {
   const { partyId } = useParams<{ partyId: string }>();
@@ -29,18 +28,18 @@ export default function PartyManageDetailPage() {
   return (
     <StatusHandler isLoading={isLoading} isError={isError} error={error}>
       <div>
-        <ManageDetailHeader
-          id={data?.id}
+        <DetailHeader
+          id={partyId ?? ""}
           title={data?.title}
-          openAt={data?.openAt}
+          appliedAt={applicationData?.appliedAt}
           isGroup={data?.isGroup}
-          status={data?.status}
+          partyStatus={data?.status}
           deliveryStatus={applicationData?.deliveryStatus}
         />
         <div className="divider" />
         <DetailSection
           isDetail title="주최자 정보" data={applicationData}
-          keys={data?.isGroup == "단체" ? GROUP1_KEYS : SINGLE_KEYS} headerButtonType="host" />
+          keys={data?.isGroup ? GROUP1_KEYS : SINGLE_KEYS} headerButtonType="host" />
         <div className="divider" />
         <DetailSection
           isDetail title="파티 정보"
@@ -60,15 +59,8 @@ export default function PartyManageDetailPage() {
       {openDeliveryModal &&
         <DeliveryModal
           setOpenModal={setOpenDeliveryModal}
-          nextStatus={getNextDeliveryStatus(applicationData?.deliveryStatus)}
           mutate={mutateDeliveryStatus}
-          data={{
-            deliveryStatus: getNextDeliveryStatus(applicationData?.deliveryStatus),
-            deliveryMemo: applicationData?.deliveryMemo,
-            trackingNumber: applicationData?.trackingNumber,
-            courierName: applicationData?.courierName,
-          }}
-          applicationId={data?.applicationId}
+          data={applicationData}
         />
       }
       {/** TODO: API patch Tax 연결 */}
@@ -76,10 +68,7 @@ export default function PartyManageDetailPage() {
         <TaxModal
           setOpenModal={setOpenTaxModal}
           mutate={mutateTax}
-          data={{
-            taxId: applicationData?.taxId,
-            name: data?.name,
-          }}
+          data={applicationData}
         />
       }
     </StatusHandler>

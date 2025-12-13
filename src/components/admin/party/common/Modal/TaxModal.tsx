@@ -1,9 +1,10 @@
 import Modal from "@/components/ui/modal.tsx";
-import type { TaxUpdateRequest } from "@/types/admin/party.ts";
+import type { PartyApplicationResponse, TaxUpdateRequest } from "@/types/admin/party.ts";
+import TaxModalContent from "@/components/admin/party/common/Modal/ModalContents/TaxModalContent.tsx";
 
 interface TaxModalProps {
   setOpenModal: (v: boolean) => void;
-  data: TaxUpdateRequest;
+  data: PartyApplicationResponse | undefined;
   mutate: (params: TaxUpdateRequest) => Promise<void>;
 }
 
@@ -14,9 +15,14 @@ export default function TaxModal(
     mutate,
   }: TaxModalProps) {
 
+  const queryBody: TaxUpdateRequest = {
+    taxId: data?.taxId ?? undefined,
+    name: data?.name ?? undefined,
+  };
+
   const handleConfirm = async () => {
     try {
-      await mutate(data);
+      await mutate(queryBody);
       setOpenModal(false);
     } catch {
     }
@@ -30,7 +36,7 @@ export default function TaxModal(
       onConfirm={handleConfirm}
     >
       <div className="text-sm font-medium font-[#939396]">
-        해당 결제/배송 상태를 변경합니다.
+        <TaxModalContent {...queryBody}/>
       </div>
     </Modal>
   );

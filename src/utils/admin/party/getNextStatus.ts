@@ -1,6 +1,5 @@
 import type { PartyStatus } from "@/types/party.ts";
 import type { DeliveryStatus } from "@/types/admin/party.ts";
-import { DeliveryStatusDescription } from "@/constants/adminConstants.ts";
 
 export function getNextPartyStatus(status: PartyStatus | null): PartyStatus | undefined {
   switch (status) {
@@ -13,17 +12,16 @@ export function getNextPartyStatus(status: PartyStatus | null): PartyStatus | un
   }
 }
 
-type DeliveryStatusKOR = (typeof DeliveryStatusDescription)[keyof typeof DeliveryStatusDescription];
 
-export function getNextDeliveryStatus(status: DeliveryStatusKOR | null): DeliveryStatus {
+export function getNextDeliveryStatus(status: DeliveryStatus | undefined | null): DeliveryStatus {
   switch (status) {
-    case "결제전":
+    case "PENDING":
       return "PREPARING";
-    case "상품준비중":
+    case "PREPARING":
       return "IN_TRANSIT";
-    case "배송중":
+    case "IN_TRANSIT":
       return "DELIVERED";
-    case "반송":
+    case "DELIVERED":
       return "RETURNED";
     default:
       return "PENDING";

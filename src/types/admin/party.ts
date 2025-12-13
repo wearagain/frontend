@@ -47,6 +47,14 @@ export interface PartyApplicationResponse {
   ymap?: number | null;
 }
 
+export type PartyApplicationView = Omit<
+  PartyApplicationResponse,
+  "openAt" | "closeAt"
+> & {
+  dateFromTo: string;
+  timeFromTo: string;
+};
+
 export type ApplicationStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
 
 export type DeliveryStatus = "PENDING" | "PREPARING" | "IN_TRANSIT" | "DELIVERED" | "RETURNED";
@@ -109,14 +117,14 @@ export type ManageBarStatus = "control" | "confirm" | "delete" | null;
 
 export interface DeliveryStatusUpdateRequest {
   deliveryStatus: DeliveryStatus;
-  deliveryMemo?: string;
-  trackingNumber?: string;
-  courierName?: string
+  deliveryMemo?: string | null;
+  trackingNumber?: string | null;
+  courierName?: string | null;
 }
 
 export interface TaxUpdateRequest {
-  taxId: string;
-  name: string;
+  taxId?: string;
+  name?: string;
 }
 
 export interface SelectedItemStatus<TStatus extends string> {

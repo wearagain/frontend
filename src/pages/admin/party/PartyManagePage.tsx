@@ -8,7 +8,7 @@ import type { PartyStatus } from "@/types/party.ts";
 import AddPartyButton from "@/components/admin/party/manage/ManageBottom/AddPartyButton.tsx";
 import ControlBottomBar from "@/components/admin/party/manage/ManageBottom/ControlBottomBar.tsx";
 import ActionBottomBar from "@/components/admin/party/manage/ManageBottom/ActionBottomBar.tsx";
-import ManageModal from "@/components/admin/party/modal/ManageModal.tsx";
+import ManageModal from "@/components/admin/party/manage/Modal/ManageModal.tsx";
 import type { ManageBarStatus, ManageAction, SelectedItemStatus } from "@/types/admin/party.ts";
 import { usePatchPartyStatus } from "@/hooks/admin/party/manage/usePatchPartyStatus.ts";
 import ManageList from "@/components/admin/party/manage/ManageList/ManageList.tsx";

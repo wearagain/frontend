@@ -1,13 +1,11 @@
 import Modal from "@/components/ui/modal.tsx";
 import { DeliveryStatusDescription } from "@/constants/adminConstants.ts";
-import type { DeliveryStatus, DeliveryStatusUpdateRequest } from "@/types/admin/party.ts";
+import type { DeliveryStatusUpdateRequest, PartyApplicationResponse } from "@/types/admin/party.ts";
 import { getNextDeliveryStatus } from "@/utils/admin/party/getNextStatus.ts";
 
 interface DeliveryModalProps {
   setOpenModal: (v: boolean) => void;
-  nextStatus: DeliveryStatus;
-  applicationId: string;
-  data: DeliveryStatusUpdateRequest;
+  data: PartyApplicationResponse | undefined;
   mutate: (params: PatchDeliveryStatusParams) => Promise<void>;
 }
 
@@ -18,25 +16,31 @@ interface PatchDeliveryStatusParams {
 
 export default function DeliveryModal(
   {
-    nextStatus,
     setOpenModal,
-    applicationId,
     data,
     mutate,
   }: DeliveryModalProps) {
+
+  const nextStatus = getNextDeliveryStatus(data?.deliveryStatus);
+
   const header = `${nextStatus && DeliveryStatusDescription[nextStatus]} 처리하시겠습니까?`;
 
   const handleConfirm = async () => {
     try {
-      await mutate({
-        applicationId: applicationId,
+
+      if(!data?.id) return alert("ID가 필요합니다.")
+
+      const queryBody: PatchDeliveryStatusParams = {
+        applicationId: data.id,
         params: {
-          deliveryStatus: getNextDeliveryStatus(data?.deliveryStatus),
+          deliveryStatus: nextStatus,
           deliveryMemo: data?.deliveryMemo,
           trackingNumber: data?.trackingNumber,
           courierName: data?.courierName,
         },
-      });
+      };
+
+      await mutate(queryBody);
       setOpenModal(false);
     } catch {
     }

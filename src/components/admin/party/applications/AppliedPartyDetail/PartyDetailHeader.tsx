@@ -1,26 +1,22 @@
-import { format } from "date-fns";
-import { ko } from "date-fns/locale/ko";
 import { Badge } from "@/components/ui/badge.tsx";
+import { getDateTime } from "@/utils/common/convertDataUtils.ts";
 
-export interface PartyDetailHeaderProps {
-  id: string;
-  partyTitle: string;
-  appliedAt: string;
-  isGroup: boolean;
-  status: string;
+export interface PartyDetailHeaderProps<TStatus extends string> {
+  id?: string;
+  partyTitle?: string;
+  appliedAt?: string;
+  isGroup?: boolean;
+  status?: TStatus | null;
 }
 
-export default function PartyDetailHeader(
+export default function PartyDetailHeader<TStatus extends string>(
   {
     id,
     partyTitle,
     appliedAt,
     isGroup,
     status,
-  }: PartyDetailHeaderProps) {
-  const dateFormatted = format(new Date(appliedAt), "yyyy.MM.dd HH:mm", {
-    locale: ko,
-  });
+  }: PartyDetailHeaderProps<TStatus>) {
 
   const getBadgeStyle = (status: string | null) => {
     switch (status) {
@@ -43,10 +39,10 @@ export default function PartyDetailHeader(
           <p className="text-[#D9D9D9]">·</p>
           <p>{isGroup}</p>
         </div>
-        <p className="font-medium text-[#939396]">{dateFormatted} 신청</p>
+        <p className="font-medium text-[#939396]">{getDateTime(appliedAt)} 신청</p>
       </div>
       <div className="flex sticky top-0 right-5">
-        <Badge variant={getBadgeStyle(status)}>{status}</Badge>
+        {status && <Badge variant={getBadgeStyle(status)}>{status}</Badge>}
       </div>
     </div>
   );

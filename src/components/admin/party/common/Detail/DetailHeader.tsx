@@ -1,19 +1,19 @@
 import { Badge } from "@/components/ui/badge.tsx";
 import { getDateTime } from "@/utils/common/convertDataUtils.ts";
 import type { PartyStatus } from "@/types/party.ts";
-import { PartyStatusDescription } from "@/constants/adminConstants.ts";
+import { DeliveryStatusDescription, PartyStatusDescription } from "@/constants/adminConstants.ts";
 import type { DeliveryStatus } from "@/types/admin/party.ts";
 
-export interface OrderDetailHeaderProps {
-  id: string;
-  title: string;
-  appliedAt: string;
-  isGroup: boolean;
-  partyStatus: PartyStatus;
-  deliveryStatus: DeliveryStatus | null;
+export interface DetailHeaderProps {
+  id?: string;
+  title?: string;
+  appliedAt?: string;
+  isGroup?: boolean;
+  partyStatus?: PartyStatus;
+  deliveryStatus?: DeliveryStatus | null;
 }
 
-export default function OrderDetailHeader(
+export default function DetailHeader(
   {
     id,
     title,
@@ -21,7 +21,7 @@ export default function OrderDetailHeader(
     isGroup,
     partyStatus,
     deliveryStatus,
-  }: OrderDetailHeaderProps) {
+  }: DetailHeaderProps) {
 
   const getBadgeStyle = (status: string | null) => {
     switch (status) {
@@ -38,6 +38,7 @@ export default function OrderDetailHeader(
     }
   };
 
+  console.log("applied at", appliedAt)
 
   return (
     <div className="p-5 flex justify-between relative">
@@ -46,14 +47,16 @@ export default function OrderDetailHeader(
         <div className="font-medium text-[#555558] flex gap-1 min-w-max">
           <p>{id}</p>
           <p className="text-[#D9D9D9]">·</p>
-          <p>{isGroup}</p>
+          <p>{isGroup ? "단체" : "개인"}</p>
         </div>
         <p className="font-medium text-[#939396]">{getDateTime(appliedAt)} 생성</p>
       </div>
       <div className="flex sticky top-0 right-5 gap-2">
-        <Badge variant={getBadgeStyle(partyStatus)}>{PartyStatusDescription[partyStatus]}</Badge>
-        {deliveryStatus && <Badge variant={getBadgeStyle(deliveryStatus)}>{deliveryStatus}</Badge>}
+        {partyStatus && <Badge variant={getBadgeStyle(partyStatus)}>{PartyStatusDescription[partyStatus]}</Badge>}
+        {deliveryStatus &&
+          <Badge variant={getBadgeStyle(deliveryStatus)}>{DeliveryStatusDescription[deliveryStatus]}</Badge>}
       </div>
     </div>
-  );
+  )
+    ;
 }

@@ -1,7 +1,7 @@
-import PartyCardHeader from "@/components/admin/party/common/List/PartyCardHeader.tsx";
+import PartyCardHeader from "@/components/admin/party/common/SectionList/PartyCardHeader.tsx";
 import type { PartyStatus } from "@/types/party.ts";
 import { CHANGEABLE_PARTY_STATUS, PartyStatusDescription } from "@/constants/adminConstants.ts";
-import { PartySection } from "@/components/admin/party/common/List/PartySection.tsx";
+import { PartySection } from "@/components/admin/party/common/SectionList/PartySection.tsx";
 import type { ManageAction, ManageBarStatus, PartyManageResponse, SelectedItemStatus } from "@/types/admin/party.ts";
 import { getNextPartyStatus } from "@/utils/admin/party/getNextStatus.ts";
 import { ManageCard } from "@/components/admin/party/manage/ManageList/ManageCard.tsx";

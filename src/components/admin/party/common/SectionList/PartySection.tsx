@@ -5,8 +5,8 @@ import type {
   PartyManageResponse,
   SelectedItemStatus,
 } from "@/types/admin/party.ts";
-import PartyCardHeader from "@/components/admin/party/common/List/PartyCardHeader.tsx";
-import SectionController from "@/components/admin/party/common/List/SectionController.tsx";
+import PartyCardHeader from "@/components/admin/party/common/SectionList/PartyCardHeader.tsx";
+import SectionController from "@/components/admin/party/common/SectionList/SectionController.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 
 export interface PartySectionProps<

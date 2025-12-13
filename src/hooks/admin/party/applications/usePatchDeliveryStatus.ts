@@ -22,7 +22,6 @@ export const usePatchDeliveryStatus = () => {
       });
     },
     onError: (error: AxiosError<any>) => {
-      alert(error.response?.data?.error ?? "승인 도중 오류가 발생했습니다.다시 시도해주세요.");
       console.error(error);
     },
   });

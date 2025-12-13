@@ -36,15 +36,18 @@ export default function TrackingModal() {
         return mutateDeliveryStatus(queryBody);
       }),
     );
-
+    const fulfilled = results.filter(r => r.status === "fulfilled");
     const rejected = results.filter(r => r.status === "rejected");
+
     if (rejected.length > 0) {
       alert(`${rejected.length}건의 요청이 실패했습니다. 다시 시도해주세요.`);
-    } else {
-      alert(`${DeliveryStatusDescription[selected.nextStatus]} 처리가 완료되었습니다.`);
-      reset();
-      navigate(-1);
     }
+
+    if (fulfilled.length > 0) {
+      alert(`${DeliveryStatusDescription[selected.nextStatus]} 처리가 완료되었습니다.`);
+    }
+    reset();
+    navigate(-1);
   };
 
   return (

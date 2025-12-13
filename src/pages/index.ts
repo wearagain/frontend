@@ -24,6 +24,7 @@ import ExchangeListPage from "./community/exchange/ExchangeListPage.tsx";
 import ClothDetailPage from "./community/exchange/ClothDetailPage.tsx";
 import ExchangeRequestPage from "./community/exchange/ExchangeRequestPage";
 import RequestInfoPage from "./community/exchange/RequestInfoPage";
+import GoodbyeHelloTagPage from "./impact/GoodbyeHelloTagPage";
 
 export {
   NotFound,
@@ -52,4 +53,5 @@ export {
   ClothDetailPage,
   ExchangeRequestPage,
   RequestInfoPage,
+  GoodbyeHelloTagPage,
 };

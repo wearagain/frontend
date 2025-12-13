@@ -25,6 +25,7 @@ import {
   ExchangeRequestPage,
   ClothDetailPage,
   RequestInfoPage,
+  GoodbyeHelloTagPage,
 } from "@/pages";
 import ChatPageWrapper from "@/pages/chat/ChatPageWrapper";
 import PartyChatPageWrapper from "@/pages/chat/PartyChatPageWrapper";
@@ -249,6 +250,20 @@ const userRoutes: RouteObject = {
       element: <QrCheckinPage />,
       handle: { header: { type: "none" } },
     }, // /qr?type=checkin or /qr?type=scan
+
+    // Impact
+    {
+      path: "impact",
+      children: [
+        {
+          path: "tag",
+          element: <GoodbyeHelloTagPage />,
+          handle: {
+            header: { type: "base", label: "GoodBye&Hello", showBack: true },
+          },
+        },
+      ],
+    }, // /impact/tag
   ],
 };
 

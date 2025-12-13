@@ -1,17 +1,17 @@
 import { Button } from "@/components/ui/button.tsx";
-import type { ManageBarStatus } from "@/types/admin/party.ts";
+import type { ManageAction } from "@/types/admin/party.ts";
 
 interface ControlBottomBarProps {
-  setBottombarStatus: React.Dispatch<React.SetStateAction<ManageBarStatus>>;
+  setAction: React.Dispatch<React.SetStateAction<ManageAction | null>>;
 }
 
-export default function ControlBottomBar({ setBottombarStatus }: ControlBottomBarProps) {
+export default function ControlBottomBar({ setAction }: ControlBottomBarProps) {
   return (
     <div className="bottombar-wrapper">
       <div className="bottombar">
         <Button
           type="button"
-          onClick={() => setBottombarStatus("confirm")}
+          onClick={() => setAction("confirm")}
           theme="purple"
           variant="primary"
           className="flex-1 h-full min-h-[52px]"
@@ -21,7 +21,7 @@ export default function ControlBottomBar({ setBottombarStatus }: ControlBottomBa
 
         <Button
           type="button"
-          onClick={() => setBottombarStatus("delete")}
+          onClick={() => setAction("delete")}
           theme="purple"
           variant="primary"
           className="flex-1 h-full min-h-[52px]"

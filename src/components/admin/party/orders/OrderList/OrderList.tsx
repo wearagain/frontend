@@ -1,33 +1,24 @@
 import PartyCardHeader from "@/components/admin/party/common/SectionList/PartyCardHeader.tsx";
 import {
   CHANGEABLE_ORDER_STATUS,
-  CHANGEABLE_PARTY_STATUS,
   DeliveryStatusDescription,
 } from "@/constants/adminConstants.ts";
-import { PartySection } from "@/components/admin/party/common/SectionList/PartySection.tsx";
 import type {
   DeliveryStatus,
-  ManageAction,
-  ManageBarStatus, PartyApplicationResponse,
-  SelectedItemStatus,
+  OrderAction, PartyApplicationResponse,
 } from "@/types/admin/party.ts";
 import { getNextDeliveryStatus } from "@/utils/admin/party/getNextStatus.ts";
 import { OrderCard } from "@/components/admin/party/orders/OrderList/OrderCard.tsx";
+import { OrderSection } from "@/components/admin/party/orders/OrderList/OrderSection.tsx";
 
 interface OrderListProps {
   total: number;
 
   groupedData: Record<DeliveryStatus, PartyApplicationResponse[]>,
-  activeSection: DeliveryStatus | null,
-  setActiveSection: React.Dispatch<React.SetStateAction<DeliveryStatus | null>>,
 
-  selected: SelectedItemStatus<DeliveryStatus>,
-  setSelected: React.Dispatch<React.SetStateAction<SelectedItemStatus<DeliveryStatus>>>,
-
-  setBottombarStatus: React.Dispatch<React.SetStateAction<ManageBarStatus>>,
   modalInstance?: {
     setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-    setModalAction: React.Dispatch<React.SetStateAction<ManageAction>>;
+    setAction: React.Dispatch<React.SetStateAction<OrderAction | null>>;
   }
   filterType: DeliveryStatus | "ALL";
 }
@@ -41,6 +32,12 @@ export default function OrderList(
   }: OrderListProps,
 ) {
 
+  const sectionProps = {
+    descriptionMap: DeliveryStatusDescription,
+    getNextStatus: getNextDeliveryStatus,
+    checkedAction: "confirm" as OrderAction,
+    children: (item: PartyApplicationResponse) => <OrderCard {...item} />,
+  };
 
   return (
     <div className="flex-1 overflow-y-auto custom-scroll bottombar-p">
@@ -56,15 +53,11 @@ export default function OrderList(
             items.length != 0 &&
             <span key={title}>
                 <div className="divider-compact" />
-                <PartySection<DeliveryStatus, ManageBarStatus, PartyApplicationResponse>
+                <OrderSection
                   header={title as DeliveryStatus}
                   items={items as PartyApplicationResponse[]}
-                  descriptionMap={DeliveryStatusDescription}
                   canSelect={!title || CHANGEABLE_ORDER_STATUS.includes(title)}
-                  getNextStatus={getNextDeliveryStatus}
-                  checkedAction="control"
-                  isOrder
-                  children={(item: PartyApplicationResponse) => <OrderCard {...item} />}
+                  {...sectionProps}
                   {...props}
                 />
               </span>
@@ -72,14 +65,11 @@ export default function OrderList(
         </>
       ) : (
         <>
-          <PartySection<DeliveryStatus, ManageBarStatus, PartyApplicationResponse>
+          <OrderSection
             header={filterType}
             items={groupedData[filterType] as PartyApplicationResponse[]}
-            descriptionMap={DeliveryStatusDescription}
-            canSelect={CHANGEABLE_PARTY_STATUS.includes(filterType)}
-            getNextStatus={getNextDeliveryStatus}
-            checkedAction="control"
-            children={(item: PartyApplicationResponse) => <OrderCard {...item} />}
+            canSelect={CHANGEABLE_ORDER_STATUS.includes(filterType)}
+            {...sectionProps}
             {...props}
           />
         </>

@@ -11,6 +11,7 @@ import PartyOrdersPage from "@/pages/admin/party/PartyOrdersPage.tsx";
 import PartyParticipantsPage from "@/pages/admin/party/PartyParticipantsPage.tsx";
 import PartyDetailDropdownContents from "@/components/common/header/DropdownMenu/PartyDetailDropdownContents.tsx";
 import PartyOrderDetailPage from "@/pages/admin/party/PartyOrderDetailPage.tsx";
+import TrackingModal from "@/components/admin/party/orders/Modal/TrackingModal.tsx";
 
 const adminRoutes: RouteObject = {
   path: "/admin",
@@ -96,6 +97,17 @@ const adminRoutes: RouteObject = {
               showLabel: false,
               to: -1,
               children: <PartyDetailDropdownContents />,
+            },
+          },
+        },
+        {
+          path: "orders/tracking",
+          element: <TrackingModal />,
+          handle: {
+            header: {
+              type: "adminClose",
+              showLabel: false,
+              to: -1,
             },
           },
         },

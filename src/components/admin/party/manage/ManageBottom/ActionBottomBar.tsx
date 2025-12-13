@@ -1,9 +1,13 @@
 import { Button } from "@/components/ui/button.tsx";
 import { PartyStatusDescription } from "@/constants/adminConstants.ts";
-import type { AdminPartyModalProps, ManageAction } from "@/types/admin/party.ts";
+import type {
+  AdminPartyModalProps,
+  ManageAction,
+} from "@/types/admin/party.ts";
 import type { PartyStatus } from "@/types/party.ts";
 
-interface ActionBottomBarProps extends AdminPartyModalProps {
+interface ActionBottomBarProps
+  extends AdminPartyModalProps<ManageAction> {
   ids?: string[];
   nextStatus?: PartyStatus;
   action: ManageAction;
@@ -14,7 +18,7 @@ export default function ActionBottomBar(
     action,
     ids,
     nextStatus = "ONGOING",
-    setModalAction,
+    setAction,
     setOpenModal,
   }: ActionBottomBarProps) {
 
@@ -29,8 +33,8 @@ export default function ActionBottomBar(
         <Button
           type="button"
           onClick={() => {
-            setModalAction(action);
-            setOpenModal(true);
+            setAction?.(action);
+            setOpenModal?.(true);
           }}
           theme="purple"
           variant="primary"

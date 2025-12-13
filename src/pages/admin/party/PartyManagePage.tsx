@@ -9,7 +9,7 @@ import AddPartyButton from "@/components/admin/party/manage/ManageBottom/AddPart
 import ControlBottomBar from "@/components/admin/party/manage/ManageBottom/ControlBottomBar.tsx";
 import ActionBottomBar from "@/components/admin/party/manage/ManageBottom/ActionBottomBar.tsx";
 import ManageModal from "@/components/admin/party/manage/Modal/ManageModal.tsx";
-import type { ManageBarStatus, ManageAction, SelectedItemStatus } from "@/types/admin/party.ts";
+import type { ManageAction, SelectedItemStatus } from "@/types/admin/party.ts";
 import { usePatchPartyStatus } from "@/hooks/admin/party/manage/usePatchPartyStatus.ts";
 import ManageList from "@/components/admin/party/manage/ManageList/ManageList.tsx";
 
@@ -17,39 +17,35 @@ import ManageList from "@/components/admin/party/manage/ManageList/ManageList.ts
 export default function PartyManagePage() {
   const { data, groupedData, isLoading, isError, error } = useGetPartyManageList();
 
-  console.log(groupedData);
-
   const tabs = generateLabelValueObjWithAll(PartyStatusDescription);
   const [filterType, setFilterType] = useState<PartyStatus | "ALL">("ALL");
 
   const [activeSection, setActiveSection] = useState<PartyStatus | null>(null);
 
-  const [bottombarStatus, setBottombarStatus] = useState<ManageBarStatus>(null);
-
   const [selected, setSelected] = useState<SelectedItemStatus<PartyStatus>>({});
 
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [modalAction, setModalAction] = useState<ManageAction>(null);
+  const [action, setAction] = useState<ManageAction | null>(null);
 
   const { mutateAsync: mutatePartyStatus } = usePatchPartyStatus();
 
-  const modalInstance = { setOpenModal, setModalAction };
+  const modalInstance = { setOpenModal, setAction };
 
-  const isManageAction = (status: ManageBarStatus): status is Exclude<ManageAction, null> => {
+  const isManageAction = (status: ManageAction): status is Exclude<ManageAction, null> => {
     return status === "confirm" || status === "delete";
   };
 
   const renderBottomComponents = () => {
-    if (bottombarStatus == null) return <AddPartyButton />;
-    if (bottombarStatus == "control") return <ControlBottomBar setBottombarStatus={setBottombarStatus} />;
-    if (isManageAction(bottombarStatus))
-      return <ActionBottomBar action={bottombarStatus} {...selected} {...modalInstance} />;
+    if (action == null) return <AddPartyButton />;
+    if (action == "control") return <ControlBottomBar setAction={setAction} />;
+    if (isManageAction(action))
+      return <ActionBottomBar action={action} {...selected} {...modalInstance} />;
   };
 
   /** bottombar 컴포넌트 초기화 */
   useEffect(() => {
     if (activeSection === null) {
-      setBottombarStatus(null);
+      setAction(null);
       setSelected({});
     }
   }, [activeSection]);
@@ -66,30 +62,20 @@ export default function PartyManagePage() {
           setActiveSection={setActiveSection}
           selected={selected}
           setSelected={setSelected}
-          setBottombarStatus={setBottombarStatus}
           modalInstance={modalInstance}
           filterType={filterType}
         />
         {renderBottomComponents()}
       </div>
 
-      {openModal && <ManageModal
-        setOpenModal={setOpenModal}
-        action={modalAction}
-        {...selected}
-        onConfirm={async () => {
-          if (!selected.ids || !selected.nextStatus) return;
-          try {
-            await mutatePartyStatus({
-              id: selected.ids[0],
-              status: selected.nextStatus,
-              count: selected.ids.length,
-            });
-            setOpenModal(false);
-          } catch {
-          }
-        }}
-      />}
+      {openModal &&
+        <ManageModal
+          setOpenModal={setOpenModal}
+          action={action}
+          {...selected}
+          mutate={mutatePartyStatus}
+        />
+      }
     </StatusHandler>
   );
 }

@@ -3,7 +3,7 @@ import defaultThumbnail from "@/assets/images/default.png";
 import { useNavigate } from "react-router";
 import { getDateTime } from "@/utils/common/convertDataUtils.ts";
 import { DeliveryStatusDescription } from "@/constants/adminConstants.ts";
-import type {  PartyApplicationResponse } from "@/types/admin/party.ts";
+import type { PartyApplicationResponse } from "@/types/admin/party.ts";
 
 
 export const OrderCard = (item: PartyApplicationResponse) => {
@@ -11,7 +11,6 @@ export const OrderCard = (item: PartyApplicationResponse) => {
     id,
     partyTitle,
     desiredDate,
-    // currentAttendeeCnt,
     maxAttendeeCnt,
     // imageUrl = "",
     deliveryStatus,
@@ -49,10 +48,14 @@ export const OrderCard = (item: PartyApplicationResponse) => {
           <div className="flex items-center gap-2 text-sm text-[#939396]">
             <Users size={14} fill="#939396" stroke="#939396" />
             <span>{maxAttendeeCnt}</span>
-            <span className="text-[#D9D9D9]">•</span>
-            <span className="font-medium text-[var(--color-purple-light)] truncate">
-              {deliveryStatus && DeliveryStatusDescription[deliveryStatus]}
-            </span>
+            {deliveryStatus &&
+              <>
+                <span className="text-[#D9D9D9]">•</span>
+                <span className="font-medium text-[var(--color-purple-light)] truncate">
+              {DeliveryStatusDescription[deliveryStatus]}
+              </span>
+              </>
+            }
           </div>
         </div>
       </div>

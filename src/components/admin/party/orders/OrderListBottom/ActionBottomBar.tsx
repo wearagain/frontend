@@ -1,17 +1,30 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button.tsx";
-import type {  DeliveryStatus } from "@/types/admin/party.ts";
+import type {
+  AdminPartyModalProps,
+  DeliveryStatus,
+  OrderAction, OrderItem,
+} from "@/types/admin/party.ts";
 import { DeliveryStatusDescription } from "@/constants/adminConstants.ts";
 
-interface ActionBottomBarProps  {
-  ids?: string[];
+interface ActionBottomBarProps
+  extends AdminPartyModalProps<OrderAction> {
+  items?: OrderItem[];
   nextStatus?: DeliveryStatus;
+  action: OrderAction | null;
 }
 
 export default function ActionBottomBar(
   {
-    ids,
+    items,
     nextStatus = "PREPARING",
+    setAction,
+    setOpenModal,
   }: ActionBottomBarProps) {
+
+  const needTrackingNumber = ["IN_TRANSIT", "DELIVERED"];
+
+  const navigate = useNavigate();
 
   return nextStatus && (
     <div className="bottombar-wrapper">
@@ -19,14 +32,19 @@ export default function ActionBottomBar(
         <Button
           type="button"
           onClick={() => {
-            console.log("navigate");
-            // setOpenModal(true);
+            if (!needTrackingNumber.includes(nextStatus)) {
+              setAction?.("confirm");
+              setOpenModal?.(true);
+            } else {
+              setAction?.(null);
+              navigate(`tracking`);
+            }
           }}
           theme="purple"
           variant="primary"
           className="flex-1 h-full min-h-[52px]"
         >
-          ${ids?.length}개 품목 ${DeliveryStatusDescription[nextStatus]} 처리
+          {items?.length}개 품목 {DeliveryStatusDescription[nextStatus]} 처리
         </Button>
       </div>
     </div>

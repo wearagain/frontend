@@ -3,6 +3,7 @@ import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { postApplicationStatus } from "@/apis/admin/party/applications/postApplicationStatus.ts";
 import type { ApplicationAction } from "@/types/admin/party.ts";
+import { queryClient } from "@/lib/queryClient.ts";
 
 interface MutationProps {
   id: string;
@@ -18,6 +19,9 @@ export const useMutateApplicationStatus = () => {
       return res;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["admin", "party", "applications"],
+      });
       alert("승인이 완료됐습니다.");
     },
     onError: (error: AxiosError<any>) => {

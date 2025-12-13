@@ -5,15 +5,22 @@ import { generateLabelValueObjWithAll } from "@/utils/common/generateLabelValueO
 import {
   DeliveryStatusDescription,
 } from "@/constants/adminConstants.ts";
-import type { ManageBarStatus, ManageAction, DeliveryStatus, SelectedItemStatus } from "@/types/admin/party.ts";
+import type {
+  ManageAction,
+  DeliveryStatus,
+  OrderAction
+} from "@/types/admin/party.ts";
 import { useGetPartyOrderList } from "@/hooks/admin/party/orders/useGetPartyOrderList.ts";
 import OrderList from "@/components/admin/party/orders/OrderList/OrderList.tsx";
 import ActionBottomBar from "@/components/admin/party/orders/OrderListBottom/ActionBottomBar.tsx";
+import { usePatchDeliveryStatus } from "@/hooks/admin/party/applications/usePatchDeliveryStatus.ts";
+import DeliveryModal from "@/components/admin/party/orders/Modal/DeliveryModal.tsx";
+import { useOrderSelectionStore } from "@/store/useOrderSelectionStore.ts";
 
 
 export interface ManageModalProps {
   setOpenModal: (v: boolean) => void;
-  setModalAction: React.Dispatch<React.SetStateAction<ManageAction>>;
+  setAction: React.Dispatch<React.SetStateAction<ManageAction>>;
 }
 
 export default function PartyOrdersPage() {
@@ -22,22 +29,30 @@ export default function PartyOrdersPage() {
   const tabs = generateLabelValueObjWithAll(DeliveryStatusDescription);
   const [filterType, setFilterType] = useState<DeliveryStatus | "ALL">("ALL");
 
-  const [activeSection, setActiveSection] = useState<DeliveryStatus | null>(null);
+  const {
+    selected,
+    activeSection,
+    reset,
+  } = useOrderSelectionStore();
 
-  const [bottombarStatus, setBottombarStatus] = useState<ManageBarStatus>(null);
 
-  const [selected, setSelected] = useState<SelectedItemStatus<DeliveryStatus>>({});
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [action, setAction] = useState<OrderAction | null>(null);
+  const modalInstance = { setOpenModal, setAction };
+
+  const { mutateAsync: mutateDeliveryStatus } = usePatchDeliveryStatus();
 
   const renderBottomComponents = () => {
-    if (bottombarStatus == "control") return <ActionBottomBar {...selected} />;
+    if (action == "confirm")
+      return <ActionBottomBar action={action} {...modalInstance} {...selected} />;
     return null;
   };
 
   /** bottombar 컴포넌트 초기화 */
   useEffect(() => {
     if (activeSection === null) {
-      setBottombarStatus(null);
-      setSelected({});
+      setAction(null);
+      reset();
     }
   }, [activeSection]);
 
@@ -49,16 +64,19 @@ export default function PartyOrdersPage() {
         <OrderList
           total={data?.length ?? 0}
           groupedData={groupedData}
-          activeSection={activeSection}
-          setActiveSection={setActiveSection}
-          selected={selected}
-          setSelected={setSelected}
-          setBottombarStatus={setBottombarStatus}
           filterType={filterType}
+          modalInstance={modalInstance}
         />
         {renderBottomComponents()}
       </div>
 
+      {openModal &&
+        <DeliveryModal
+          setOpenModal={setOpenModal}
+          {...selected}
+          mutate={mutateDeliveryStatus}
+        />
+      }
     </StatusHandler>
   );
 }

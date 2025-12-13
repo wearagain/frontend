@@ -110,10 +110,9 @@ export interface PartyManageDetail {
 }
 
 
-export type ManageAction = "confirm" | "delete" | null;
+export type ManageAction = "control" | "confirm" | "delete";
 
-export type ManageBarStatus = "control" | "confirm" | "delete" | null;
-
+export type OrderAction = "confirm" | "tracking";
 
 export interface DeliveryStatusUpdateRequest {
   deliveryStatus: DeliveryStatus;
@@ -132,8 +131,27 @@ export interface SelectedItemStatus<TStatus extends string> {
   ids?: string[];
 }
 
-export interface AdminPartyModalProps {
-  setOpenModal?: (v: boolean) => void;
-  setModalAction?: React.Dispatch<React.SetStateAction<ManageAction>>;
+export interface SelectedOrderItems<TStatus extends string> {
+  nextStatus: TStatus;
+  items?: OrderItem[];
 }
 
+export interface OrderItem {
+  imgUrl?: string;
+  partyTitle: string;
+  id: string;
+  desiredDate?: string;
+  maxAttendeeCnt?: number;
+  price?: string;
+}
+
+export interface AdminPartyModalProps<TAction extends string> {
+  setOpenModal?: (v: boolean) => void;
+  setAction?: React.Dispatch<React.SetStateAction<TAction | null>>;
+}
+
+
+export interface PatchDeliveryStatusParams {
+  applicationId: string;
+  params: DeliveryStatusUpdateRequest;
+}

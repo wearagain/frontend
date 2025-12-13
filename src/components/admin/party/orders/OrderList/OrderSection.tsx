@@ -1,60 +1,46 @@
 import { useState, useEffect } from "react";
 import type {
-  AdminPartyModalProps,
-  PartyApplicationResponse,
-  PartyManageResponse,
-  SelectedItemStatus,
+  AdminPartyModalProps, DeliveryStatus, OrderAction, PartyApplicationResponse,
 } from "@/types/admin/party.ts";
 import PartyCardHeader from "@/components/admin/party/common/SectionList/PartyCardHeader.tsx";
-import SectionController from "@/components/admin/party/common/SectionList/SectionController.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
+import SectionController from "@/components/admin/party/orders/OrderList/SectionController.tsx";
+import { useOrderSelectionStore } from "@/store/useOrderSelectionStore.ts";
 
-export interface PartySectionProps<
-  TStatus extends string,
-  TAction extends string | null,
-  TItem extends PartyManageResponse |  PartyApplicationResponse
-> {
-  items:  (TItem)[];
-  header: TStatus;
+interface OrderSectionProps {
+  items: PartyApplicationResponse[];
+  header: DeliveryStatus;
   canSelect: boolean;
 
-  activeSection: TStatus | null;
-  setActiveSection: (v: TStatus | null) => void;
+  checkedAction: OrderAction;
 
-  setSelected: React.Dispatch<React.SetStateAction<SelectedItemStatus<TStatus>>>;
-  setBottombarStatus: React.Dispatch<React.SetStateAction<TAction | null>>;
-  checkedAction: TAction;
+  modalInstance?: AdminPartyModalProps<OrderAction>;
 
-  modalInstance?: AdminPartyModalProps;
+  getNextStatus: (status: DeliveryStatus) => DeliveryStatus;
+  descriptionMap: Partial<Record<DeliveryStatus, string>>;
 
-  getNextStatus: (status: TStatus | null) => TStatus | undefined;
-  descriptionMap: Partial<Record<TStatus, string>>;
-
-  children: (item: TItem) => React.ReactNode;
+  children: (item: PartyApplicationResponse) => React.ReactNode;
 
   isOrder?: boolean;
 }
 
-export const PartySection = <
-  TStatus extends string,
-  TAction extends string | null,
-  TItem extends PartyManageResponse |  PartyApplicationResponse
->(
+export const OrderSection = (
   {
     items,
     header,
     canSelect,
-    activeSection,
-    setActiveSection,
-    setSelected,
-    setBottombarStatus,
     checkedAction,
     modalInstance,
     getNextStatus,
     descriptionMap,
     children,
-    isOrder
-  }: PartySectionProps<TStatus, TAction, TItem>) => {
+  }: OrderSectionProps) => {
+
+  const {
+    setSelected,
+    activeSection,
+    setActiveSection,
+  } = useOrderSelectionStore();
 
   /** 아코디언 */
   const [accordian, setAccordian] = useState<boolean>(false);
@@ -100,14 +86,21 @@ export const PartySection = <
 
     const hasChecked = checkedStates.some(Boolean);
 
-    setBottombarStatus(hasChecked ? checkedAction : null);
+    modalInstance?.setAction?.(hasChecked ? checkedAction : null);
 
     setSelected(prev => ({
       ...prev,
       nextStatus: getNextStatus(activeSection),
-      ids: items
+      items: items
         .filter((_, idx) => checkedStates[idx])
-        .map(i => i.id),
+        .map(i => ({
+          // imgUrl: i?.imageUrl,
+          partyTitle: i?.partyTitle,
+          id: i?.id,
+          desiredDate: i?.desiredDate,
+          maxAttendeeCnt: i?.maxAttendeeCnt,
+          // price: i?.price
+        })),
     }));
   }, [checkedStates, activeSection]);
 
@@ -124,7 +117,6 @@ export const PartySection = <
             checked={parentChecked}
             onCheckedChange={clickParentCheckbox}
             isActive={header == activeSection}
-            isOrder={isOrder}
             {...modalInstance} />}
 
         {items.map((item, index) =>

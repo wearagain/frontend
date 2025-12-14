@@ -138,7 +138,7 @@ export interface PartyParticipantsResponse {
 
 export interface OrderResponse {
   id: string;
-  // partyId: string;
+  partyId: string | null;
   partyTitle: string;
   price: number;
   desiredDate: string;
@@ -171,6 +171,7 @@ export interface OrderDetailResponse {
   trackingNumber: string;
   taxReceipt: boolean;
   taxId: string;
+  applicationStatus: ApplicationStatus;
 }
 
 

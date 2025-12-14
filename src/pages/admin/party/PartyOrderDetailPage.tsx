@@ -32,6 +32,7 @@ export default function PartyOrderDetailPage() {
           isGroup={data?.isGroup}
           partyStatus={data?.partyStatus}
           deliveryStatus={data?.deliveryStatus}
+          applicationStatus={data?.applicationStatus}
         />
         <div className="divider" />
         <DetailSection

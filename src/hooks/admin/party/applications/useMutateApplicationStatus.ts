@@ -20,7 +20,7 @@ export const useMutateApplicationStatus = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["admin", "party", "applications"],
+        queryKey: ["admin", "party", "application"],
       });
       alert("승인이 완료됐습니다.");
     },

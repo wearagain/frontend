@@ -6,7 +6,7 @@ export default function AddPartyButton() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("post");
+    navigate("/host");
   };
 
   return (

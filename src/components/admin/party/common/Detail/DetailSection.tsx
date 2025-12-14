@@ -64,7 +64,7 @@ export default function DetailSection(
                 <h4 className="font-medium text-base text-[#555558]">{value == null ? "-" : String(value)}</h4>
               </div>
 
-              {isDetail && SIDE_BUTTON_TEXT[key] &&
+              {isDetail && data?.partyId && SIDE_BUTTON_TEXT[key] &&
                 <button
                   onClick={() => {
                     if (key in getSideButton) {

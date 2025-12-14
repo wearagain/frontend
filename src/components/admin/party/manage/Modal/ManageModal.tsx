@@ -20,7 +20,7 @@ export default function ManageModal({ action, ids, nextStatus, setOpenModal, mut
 
   const confirmText =
     action == "confirm" ?
-      "처리하기" : "삭제하기";
+      "처리하기" : "취소하기";
 
   const clickConfirm = async () => {
     try {

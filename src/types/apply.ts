@@ -1,6 +1,7 @@
 /**
  * 신청 리스트
  */
+import type {DeliveryStatus} from "@/types/admin/party.ts";
 
 // 신청 상태 타입
 export type ParticipantStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
@@ -96,10 +97,11 @@ export interface PartyParticipantResponse {
 
 export interface HostApplicationResponse {
   id: string;
+  partyId?: string;
   isGroup: boolean;
   groupName: string;
-  userId: string;
 
+  userId: string;
   name: string;
   phone: string;
   email: string;
@@ -117,7 +119,7 @@ export interface HostApplicationResponse {
   deliverAddress: string;
   deliverAddressDetail: string;
   desiredDate: string;
-  deliveryStatus?: string;
+  deliveryStatus?: DeliveryStatus;
   deliveryMemo?: string;
   trackingNumber?: string;
   courierName?: string;
@@ -129,15 +131,11 @@ export interface HostApplicationResponse {
 
   status: HostApplicationStatus;
   processMemo: string;
-  appliedAt: string;
+  appliedAt?: string;
   processedAt: string;
+  imageUrl?: string;
+  price?: number;
 
   xMap?: number;
   yMap?: number;
 }
-
-/**
- * 배송 관련
- */
-
-// TODO: 배송 STATUS 추가

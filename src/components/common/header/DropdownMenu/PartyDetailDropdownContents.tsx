@@ -28,7 +28,7 @@ export default function PartyDetailDropdownContents() {
         className="dropdown-menu-item"
         onClick={() => navigate(`${location.pathname}/participants`)}
       >
-        참여자 보기
+         참여자 보기
       </button>
       <div className="border-b border-gray-300 w-full" />
       <button

@@ -50,16 +50,21 @@ export const useApplySubmit = (partyId: string) => {
 
       const { selectedItems, itemsInfo, selectedDate, selectedTime } = applyData;
 
+      const images: string[] = [];
       const clothingItems = selectedItems.flatMap((item) => {
         return Array.from({ length: item.count }, (_, index) => {
           const itemId = `${item.code}-${index}`;
           const info = itemsInfo.get(itemId) || { images: [], description: "" };
 
+          info.images.forEach((image) => {
+            images.push(image);
+          });
           return {
             mainCategory: item.mainCategory,
             subCategory: item.subCategory,
             description: info.description || "",
-            imageUrls: info.images,
+            imageCount: info.images.length,
+            // imageUrls: info.images,
           };
         });
       });
@@ -76,13 +81,32 @@ export const useApplySubmit = (partyId: string) => {
       const attendanceDateTime = new Date(timestamp);
       const attendanceDate = attendanceDateTime.toISOString();
 
-      const payload = {
-        name: userData.nickname,
-        phone: "", // TODO: useMe에 phone 정보 추가 시 사용
-        email: userData.email,
-        clothingItems,
-        attendanceDate,
-      };
+      const payload = new FormData();
+
+      images.forEach((file) => {
+        payload.append("images", file);
+      });
+
+      payload.append("name", userData.nickname);
+      payload.append("phone", "");
+      payload.append("email", userData.email);
+      payload.append("clothingItems", JSON.stringify(clothingItems));  // 배열이나 객체는 JSON 문자열로
+      payload.append("attendanceDate", attendanceDate);
+
+      // const payload = {
+      //   images: images,
+      //   request: {
+      //     name: userData.nickname,
+      //     phone: "", // TODO: useMe에 phone 정보 추가 시 사용
+      //     email: userData.email,
+      //     clothingItems,
+      //     attendanceDate,
+      //   },
+      // };
+
+      for (const [key, value] of payload.entries()) {
+        console.log(key, value);
+      }
 
       const res = await postPartyParticipant(partyId, payload);
       return res;

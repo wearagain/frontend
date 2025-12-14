@@ -25,23 +25,32 @@ export interface ClothingItemRequest {
   mainCategory: string;
   subCategory: string;
   description: string;
-  imageUrls: string[];
+  imageCount: number;
 }
 
 // Response DTO
-export interface ClothingItemResponse extends ClothingItemRequest {
+export interface ClothingItemResponse {
   clothingNumber?: string;
+  mainCategory: string;
+  subCategory: string;
+  description: string;
+  imageUrls: string[];
 }
 
 // 신청 요청 바디
 export interface PartyParticipantRequest {
-  name: string;
-  phone: string;
-  email: string;
+  images: string[]
+  request: {
+    name: string;
+    phone: string;
+    email: string;
 
-  clothingItems: ClothingItemRequest[];
-  attendanceDate: string;
+    clothingItems: ClothingItemRequest[];
+    attendanceDate: string;
+  }
 }
+
+
 
 // 교환 의류 관련
 export interface MyTakenClothingResponse {
@@ -82,6 +91,7 @@ export interface PartyParticipantResponse {
 
   qrCode: string | null;
   qrExpiresAt: string | null;
+  imageUrls?: string[]
 }
 
 export interface HostApplicationResponse {

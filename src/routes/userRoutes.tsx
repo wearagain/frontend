@@ -26,6 +26,10 @@ import {
   ClothDetailPage,
   RequestInfoPage,
   GoodbyeHelloTagPage,
+  PartyHelpPage,
+  ImpactReceiptPage,
+  SettingsPage,
+  UserProfilePage,
 } from "@/pages";
 import ChatPageWrapper from "@/pages/chat/ChatPageWrapper";
 import PartyChatPageWrapper from "@/pages/chat/PartyChatPageWrapper";
@@ -185,6 +189,11 @@ const userRoutes: RouteObject = {
           handle: { header: { type: "base", label: "참여하기", showBack: true } },
         }, // /party
         {
+          path: "help",
+          element: <PartyHelpPage />,
+          handle: { header: { type: "base", label: "문의하기", showBack: true } },
+        }, // /party/help
+        {
           path: ":id",
           element: <PartyDetailPage />,
           handle: { header: { type: "base", label: "파티명", showBack: true } },
@@ -215,9 +224,19 @@ const userRoutes: RouteObject = {
     // 주최
     {
       path: "host",
-      element: <PartyHostPage />,
-      handle: { header: { type: "base", label: "주최하기", showBack: true } },
-    }, // /host
+      children: [
+        {
+          index: true,
+          element: <PartyHostPage />,
+          handle: { header: { type: "base", label: "주최하기", showBack: true } },
+        }, // /host
+        {
+          path: "complete",
+          element: <ApplyCompletePage />,
+          handle: { header: { type: "close" } },
+        }, // /host/complete
+      ],
+    },
 
     // 일반 채팅 - 리스트와 개별 채팅방
     {
@@ -244,6 +263,22 @@ const userRoutes: RouteObject = {
       handle: { header: { type: "base", label: "마이페이지", showBack: true } },
     }, // /mypage
 
+    {
+      path: "settings",
+      children: [
+        {
+          index: true,
+          element: <SettingsPage />,
+          handle: { header: { type: "base", label: "환경설정", showBack: true } },
+        },
+        {
+          path: "profile",
+          element: <UserProfilePage />,
+          handle: { header: { type: "back", label: "프로필", showBack: true } },
+        },
+      ], // /editProfile
+    }, // /mypage
+
     // QR 체크인/스캔
     {
       path: "qr",
@@ -262,8 +297,15 @@ const userRoutes: RouteObject = {
             header: { type: "base", label: "GoodBye&Hello", showBack: true },
           },
         },
+        {
+          path: "receipt",
+          element: <ImpactReceiptPage />,
+          handle: {
+            header: { type: "base", label: "환경영수증", showBack: true },
+          },
+        },
       ],
-    }, // /impact/tag
+    }, // /impact/tag, /impact/receipt
   ],
 };
 

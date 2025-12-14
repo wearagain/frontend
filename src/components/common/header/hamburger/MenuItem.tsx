@@ -1,37 +1,43 @@
 import { Link } from "react-router-dom";
-import { mainMenu } from "@/config/navMenu.ts";
+import type { NavCategory } from "@/config/navMenu";
 
 interface MenuItemProps {
-  item: typeof mainMenu[number];
+  item: NavCategory;
   onClose: () => void;
 }
-export default function MenuItem({ item, onClose }: MenuItemProps) {
+
+export default function MenuItem({
+  item,
+  onClose,
+}: MenuItemProps) {
+  const baseClass = "flex items-center hover:text-primary transition-colors";
+
   const content = (
-      <>
+    <>
+      <div className='flex items-center'>
         {item.icon && <item.icon className='w-5 h-5 mr-2' />}
         <span>{item.label}</span>
-      </>
+      </div>
+    </>
   );
-
-  const className = 'flex items-center hover:text-primary transition-colors';
 
   if (item.external) {
     return (
-        <a
-            href={item.path}
-            target='_blank'
-            rel='noopener noreferrer'
-            className={className}
-            onClick={onClose}
-        >
-          {content}
-        </a>
+      <a
+        href={item.path}
+        target='_blank'
+        rel='noopener noreferrer'
+        className={`${baseClass}`}
+        onClick={onClose}
+      >
+        {content}
+      </a>
     );
   }
 
   return (
-      <Link to={item.path || '#'} onClick={onClose} className={className}>
-        {content}
-      </Link>
+    <Link to={item.path || "#"} onClick={onClose} className={`${baseClass}`}>
+      {content}
+    </Link>
   );
 }

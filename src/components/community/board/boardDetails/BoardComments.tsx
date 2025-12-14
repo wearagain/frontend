@@ -9,7 +9,7 @@ export const BoardComments = ({ comments }: Props) => {
   return (
     <div className='mt-6'>
       {comments.map((c) => (
-        <div key={c.id} className='py-3 border-b'>
+        <div key={c.commentId} className='py-3 border-b'>
           <div className='flex items-center gap-2 text-sm text-gray-500'>
             <div className='w-6 h-6 rounded-full bg-gray-200' />
             <span>{c.creatorNickname}</span>

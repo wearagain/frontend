@@ -4,7 +4,9 @@ import {
   getMyParticipations,
   getMyHostApplications,
   getParticipationDetail,
+  getHostApplicationDetail,
   deleteParticipation,
+  deleteHostApplication,
   getMyTakenClothes,
 } from "@/apis/party/apply";
 import type {
@@ -95,38 +97,69 @@ export const useApplySubmit = (partyId: string) => {
   });
 };
 
-export const useGetParticipantList = () => {
+export const useGetParticipantList = (enabled: boolean = true) => {
   return useQuery<PartyParticipantResponse[], Error>({
     queryKey: ["myParticipants"],
     queryFn: getMyParticipations,
+    enabled,
+    staleTime: 1000 * 60 * 5,
   });
 };
 
-export const useGetHostApplicationList = () => {
+export const useGetHostApplicationList = (enabled: boolean = true) => {
   return useQuery<HostApplicationResponse[], Error>({
     queryKey: ["myHostApplications"],
     queryFn: getMyHostApplications,
+    enabled,
+    staleTime: 1000 * 60 * 5,
   });
 };
 
-export const useGetParticipation = (participantId: string) => {
+export const useGetParticipation = (participantId: string, enabled: boolean = true) => {
   return useQuery({
     queryKey: ["participant", participantId],
     queryFn: () => getParticipationDetail(participantId),
+    enabled: enabled && !!participantId,
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useGetHostApplication = (applicationId: string, enabled: boolean = true) => {
+  return useQuery<HostApplicationResponse, Error>({
+    queryKey: ["hostApplication", applicationId],
+    queryFn: () => getHostApplicationDetail(applicationId),
+    enabled: enabled && !!applicationId,
+    staleTime: 1000 * 60 * 5,
   });
 };
 
 export const useCancelParticipation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<PartyParticipantResponse, Error, string>({
+  return useMutation<void, Error, string>({
     mutationKey: ["cancelParticipation"],
     mutationFn: (participantId: string) => deleteParticipation(participantId),
 
-    onSuccess: (data, participantId) => {
-      alert(`신청 ${participantId} 취소가 완료되었습니다.`);
+    onSuccess: (_, participantId) => {
       queryClient.invalidateQueries({ queryKey: ["participant", participantId] });
       queryClient.invalidateQueries({ queryKey: ["myParticipants"] });
+    },
+    onError: (error: unknown) => {
+      alert(handleApiError(error));
+    },
+  });
+};
+
+export const useCancelHostApplication = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, Error, string>({
+    mutationKey: ["cancelHostApplication"],
+    mutationFn: (applicationId: string) => deleteHostApplication(applicationId),
+
+    onSuccess: (_, applicationId) => {
+      queryClient.invalidateQueries({ queryKey: ["hostApplication", applicationId] });
+      queryClient.invalidateQueries({ queryKey: ["myHostApplications"] });
     },
     onError: (error: unknown) => {
       alert(handleApiError(error));

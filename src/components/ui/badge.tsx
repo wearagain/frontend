@@ -5,22 +5,28 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-full border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
+  "inline-flex items-center justify-center border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
   {
     variants: {
       variant: {
-        default: "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
+        default: "rounded-sm border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+        mint: "rounded-full border-transparent bg-(--color-mint-light) text-white [a&]:hover:bg-(--color-mint-dark)",
+        purple:
+          "rounded-full border-transparent bg-(--color-purple-light) text-white [a&]:hover:bg-(--color-purplr-dark)",
         destructive:
-          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline: "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
+          "rounded-full border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        normalOutline: "rounded-full flex mt-0.5 h-fit items-center gap-1 px-2 py-[2px] text-sm border rounded-full text-[#424242] border-[#E4E4E4] font-medium bg-[#FFFFFF]",
+        greenOutline: "rounded-fullflex mt-0.5 h-fit items-center gap-1 px-2 py-[2px] text-sm border rounded-full text-[#00B477] border-[#00B477] font-medium bg-[#E5F7F1]",
+        redOutline: "rounded-full flex mt-0.5 h-fit items-center gap-1 px-2 py-[2px] text-sm border rounded-full text-[#F23F3F] border-[#F23F3F] font-medium bg-[#FEECEC]",
+        outline: "rounded-full border-[#E4E4E4] text-[#222222]",
+        outlineMint: "rounded-full border-(--color-mint-light) text-(--color-mint-light) [a&]:hover:bg-(--color-mint-light) [a&]:hover:text-white",
+        outlinePurple: "rounded-full border-(--color-purple-light) text-(--color-purple-light) [a&]:hover:bg-(--color-purple-light) [a&]:hover:text-white",
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "normalOutline",
     },
-  }
+  },
 );
 
 function Badge({

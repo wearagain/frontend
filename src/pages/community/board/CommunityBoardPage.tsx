@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { BoardHeader } from "@/components/community/board/boardList/BoardHeader";
 import { BoardList } from "@/components/community/board/boardList/BoardList";
-import type { BoardType } from "@/types/board";
+import type { BoardType, BoardSort } from "@/types/board";
 import { GotoPostBtn } from "@/components/community/board/boardList/GotoPostBtn";
 
 const CommunityBoardPage = () => {
   const [sort, setSort] = useState<"popular" | "latest">("latest");
   const [boardType, setBoardType] = useState<BoardType | undefined>(undefined);
   const [keyword, setKeyword] = useState("");
+
+  // 프론트엔드 sort를 API sort로 변환
+  const apiSort: BoardSort = useMemo(() => {
+    return sort === "popular" ? "POPULAR" : "RECENT";
+  }, [sort]);
 
   return (
     <div className='relative'>
@@ -19,7 +24,7 @@ const CommunityBoardPage = () => {
         onSearch={setKeyword}
       />
       <div className='px-3 py-2'>
-        <BoardList boardType={boardType} sort={sort} keyword={keyword} />
+        <BoardList boardType={boardType} sort={apiSort} keyword={keyword} />
         <GotoPostBtn />
       </div>
     </div>

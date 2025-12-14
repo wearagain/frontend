@@ -8,6 +8,7 @@ import ApplyDetailPage from "./party/ApplyDetailPage";
 import PartyParticipatePage from "./party/PartyParticipatePage.tsx";
 import PartyDetailPage from "./party/PartyDetailPage";
 import PartyHostPage from "./party/PartyHostPage";
+import PartyHelpPage from "./party/PartyHelpPage";
 import PartyListPage from "./party/PartyListPage";
 import SigninMainPage from "./auth/SigninMainPage";
 import ResetPasswordPage from "./auth/ResetPasswordPage";
@@ -25,6 +26,9 @@ import ClothDetailPage from "./community/exchange/ClothDetailPage.tsx";
 import ExchangeRequestPage from "./community/exchange/ExchangeRequestPage";
 import RequestInfoPage from "./community/exchange/RequestInfoPage";
 import GoodbyeHelloTagPage from "./impact/GoodbyeHelloTagPage";
+import ImpactReceiptPage from "./impact/ImpactReceiptPage";
+import SettingsPage from "@/pages/settings/SettingsPage";
+import UserProfilePage from "@/pages/settings/UserProfilePage.tsx";
 
 export {
   NotFound,
@@ -38,6 +42,7 @@ export {
   ApplyListPage,
   ApplyDetailPage,
   PartyHostPage,
+  PartyHelpPage,
   MyPage,
   SigninMainPage,
   ResetPasswordPage,
@@ -54,4 +59,7 @@ export {
   ExchangeRequestPage,
   RequestInfoPage,
   GoodbyeHelloTagPage,
+  ImpactReceiptPage,
+  SettingsPage,
+  UserProfilePage,
 };

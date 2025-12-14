@@ -29,6 +29,8 @@ export default function HeaderAdmin({
   }, [location.pathname]);
 
   const nickname = data?.nickname ?? null;
+  const dummyTicket = 2;
+  const dummyCo2 = 12.5;
 
   return (
     <HeaderContainer>
@@ -41,7 +43,13 @@ export default function HeaderAdmin({
       {/* Right Side */}
       <div className='flex gap-3'>
         <Message />
-        <Hamburger nickname={nickname} open={open} setOpen={setOpen} />
+        <Hamburger
+          nickname={nickname}
+          open={open}
+          setOpen={setOpen}
+          ticket={dummyTicket}
+          co2={dummyCo2}
+        />
       </div>
     </HeaderContainer>
   );

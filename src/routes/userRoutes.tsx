@@ -317,7 +317,7 @@ const userRoutes: RouteObject = {
           index: true,
           element: <InspectionTicketPage />,
           handle: {
-            header: { type: "base", label: "의류추적", showBack: true },
+            header: { type: "base", label: "의류추적", showBack: true, to: "/" },
           },
         },
         {

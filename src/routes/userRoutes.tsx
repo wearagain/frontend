@@ -68,7 +68,7 @@ const userRoutes: RouteObject = {
         {
           path: "signin",
           element: <SigninMainPage />,
-          handle: { header: { type: "close" } },
+          handle: { header: { type: "close", to: "/home" } },
         }, // /auth/signin
         {
           path: "reset",
@@ -174,7 +174,7 @@ const userRoutes: RouteObject = {
     {
       path: "ticket",
       element: <TicketPage />,
-      handle: { header: { type: "base" } },
+      handle: { header: { type: "backClose", label: "티켓", onClose: () => window.history.back() } },
     },
 
     // 파티 참여
@@ -187,10 +187,10 @@ const userRoutes: RouteObject = {
           handle: { header: { type: "base", label: "참여하기", showBack: true } },
         }, // /party
         {
-          path: "help",
+          path: "help/:id",
           element: <PartyHelpPage />,
           handle: { header: { type: "base", label: "문의하기", showBack: true } },
-        }, // /party/help
+        }, // /party/help/:id
         {
           path: ":id",
           element: <PartyDetailPage />,
@@ -204,13 +204,13 @@ const userRoutes: RouteObject = {
         {
           path: ":id/participate/complete",
           element: <ApplyCompletePage />,
-          handle: { header: { type: "close" } },
+          handle: { header: { type: "close", onClose: () => window.history.back() } },
         }, // /party/apply
         {
           path: "apply",
           element: <ApplyListPage />,
           handle: { header: { type: "base", label: "신청내역", showBack: true } },
-        }, // /party/apply/:id
+        }, // /party/apply/
         {
           path: "apply/:id",
           element: <ApplyDetailPage />,
@@ -231,7 +231,7 @@ const userRoutes: RouteObject = {
         {
           path: "complete",
           element: <ApplyCompletePage />,
-          handle: { header: { type: "close" } },
+          handle: { header: { type: "close", onClose: () => window.history.back() } },
         }, // /host/complete
       ],
     },
@@ -240,8 +240,12 @@ const userRoutes: RouteObject = {
     {
       path: "chat",
       children: [
-        { index: true, element: <ChatPageWrapper /> }, // /chat
-        { path: ":roomId", element: <ChatPageWrapper /> }, // /chat/:roomId
+        { index: true, element: <ChatPageWrapper />,
+          handle: { header: { type: "base", label: "", to: "/", showBack: true} },
+        }, // /chat
+        { path: ":roomId", element: <ChatPageWrapper />,
+        handle: { header: {type: "none"} },
+        }, // /chat/:roomId
       ],
     },
 
@@ -249,8 +253,12 @@ const userRoutes: RouteObject = {
     {
       path: "party-chat",
       children: [
-        { index: true, element: <PartyChatPageWrapper /> }, // /party-chat
-        { path: ":roomId", element: <PartyChatPageWrapper /> }, // /party-chat/:roomId
+        { index: true, element: <PartyChatPageWrapper />,
+          handle: { header: { type: "base", label: "", to: "/party/apply?tab=host", showBack: true} },
+        }, // /party-chat
+        { path: ":roomId", element: <PartyChatPageWrapper />,
+          handle: { header: {type: "none"} },
+        }, // /party-chat/:roomId
       ],
     },
 
@@ -281,7 +289,7 @@ const userRoutes: RouteObject = {
     {
       path: "qr",
       element: <QrCheckinPage />,
-      handle: { header: { type: "none" } },
+      handle: { header: { type: "close", to: "/home" } },
     }, // /qr?type=checkin or /qr?type=scan
   ],
 };

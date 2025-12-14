@@ -1,13 +1,11 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQueries } from "@tanstack/react-query";
-import { X } from "@/assets/icons";
 import { QrCodeDisplay } from "@/components/qr-checkin/QrCodeDisplay";
 import { PartySelectionSheet } from "@/components/qr-checkin/PartySelectionSheet";
 import { HostedPartyCard, type HostedParty } from "@/components/qr-checkin/HostedPartyCard";
 import { QrScannerView } from "@/components/qr-checkin/QrScannerView";
 import { InspectionView } from "@/components/qr-checkin/InspectionView";
-import { TicketView } from "@/components/qr-checkin/TicketView";
 import { Button } from "@/components/ui/button";
 import { useGetMyParticipants } from "@/hooks/party/useGetMyParticipants";
 import { useGetMyHostedParties } from "@/hooks/party/useGetParty";
@@ -19,7 +17,7 @@ import type { InspectionScanResponse } from "@/types/inspection";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 
-type TabType = "ticket" | "checkin" | "scan";
+type TabType = "checkin" | "scan";
 
 // 파티 선택 시트용 데이터 타입
 export interface CheckinParty {
@@ -75,7 +73,7 @@ const QrCheckinPage = () => {
   // URL 쿼리 파라미터에서 탭 타입 읽기
   const typeParam = searchParams.get("type");
   const activeTab: TabType =
-    typeParam === "checkin" ? "checkin" : typeParam === "scan" ? "scan" : "ticket";
+    typeParam === "checkin" ? "checkin" : "scan";
 
   const [selectedParty, setSelectedParty] = useState<CheckinParty | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -172,10 +170,6 @@ const QrCheckinPage = () => {
 
   const hasParties = parties.length > 0;
 
-  const handleClose = () => {
-    navigate("/home");
-  };
-
   const handleSelectParty = (party: CheckinParty) => {
     setSelectedParty(party);
     setIsSheetOpen(false);
@@ -250,15 +244,7 @@ const QrCheckinPage = () => {
   // 로딩 상태
   if (isLoading || isInspectionLoading) {
     return (
-      <div className='flex flex-col min-h-[calc(100vh-var(--header-height))] bg-white -ml-5 -mt-5 w-[calc(100%+1.25rem)]'>
-        <div className='flex justify-end p-4'>
-          <button
-            onClick={handleClose}
-            className='p-2 hover:bg-gray-100 rounded-full transition-colors'
-          >
-            <X size={24} className='text-gray-700' />
-          </button>
-        </div>
+        <div className='fixed inset-y-[64px] h-full right-0 left-0 bg-white flex flex-col max-w-[430px] top-[64px] mx-auto'>
         <div className='flex-1 flex items-center justify-center'>
           <p className='text-gray-400'>
             {isInspectionLoading ? "검수 정보를 불러오는 중..." : "로딩 중..."}
@@ -271,20 +257,13 @@ const QrCheckinPage = () => {
   // 에러 상태
   if (isError) {
     return (
-      <div className='flex flex-col min-h-[calc(100vh-var(--header-height))] bg-white -ml-5 -mt-5 w-[calc(100%+1.25rem)]'>
-        <div className='flex justify-end p-4'>
-          <button
-            onClick={handleClose}
-            className='p-2 hover:bg-gray-100 rounded-full transition-colors'
-          >
-            <X size={24} className='text-gray-700' />
-          </button>
-        </div>
+        <div className='fixed inset-y-[64px] h-full right-0 left-0 bg-white flex flex-col max-w-[430px] top-[64px] mx-auto'>
         <div className='flex-1 flex flex-col items-center justify-center px-4'>
           <p className='text-gray-400 mb-4'>데이터를 불러오는데 실패했습니다.</p>
           <Button
+            theme = 'mint'
             onClick={() => window.location.reload()}
-            className='bg-gray-200 text-gray-700 hover:bg-gray-300'
+            className='w-full'
           >
             다시 시도
           </Button>
@@ -295,34 +274,24 @@ const QrCheckinPage = () => {
 
   return (
     <>
-      <div className='flex flex-col min-h-[calc(100vh-var(--header-height))] bg-white -ml-5 -mt-5 w-[calc(100%+1.25rem)]'>
-        {/* 헤더 - 닫기 버튼 */}
-        <div className='flex justify-end p-4'>
-          <button
-            onClick={handleClose}
-            className='p-2 hover:bg-gray-100 rounded-full transition-colors'
-          >
-            <X size={24} className='text-gray-700' />
-          </button>
-        </div>
-
+      <div className='fixed inset-y-[64px] h-full right-0 left-0 bg-white flex flex-col max-w-[430px] top-[64px] mx-auto'>
         {/* 탭 */}
-        <div className='flex border-b border-gray-200'>
+        <div className='sticky top-0 flex justify-between bg-white z-10'>
           <button
-            className={`flex-1 py-3 text-center font-medium transition-colors ${
+            className={`w-1/2 text-center cursor-pointer pb-2 border-b transition-colors ${
               activeTab === "checkin"
                 ? "text-[var(--color-mint-dark)] border-b-2 border-[var(--color-mint-dark)]"
-                : "text-gray-400"
+                : "border-[#E0E2E4]"
             }`}
             onClick={() => handleTabChange("checkin")}
           >
             QR 체크인
           </button>
           <button
-            className={`flex-1 py-3 text-center font-medium transition-colors ${
+            className={`w-1/2 text-center cursor-pointer pb-2 transition-colors border-b ${
               activeTab === "scan"
                 ? "text-[var(--color-purple-dark)] border-b-2 border-[var(--color-purple-dark)]"
-                : "text-gray-400"
+                : "border-[#E0E2E4]"
             }`}
             onClick={() => handleTabChange("scan")}
           >
@@ -336,7 +305,7 @@ const QrCheckinPage = () => {
             <>
               {hasParties && selectedParty ? (
                 // 파티가 있을 때 - QR 코드 표시
-                <div className='flex-1 flex flex-col items-center justify-center px-4'>
+                <div className='flex-col items-center justify-center my-8 px-4'>
                   <QrCodeDisplay
                     qrCode={selectedParty.qrCode}
                     partyTitle={selectedParty.title}
@@ -422,9 +391,6 @@ const QrCheckinPage = () => {
           onComplete={handleInspectionComplete}
         />
       )}
-
-      {/* 티켓 화면 (풀스크린) */}
-      {activeTab === "ticket" && <TicketView onClose={handleClose} />}
     </>
   );
 };

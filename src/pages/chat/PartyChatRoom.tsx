@@ -81,7 +81,43 @@ export default function PartyChatRoom({
   };
 
   return (
-    <div className='fixed inset-y-[64px] h-full right-0 left-0 bg-white flex flex-col max-w-[430px] top-[64px] mx-auto bg-white'>
+    <div className='fixed h-full right-0 left-0 bg-white flex flex-col max-w-[430px] top-0 mx-auto bg-white'>
+      {/* 채팅 헤더 */}
+      <div className='flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200 bg-white'>
+        <div className='flex items-center gap-3'>
+          {onBack && (
+            <button
+              type='button'
+              onClick={onBack}
+              className='p-2 hover:bg-gray-100 rounded-full transition-colors'
+              aria-label='뒤로가기'
+            >
+              <svg
+                className='w-6 h-6 text-gray-700'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M15 19l-7-7 7-7'
+                />
+              </svg>
+            </button>
+          )}
+          <div>
+            <h2 className='text-lg font-semibold text-gray-900'>파티 호스트 {receiverId}</h2>
+            <p className='text-sm text-gray-500'>{isConnected ? "온라인" : "오프라인"}</p>
+          </div>
+        </div>
+        <div className='flex items-center gap-2'>
+          <span className={`w-2 h-2 rounded-full ${isConnected ? "bg-green-500" : "bg-red-500"}`} />
+          <span className='text-sm text-gray-600'>{isConnected ? "연결됨" : "연결 끊김"}</span>
+        </div>
+      </div>
+
       {/* 파티 정보 배너 */}
       {partyInfo && (
         <div className='sticky top-0 w-full flex-shrink-0 bg-gradient-to-r from-[#7C31B4] to-[#9A4DDA] text-white p-4'>
@@ -136,42 +172,6 @@ export default function PartyChatRoom({
         </div>
       )}
 
-      {/* 채팅 헤더 */}
-      <div className='flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200 bg-white'>
-        <div className='flex items-center gap-3'>
-          {onBack && (
-            <button
-              type='button'
-              onClick={onBack}
-              className='p-2 hover:bg-gray-100 rounded-full transition-colors'
-              aria-label='뒤로가기'
-            >
-              <svg
-                className='w-6 h-6 text-gray-700'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M15 19l-7-7 7-7'
-                />
-              </svg>
-            </button>
-          )}
-          <div>
-            <h2 className='text-lg font-semibold text-gray-900'>파티 호스트 {receiverId}</h2>
-            <p className='text-sm text-gray-500'>{isConnected ? "온라인" : "오프라인"}</p>
-          </div>
-        </div>
-        <div className='flex items-center gap-2'>
-          <span className={`w-2 h-2 rounded-full ${isConnected ? "bg-green-500" : "bg-red-500"}`} />
-          <span className='text-sm text-gray-600'>{isConnected ? "연결됨" : "연결 끊김"}</span>
-        </div>
-      </div>
-
       <div
         ref={messagesContainerRef}
         className='flex-1 overflow-y-auto p-4 bg-gray-50'
@@ -182,7 +182,7 @@ export default function PartyChatRoom({
             <p className='text-gray-500'>메시지가 없습니다. 첫 메시지를 보내보세요!</p>
           </div>
         ) : (
-          <div className='space-y-4 pb-32'>
+          <div className='space-y-4'>
             {messages.map((message, index) => {
               const isMyMessage = String(message.senderId) === String(currentUserId);
 

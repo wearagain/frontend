@@ -69,7 +69,7 @@ export default function ChatRoom({
   };
 
   return (
-    <div className='fixed inset-y-[64px] h-full right-0 left-0 bg-white flex flex-col max-w-[430px] top-[64px] mx-auto'>
+    <div className='fixed h-full right-0 left-0 bg-white flex flex-col max-w-[430px] top-0 mx-auto'>
       <div className='sticky top-0 w-full flex items-center justify-between p-4 border-b border-gray-200 bg-white'>
         <div className='flex items-center gap-3'>
           {onBack && (
@@ -115,7 +115,7 @@ export default function ChatRoom({
             <p className='text-gray-500'>메시지가 없습니다. 첫 메시지를 보내보세요!</p>
           </div>
         ) : (
-          <div className='space-y-4 pb-32'>
+          <div className='space-y-4'>
             {messages.map((message, index) => {
               const isMyMessage = String(message.senderId) === String(currentUserId);
 

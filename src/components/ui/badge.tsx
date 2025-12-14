@@ -15,15 +15,18 @@ const badgeVariants = cva(
           "rounded-full border-transparent bg-(--color-purple-light) text-white [a&]:hover:bg-(--color-purplr-dark)",
         destructive:
           "rounded-full border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        normalOutline: "rounded-full flex mt-0.5 h-fit items-center gap-1 px-2 py-[2px] text-sm border rounded-full text-[#424242] border-[#E4E4E4] font-medium bg-[#FFFFFF]",
+        greenOutline: "rounded-fullflex mt-0.5 h-fit items-center gap-1 px-2 py-[2px] text-sm border rounded-full text-[#00B477] border-[#00B477] font-medium bg-[#E5F7F1]",
+        redOutline: "rounded-full flex mt-0.5 h-fit items-center gap-1 px-2 py-[2px] text-sm border rounded-full text-[#F23F3F] border-[#F23F3F] font-medium bg-[#FEECEC]",
         outline: "rounded-full border-[#E4E4E4] text-[#222222]",
         outlineMint: "rounded-full border-(--color-mint-light) text-(--color-mint-light) [a&]:hover:bg-(--color-mint-light) [a&]:hover:text-white",
         outlinePurple: "rounded-full border-(--color-purple-light) text-(--color-purple-light) [a&]:hover:bg-(--color-purple-light) [a&]:hover:text-white",
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "normalOutline",
     },
-  }
+  },
 );
 
 function Badge({

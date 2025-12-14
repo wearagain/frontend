@@ -26,6 +26,7 @@ import {
   ClothDetailPage,
   RequestInfoPage,
   PartyHelpPage,
+  ImpactReceiptPage,
 } from "@/pages";
 import ChatPageWrapper from "@/pages/chat/ChatPageWrapper";
 import PartyChatPageWrapper from "@/pages/chat/PartyChatPageWrapper";
@@ -265,6 +266,20 @@ const userRoutes: RouteObject = {
       element: <QrCheckinPage />,
       handle: { header: { type: "none" } },
     }, // /qr?type=checkin or /qr?type=scan
+
+    // Impact
+    {
+      path: "impact",
+      children: [
+        {
+          path: "receipt",
+          element: <ImpactReceiptPage />,
+          handle: {
+            header: { type: "base", label: "환경영수증", showBack: true },
+          },
+        },
+      ],
+    }, // /impact/receipt
   ],
 };
 

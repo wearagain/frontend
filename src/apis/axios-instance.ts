@@ -5,7 +5,7 @@ import axios, {
   type InternalAxiosRequestConfig,
   AxiosHeaders,
 } from "axios";
-import {API_BASE_URL} from "@/apis/config.ts";
+import { API_BASE_URL } from "@/apis/config.ts";
 
 export const axiosInstance: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -14,6 +14,10 @@ export const axiosInstance: AxiosInstance = axios.create({
 });
 
 let csrfTokenCache = "";
+
+export const clearCsrfTokenCache = () => {
+  csrfTokenCache = "";
+};
 
 export const getPing = async (): Promise<void> => {
   try {

@@ -10,6 +10,7 @@ import {
 import { startSocialLogin } from "@/apis/auth/social";
 import { handleApiError } from "@/utils/handleApiError";
 import { useNavigate } from "react-router-dom";
+import { clearCsrfTokenCache } from "@/apis/axios-instance";
 
 // 회원가입 관련
 export const useEmailVerification = () => {
@@ -104,15 +105,31 @@ export const useSignout = () => {
 
   const mutation = useMutation({
     mutationKey: ["signout"],
-    mutationFn: async () => await postSignout(),
-    onSuccess: async () => {
-      queryClient.removeQueries({ queryKey: ["me"], exact: true });
+    mutationFn: async () => {
+      try {
+        await postSignout();
+      } catch (error) {
+        // 로그아웃 API 실패해도 로컬 정리는 수행
+        console.warn("로그아웃 API 호출 실패, 로컬 정리 진행:", error);
+      }
+    },
+    onSuccess: () => {
+      // 모든 쿼리 제거
+      queryClient.clear();
+      // 쿠키 정리
       document.cookie = "XSRF-TOKEN=; Max-Age=0; path=/;";
-      navigate("/auth/signin");
+      // CSRF 토큰 캐시 초기화
+      clearCsrfTokenCache();
+      // 네비게이션
+      navigate("/auth/signin", { replace: true });
     },
     onError: (error: unknown) => {
       console.error("로그아웃 실패:", error);
-      alert("로그아웃 중 오류가 발생했습니다.");
+      // 에러가 발생해도 로컬 정리는 수행
+      queryClient.clear();
+      document.cookie = "XSRF-TOKEN=; Max-Age=0; path=/;";
+      clearCsrfTokenCache();
+      navigate("/auth/signin", { replace: true });
     },
   });
 

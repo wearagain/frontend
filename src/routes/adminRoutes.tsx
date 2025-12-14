@@ -15,6 +15,7 @@ import TrackingModal from "@/components/admin/party/orders/Modal/TrackingModal.t
 import PartyParticipantDetailPage from "@/pages/admin/party/PartyParticipantDetailPage.tsx";
 import PartyParticipantDropdownContents
   from "@/components/common/header/DropdownMenu/PartyParticipantDropdownContents.tsx";
+import RejectParticipantModal from "@/components/admin/party/participants/Modal/RejectParticipantModal.tsx";
 
 const adminRoutes: RouteObject = {
   path: "/admin",
@@ -128,6 +129,17 @@ const adminRoutes: RouteObject = {
               showLabel: false,
               to: -1,
               children: <PartyParticipantDropdownContents />,
+            },
+          },
+        },
+        {
+          path: "manage/:partyId/participants/:participantId/reject",
+          element: <RejectParticipantModal />,
+          handle: {
+            header: {
+              type: "adminClose",
+              showLabel: false,
+              to: -1,
             },
           },
         },

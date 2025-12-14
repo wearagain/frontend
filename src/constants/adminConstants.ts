@@ -33,7 +33,7 @@ export const ApplicationStatusDescription: Record<ApplicationStatus, string> = {
 };
 
 export const DeliveryStatusDescription: Record<DeliveryStatus, string> = {
-  PENDING: "결제전",
+  PENDING: "결제대기",
   PREPARING: "상품준비중",
   IN_TRANSIT: "배송중",
   DELIVERED: "배송완료",

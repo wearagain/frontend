@@ -5,9 +5,12 @@ import type { ApplicationStatus } from "@/types/admin/party.ts";
 interface PartyRowButtonsProps {
   status: ApplicationStatus;
   id: string;
+  openApproveModal: (open: boolean) => void;
 }
 
-export default function PartyRowButtons({ status, id }: PartyRowButtonsProps) {
+
+
+export default function ParticipantRowButtons({ status, id, openApproveModal }: PartyRowButtonsProps) {
 
   const getStatusCSS = (status: ApplicationStatus, type: ApplicationStatus) => {
     if (status == type)
@@ -29,7 +32,8 @@ export default function PartyRowButtons({ status, id }: PartyRowButtonsProps) {
         (<>
             <Button
               type="button"
-              onClick={() => navigate(`${id}/approve`)}
+              onClick={() => openApproveModal(true)}
+              // onClick={() => navigate(`${id}/approve`)}
               theme="normalOutlined"
               variant="primary"
               className="h-[40px] w-fit"

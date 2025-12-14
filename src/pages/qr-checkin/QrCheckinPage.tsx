@@ -205,7 +205,7 @@ const QrCheckinPage = () => {
     setIsInspectionLoading(true);
     try {
       // 검수 API 호출
-      const data = await scanInspection(qrCode);
+      const data = await scanInspection(qrCode,partyId);
       console.log("검수 데이터:", data);
 
       // 스캐너 닫고 검수 화면 표시

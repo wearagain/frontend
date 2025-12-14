@@ -1,13 +1,18 @@
 import type {  PartyParticipantsResponse } from "@/types/admin/party.ts";
 import ParticipantRowDetail from "@/components/admin/party/participants/ParticipantsList/ParticipantRowDetail.tsx";
-import PartyRowButtons from "@/components/admin/party/participants/ParticipantsList/PartyRowButtons.tsx";
+import ParticipantRowButtons from "@/components/admin/party/participants/ParticipantsList/ParticipantRowButtons.tsx";
 
-export default function ParticipantRow(item: PartyParticipantsResponse) {
+interface ParticipantRowProps {
+  item: PartyParticipantsResponse;
+  openApproveModal: (open: boolean) => void;
+}
+
+export default function ParticipantRow({item, openApproveModal}: ParticipantRowProps) {
   return (
     <div className='py-5 h-[114px] min-h-max'>
       <div className='flex justify-between items-center'>
         <ParticipantRowDetail {...item} />
-        <PartyRowButtons status={item.status ?? "PENDING"} id={item.id} />
+        <ParticipantRowButtons openApproveModal={openApproveModal} status={item.status ?? "PENDING"} id={item.id} />
       </div>
     </div>
   );

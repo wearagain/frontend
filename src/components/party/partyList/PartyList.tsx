@@ -51,7 +51,7 @@ export const PartyList = () => {
   }
 
   return (
-    <div>
+    <div className='flex flex-col h-full overflow-hidden'>
       <PartyHeader
         sort={sort}
         region={region}
@@ -60,7 +60,7 @@ export const PartyList = () => {
         onChangeRegion={setRegion}
         onChangeStatus={setStatus}
       />
-      <div className='flex flex-col gap-3'>
+      <div className='flex-1 flex-col overflow-y-auto custom-scroll'>
         {parties.length > 0 ? (
           parties.map((party: PartyDTO) => <PartyCard key={party.id} party={party} />)
         ) : (

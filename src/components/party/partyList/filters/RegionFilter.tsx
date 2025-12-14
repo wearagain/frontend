@@ -42,17 +42,17 @@ export function RegionFilter({ value, onChange }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className='h-10 rounded-full bg-white border border-gray-300 text-gray-700 hover:bg-gray-100'>
+        <Button theme={"normalOutlined"} className='h-9 w-fit min-w-max rounded-full border transition-colors text-[#222222] hover:bg-(--color-mint-light) hover:border-(--color-mint-light) hover:text-white'>
           {currentLabel}
           <ChevronDownIcon className='ml-1 size-4' />
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className='p-1 min-w-[10rem]'>
+      <DropdownMenuContent className='p-1 w-[200px]'>
         <DropdownMenuItem
           key='전체'
           onClick={() => handleSelect("전체")}
-          className={value === undefined ? "bg-gray-100 font-semibold" : ""}
+          className={`focus:text-(--color-mint-light) value === undefined ? "text-(--color-mint-light) font-semibold" : ""`}
         >
           전체
         </DropdownMenuItem>
@@ -60,7 +60,7 @@ export function RegionFilter({ value, onChange }: Props) {
           <DropdownMenuItem
             key={region}
             onClick={() => handleSelect(region)}
-            className={value === regionMap[region] ? "bg-gray-100 font-semibold" : ""}
+            className={`focus:text-(--color-mint-light) value === undefined ? "text-(--color-mint-light) font-semibold" : ""`}
           >
             {region}
           </DropdownMenuItem>

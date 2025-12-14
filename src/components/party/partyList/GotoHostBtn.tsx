@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import {Plus} from "lucide-react"
 
 export const GoToHostBtn = () => {
   const navigate = useNavigate();
@@ -9,18 +10,14 @@ export const GoToHostBtn = () => {
   };
 
   return (
-    <Button
-      className='
-        fixed bottom-15 right-6
-        rounded-full px-6 py-3
-        bg-[var(--color-mint-light)]
-        text-white font-semibold
-        hover:bg-[var(--color-mint-dark)]
-        transition-all
-      '
+    <div className='absolute bottom-8 right-0 mb-[72px] mr-5'>
+      <Button
+      className='rounded-full py-[10px] gap-1 px-4'
       onClick={handleClick}
     >
-      + 파티 주최하기
+      <Plus className='w-4' strokeWidth={3}/>
+        <h3>파티 주최하기</h3>
     </Button>
+    </div>
   );
 };

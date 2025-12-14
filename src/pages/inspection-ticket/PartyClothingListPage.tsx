@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { Search, QrCode } from "lucide-react";
+import { Search, ScanQrCode } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import StatusHandler from "@/components/common/StatusHandler";
 import { useGetPartyClothingItems } from "@/hooks/inspection/useGetPartyClothingItems";
@@ -12,9 +12,11 @@ import type { ClothingCategoryCode } from "@/types/clothingCategory";
 import type { PartyClothingItem } from "@/apis/inspection/getPartyClothingItems";
 import defaultImage from "@/assets/images/default.png";
 import { TicketScanView } from "@/components/inspection-ticket/TicketScanView";
+import {FilterHeader} from "@/components/common/FilterHeader.tsx";
 
 export default function PartyClothingListPage() {
   const { partyId } = useParams<{ partyId: string }>();
+
   const queryClient = useQueryClient();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -34,18 +36,18 @@ export default function PartyClothingListPage() {
   });
 
   // 카테고리 목록 생성 (모든 카테고리 표시)
-  const categories = useMemo(() => {
-    const allCategories: Array<{ code: string; label: string }> = [];
-    Object.values(CLOTHING_CATEGORIES).forEach((group) => {
-      group.categories.forEach((cat) => {
-        allCategories.push({
-          code: cat.code,
-          label: cat.subCategory,
-        });
-      });
-    });
-    return allCategories;
-  }, []);
+  const filterTabs = useMemo(
+      () =>
+          Object.values(CLOTHING_CATEGORIES).flatMap((group) =>
+              group.categories.map((cat) => ({
+                label: cat.subCategory,
+                value: cat.code,
+              }))
+          ),
+      []
+  );
+
+  const filterValue = selectedCategory ?? undefined;
 
   // 검색 입력 핸들러 (즉시 반영, debounce로 API 호출 제어)
   const handleSearchChange = (value: string) => {
@@ -64,7 +66,9 @@ export default function PartyClothingListPage() {
   };
 
   // 카테고리 선택 시 검색창에 코드 자동 입력 및 API 호출
-  const handleCategorySelect = (categoryCode: string) => {
+  const handleCategorySelect = (categoryCode?: string) => {
+    if (!categoryCode) return;
+
     const isSelected = selectedCategory === categoryCode;
     if (isSelected) {
       // 이미 선택된 카테고리를 다시 클릭하면 선택 해제
@@ -148,29 +152,10 @@ export default function PartyClothingListPage() {
         </div>
 
         {/* 카테고리 필터 */}
-        <div className='px-5 pb-4'>
-          <div className='flex gap-2 overflow-x-auto scrollbar-hide'>
-            {categories.map((category) => {
-              const isSelected = selectedCategory === category.code;
-              return (
-                <button
-                  key={category.code}
-                  onClick={() => handleCategorySelect(category.code)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
-                    isSelected
-                      ? "bg-[var(--color-purple-dark)] text-white"
-                      : "bg-white text-gray-700 border border-gray-300"
-                  }`}
-                >
-                  {category.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        <FilterHeader value={filterValue} onChange={handleCategorySelect} tabs={filterTabs} theme={'purple'}/>
 
         {/* 의류 목록 (로딩 상태는 여기만 표시) */}
-        <div className='flex-1 overflow-y-auto px-5 pb-24'>
+        <div className='flex-1 overflow-y-auto px-5 pb-24 custom-scroll'>
           <StatusHandler isLoading={isLoading} isError={isError} error={error}>
             {!searchKeyword ? (
               <div className='flex flex-col items-center justify-center h-full text-gray-400'>
@@ -219,7 +204,7 @@ export default function PartyClothingListPage() {
                       onClick={() => handleTicketScan(item.clothingNumber)}
                       className='bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center gap-2 whitespace-nowrap'
                     >
-                      <QrCode size={16} />
+                      <ScanQrCode size={16} />
                       <span>티켓 스캔</span>
                     </Button>
                   </div>
@@ -230,7 +215,7 @@ export default function PartyClothingListPage() {
         </div>
 
         {/* 건너뛰기 버튼 */}
-        <div className='fixed bottom-0 left-0 right-0 p-5 bg-white border-t border-gray-200 max-w-[430px] mx-auto'>
+        <div className='fixed bottom-0 left-0 right-0 p-5 bg-white max-w-[430px] mx-auto'>
           <Button theme='purple' onClick={handleSkip} className='w-full py-4 rounded-xl'>
             건너뛰기
           </Button>

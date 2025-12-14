@@ -280,7 +280,7 @@ const QrCheckinPage = () => {
           <button
             className={`w-1/2 text-center cursor-pointer pb-2 border-b transition-colors ${
               activeTab === "checkin"
-                ? "text-[var(--color-mint-dark)] border-b-2 border-[var(--color-mint-dark)]"
+                ? "font-bold text-[var(--color-mint-dark)] border-b-2 border-[var(--color-mint-dark)]"
                 : "border-[#E0E2E4]"
             }`}
             onClick={() => handleTabChange("checkin")}
@@ -290,7 +290,7 @@ const QrCheckinPage = () => {
           <button
             className={`w-1/2 text-center cursor-pointer pb-2 transition-colors border-b ${
               activeTab === "scan"
-                ? "text-[var(--color-purple-dark)] border-b-2 border-[var(--color-purple-dark)]"
+                ? "font-bold text-[var(--color-purple-dark)] border-b-2 border-[var(--color-purple-dark)]"
                 : "border-[#E0E2E4]"
             }`}
             onClick={() => handleTabChange("scan")}

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetMyHostedParties } from "@/hooks/party/useGetParty";
 import { Button } from "@/components/ui/button";
 import StatusHandler from "@/components/common/StatusHandler";
-import { QrCode } from "lucide-react";
+import { ScanQrCode } from "lucide-react";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 
@@ -37,7 +37,7 @@ export default function InspectionTicketPage() {
             </Button>
           </div>
         ) : (
-          <div className="flex-1 overflow-y-auto p-5">
+          <div className="flex-1 overflow-y-auto custom-scroll p-5">
             <div className="flex flex-col gap-4">
               {parties.map((party) => {
                 const formattedDate = party.openAt
@@ -56,10 +56,11 @@ export default function InspectionTicketPage() {
                       )}
                     </div>
                     <Button
+                      theme={"normalOutlined"}
                       onClick={() => handleTicketScan(party.id)}
                       className="ml-4 bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center gap-2"
                     >
-                      <QrCode size={16} />
+                      <ScanQrCode size={16} />
                       <span>티켓 스캔</span>
                     </Button>
                   </div>

@@ -5,6 +5,7 @@ import StatusHandler from "@/components/common/StatusHandler.tsx";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useGetParticipantList, useGetHostApplicationList } from "@/hooks/party/useApply";
 import { STATUS_TABS, type ParticipantStatus } from "@/types/apply";
+import {GoToChatBtn} from "@/components/party/partyApplyList/GoToChatBtn.tsx";
 
 export type ApplyTab = "participate" | "host";
 
@@ -69,6 +70,9 @@ export default function ApplyListPage() {
       {/* 리스트 */}
       <StatusHandler isLoading={isLoading} isError={isError} error={error}>
         <ApplyList type={currentTab} data={filteredData} onCardClick={handleCardClick} />
+        {currentTab === "host" && (
+            <GoToChatBtn />
+        )}
       </StatusHandler>
     </div>
   );

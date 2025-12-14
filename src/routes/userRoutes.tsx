@@ -29,6 +29,8 @@ import {
   ImpactReceiptPage,
   SettingsPage,
   UserProfilePage,
+  InspectionTicketPage,
+  PartyClothingListPage,
 } from "@/pages";
 import ChatPageWrapper from "@/pages/chat/ChatPageWrapper";
 import PartyChatPageWrapper from "@/pages/chat/PartyChatPageWrapper";
@@ -306,6 +308,27 @@ const userRoutes: RouteObject = {
         },
       ],
     }, // /impact/receipt
+
+    // Inspection Ticket
+    {
+      path: "inspection-ticket",
+      children: [
+        {
+          index: true,
+          element: <InspectionTicketPage />,
+          handle: {
+            header: { type: "base", label: "의류추적", showBack: true },
+          },
+        },
+        {
+          path: ":partyId",
+          element: <PartyClothingListPage />,
+          handle: {
+            header: { type: "base", label: "파티명", showBack: true },
+          },
+        },
+      ],
+    }, // /inspection-ticket, /inspection-ticket/:partyId
   ],
 };
 

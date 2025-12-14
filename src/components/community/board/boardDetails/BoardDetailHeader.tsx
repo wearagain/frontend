@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const BoardDetailHeader = ({ board }: Props) => {
-  const date = format(new Date(board.createdAt), "MM/dd HH:mm");
+  const date = board.createdAt ? format(new Date(board.createdAt), "MM/dd HH:mm") : "";
 
   return (
     <div className='flex items-start gap-3 mb-4'>

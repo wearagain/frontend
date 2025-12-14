@@ -6,9 +6,9 @@ import type {
 } from "@/types/inspection";
 
 // QR 코드로 검수 정보 조회
-export const scanInspection = async (qrCode: string): Promise<InspectionScanResponse> => {
+export const scanInspection = async (qrCode: string, partyId: string): Promise<InspectionScanResponse> => {
   const { data } = await axiosInstance.get<InspectionScanResponse>("/api/inspection/scan", {
-    params: { qrCode },
+    params: { qrCode, partyId },
   });
   return data;
 };

@@ -10,6 +10,7 @@ import type {
   InspectionStatus,
 } from "@/types/inspection";
 import defaultImage from "@/assets/images/default.png";
+import ImageViewer from "@/components/qr-checkin/ImageViewer.tsx";
 
 interface InspectionViewProps {
   data: InspectionScanResponse;
@@ -25,7 +26,7 @@ export interface InspectionResult {
 
 export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProps) => {
   // 각 아이템의 검수 상태 관리
-  const [itemStatuses, setItemStatuses] = useState<Map<string, InspectionResult>>(new Map());
+  const [itemStatuses, setItemStatuses] = useState<InspectionClothingItem[]>(data?.clothingItems ?? []);
 
   // 반려 사유 입력 폼 상태
   const [rejectionItem, setRejectionItem] = useState<InspectionClothingItem | null>(null);
@@ -48,14 +49,14 @@ export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProp
         reason: "",
       });
 
-      setItemStatuses((prev) => {
-        const newMap = new Map(prev);
-        newMap.set(item.clothingNumber, {
-          clothingNumber: item.clothingNumber,
-          status: "APPROVED",
-        });
-        return newMap;
-      });
+      setItemStatuses((prev) =>
+        prev.map((p) =>
+          p.clothingNumber === item.clothingNumber
+            ? { ...p, inspectionStatus: "APPROVED", inspectionReason: null }
+            : p
+        )
+      );
+
     } catch (error) {
       console.error("승인 처리 실패:", error);
       alert("승인 처리 중 오류가 발생했습니다.");
@@ -83,15 +84,18 @@ export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProp
         reason,
       });
 
-      setItemStatuses((prev) => {
-        const newMap = new Map(prev);
-        newMap.set(rejectionItem.clothingNumber, {
-          clothingNumber: rejectionItem.clothingNumber,
-          status: "REJECTED",
-          reason,
-        });
-        return newMap;
-      });
+      setItemStatuses((prev) =>
+        prev.map((item) =>
+          item.clothingNumber === rejectionItem.clothingNumber
+            ? {
+              ...item,
+              inspectionStatus: "REJECTED",
+              inspectionReason: reason,
+            }
+            : item
+        )
+      );
+
       setRejectionItem(null);
     } catch (error) {
       console.error("반려 처리 실패:", error);
@@ -107,9 +111,17 @@ export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProp
   };
 
   // 모든 아이템이 처리되었는지 확인
-  const allItemsProcessed = data.clothingItems.every((item) =>
-    itemStatuses.has(item.clothingNumber)
+  const allItemsProcessed = itemStatuses.every(
+    (item) => item.inspectionStatus !== null
   );
+
+
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [viewerImages, setViewerImages] = useState<string[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  console.log(data);
+
 
   // 반려 사유 입력 폼이 열려있으면 그 화면 표시
   if (rejectionItem) {
@@ -123,42 +135,45 @@ export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProp
     );
   }
 
+
   return (
-    <div className='fixed inset-0 z-50 bg-white flex flex-col'>
+    <div className="fixed inset-0 z-50 bg-white flex flex-col">
       {/* 헤더 */}
-      <div className='flex items-center gap-2 p-4 border-b border-gray-100'>
-        <button onClick={onClose} className='p-1 hover:bg-gray-100 rounded-full transition-colors'>
-          <ChevronLeft size={24} className='text-gray-700' />
+      <div className="flex items-center gap-2 p-4 border-b border-gray-100">
+        <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-full transition-colors">
+          <ChevronLeft size={24} className="text-gray-700" />
         </button>
-        <h1 className='text-lg font-semibold'>검수하기</h1>
+        <h1 className="text-lg font-semibold">검수하기</h1>
       </div>
 
       {/* 컨텐츠 */}
-      <div className='flex-1 overflow-y-auto p-4'>
+      <div className="flex-1 overflow-y-auto p-4">
         {/* 신청 품목 정보 */}
-        <div className='mb-4'>
-          <span className='text-base font-medium'>신청 품목 정보 </span>
-          <span className='text-[var(--color-purple-dark)] font-semibold'>
+        <div className="mb-4">
+          <span className="text-base font-medium">신청 품목 정보 </span>
+          <span className="text-[var(--color-purple-dark)] font-semibold">
             {data.clothingItems.length}
           </span>
         </div>
 
         {/* 의류 아이템 리스트 */}
-        <div className='flex flex-col gap-6'>
+        <div className="flex flex-col gap-6">
           {data.clothingItems.map((item, index) => {
-            const status = itemStatuses.get(item.clothingNumber);
-            const isApproved = status?.status === "APPROVED";
-            const isRejected = status?.status === "REJECTED";
             const isLoading = loadingItem === item.clothingNumber;
 
             return (
-              <div key={item.clothingNumber} className='flex gap-4'>
+              <div key={item.clothingNumber} className="flex gap-4">
                 {/* 이미지 */}
-                <div className='w-24 h-24 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0'>
+                <div className="w-24 h-24 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                   <img
+                    onClick={() => {
+                      setViewerImages(item.imageUrls ?? []);
+                      setCurrentIndex(0);
+                      setViewerOpen(true);
+                    }}
                     src={item.imageUrls?.[0] || defaultImage}
                     alt={`${getCategoryLabel(item.category)} ${index + 1}`}
-                    className='w-full h-full object-cover'
+                    className="w-full h-full object-cover"
                     onError={(e) => {
                       e.currentTarget.src = defaultImage;
                     }}
@@ -166,43 +181,43 @@ export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProp
                 </div>
 
                 {/* 정보 */}
-                <div className='flex flex-col flex-1'>
-                  <h3 className='font-medium text-gray-900'>
+                <div className="flex flex-col flex-1">
+                  <h3 className="font-medium text-gray-900">
                     {getCategoryLabel(item.category)} {index + 1}
                   </h3>
-                  <p className='text-sm text-gray-500'>
+                  <p className="text-sm text-gray-500">
                     의류코드{" "}
-                    <span className='text-[var(--color-purple-dark)]'>{item.clothingNumber}</span>
+                    <span className="text-[var(--color-purple-dark)]">{item.clothingNumber}</span>
                   </p>
 
                   {/* 승인/반려 버튼 */}
-                  <div className='flex gap-2 mt-auto'>
-                    <button
-                      onClick={() => handleApprove(item)}
-                      disabled={isApproved || isRejected || isLoading}
-                      className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${
-                        isApproved
-                          ? "bg-[var(--color-purple-dark)] text-white border-[var(--color-purple-dark)]"
-                          : isRejected || isLoading
-                            ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
-                            : "border-[var(--color-purple-dark)] text-[var(--color-purple-dark)] hover:bg-purple-50"
-                      }`}
-                    >
-                      {isLoading ? "처리중..." : "승인"}
-                    </button>
-                    <button
-                      onClick={() => handleRejectClick(item)}
-                      disabled={isApproved || isRejected || isLoading}
-                      className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${
-                        isRejected
-                          ? "bg-gray-700 text-white border-gray-700"
-                          : isApproved || isLoading
-                            ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
-                            : "border-gray-300 text-gray-700 hover:bg-gray-50"
-                      }`}
-                    >
-                      반려
-                    </button>
+                  <div className="flex gap-2 mt-auto">
+                    {item?.inspectionStatus == "APPROVED"
+                      ? <div className="px-4 py-2 rounded-lg border text-sm font-medium transition-colors
+                    bg-[var(--color-purple-dark)] text-white border-[var(--color-purple-dark)]">승인</div>
+                      : <Button
+                        onClick={() => handleApprove(item)}
+                        className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors`}
+                        disabled={ isLoading || !!item?.inspectionStatus}
+                        theme="purple"
+                      >
+                        {isLoading ? "처리중..." : "승인"}
+                      </Button>
+                    }
+
+                    {item?.inspectionStatus == "REJECTED"
+                      ? <div className="px-4 py-2 rounded-lg border text-sm font-medium transition-colors
+                    bg-[var(--color-purple-dark)] text-white border-[var(--color-purple-dark)]">반려</div>
+                      : <Button
+                        onClick={() => handleRejectClick(item)}
+                        className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors`}
+                        disabled={ isLoading || !!item?.inspectionStatus}
+                        theme="purple"
+                      >
+                        반려
+                      </Button>
+                    }
+
                   </div>
                 </div>
               </div>
@@ -212,7 +227,7 @@ export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProp
       </div>
 
       {/* 완료하기 버튼 */}
-      <div className='p-4 border-t border-gray-100'>
+      <div className="p-4 border-t border-gray-100">
         <Button
           onClick={handleComplete}
           disabled={!allItemsProcessed}
@@ -225,6 +240,15 @@ export const InspectionView = ({ data, onClose, onComplete }: InspectionViewProp
           완료하기
         </Button>
       </div>
+      {viewerOpen && (
+        <ImageViewer
+          images={viewerImages}
+          index={currentIndex}
+          onChange={setCurrentIndex}
+          onClose={() => setViewerOpen(false)}
+        />
+      )}
+
     </div>
   );
 };

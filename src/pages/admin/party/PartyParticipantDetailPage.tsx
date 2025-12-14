@@ -1,48 +1,51 @@
-import { Outlet } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { generateLabelValueObjWithAll } from "@/utils/common/generateLabelValueObj.tsx";
-import { ApplicationStatusDescription } from "@/constants/adminConstants.ts";
-import type { ApplicationStatus, PartyApplicationResponse } from "@/types/admin/party.ts";
+import { Outlet, useParams } from "react-router-dom";
 import StatusHandler from "@/components/common/StatusHandler.tsx";
-import { FilterHeader } from "@/components/common/FilterHeader.tsx";
-import PartyRow from "@/components/admin/party/applications/ApplicationList/PartyRow.tsx";
-import { useGetPartyApplications } from "@/hooks/admin/party/applications/useGetPartyApplications.ts";
+import { useGetPartyParticipantDetail } from "@/hooks/admin/party/participants/useGetPartyParticipantDetial.ts";
+import { useState } from "react";
+import ParticipantDetailBottomBar
+  from "@/components/admin/party/participants/ParticipantDetail/ParticipantDetailBottomBar.tsx";
+import Modal from "@/components/ui/modal.tsx";
+import { usePostParticipantStatus } from "@/hooks/admin/party/participants/usePostParticipantStatus.ts";
+import ClothSection from "@/components/admin/party/participants/ParticipantDetail/ClothSection.tsx";
+import ApplySection from "@/components/admin/party/participants/ParticipantDetail/ApplySection.tsx";
+import HeaderSection from "@/components/admin/party/participants/ParticipantDetail/HeaderSection.tsx";
 
 export default function PartyParticipantDetailPage() {
-  const tabs = generateLabelValueObjWithAll(ApplicationStatusDescription);
 
-  const {
-    data,
-    isLoading, isError, error,
-  } = useGetPartyApplications();
+  const { participantId } = useParams<{ participantId: string }>();
 
-  const [filterType, setFilterType] = useState<ApplicationStatus | "ALL">("ALL");
+  const { data, isLoading, isError, error } = useGetPartyParticipantDetail(participantId ?? "");
+  const { mutateAsync: postParticipantStatus } = usePostParticipantStatus();
 
-  const [filteredData, setFilteredData] = useState<PartyApplicationResponse[] | undefined>(data);
+  const [openApproveModal, setOpenApproveModal] = useState<boolean>(false);
 
-  const handleChangeFilter = (type: ApplicationStatus | "ALL") => {
-    setFilterType(type);
-    const filtered = type !== "ALL" ? data?.filter(i => i.status === type) : data;
-    setFilteredData(filtered);
-  };
 
-  useEffect(() => {
-    setFilteredData(data);
-  }, [data]);
 
   return (
     <StatusHandler isLoading={isLoading} isError={isError} error={error}>
       <div className="flex flex-col h-full">
-        <FilterHeader onChange={(v) => handleChangeFilter(v ?? "ALL")} tabs={tabs} theme="purple" value={filterType} />
-        <div className="p-5 flex flex-col gap-4 flex-1 overflow-y-auto w-full custom-scroll">
-          <h4
-            className="font-bold text-base">{filterType == "ALL" ? "전체" : ApplicationStatusDescription[filterType]} {filteredData?.length ?? ""}</h4>
-          <div>
-            {filteredData?.map((item) => (
-              <PartyRow {...item} />
-            ))}
-          </div>
+        <div className={`flex flex-1 flex-col gap-1 ${data?.status == "PENDING" && "bottombar-p"}`}>
+          <HeaderSection data={data} />
+          <div className="divider-compact" />
+          <ApplySection data={data} />
+          <div className="divider-compact" />
+          <ClothSection data={data} />
         </div>
+        {data?.status == "PENDING" && <ParticipantDetailBottomBar openApproveModal={setOpenApproveModal} />}
+        {openApproveModal &&
+          <Modal
+            theme="purple"
+            header="참가자를 승인하시겠습니까?"
+            confirmText="승인하기"
+            onConfirm={() =>
+              postParticipantStatus({
+                id: participantId!,
+                action: "approve",
+              })
+            }
+            onClose={() => setOpenApproveModal(false)}
+          />
+        }
         <Outlet />
       </div>
     </StatusHandler>

@@ -3,7 +3,7 @@ import { getPartyApplications } from "@/apis/admin/party/applications/getPartyAp
 
 export const useGetPartyApplications = () => {
   return useQuery({
-    queryKey: ["admin", "party", "applications"],
+    queryKey: ["admin", "party", "application"],
     queryFn: () => getPartyApplications(),
   });
 };

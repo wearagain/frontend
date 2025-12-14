@@ -24,6 +24,7 @@ export default function PartyDetailDropdownContents() {
   return (
     <div className="flex flex-col gap-2 items-start">
       <button
+        disabled={!partyId}
         className="dropdown-menu-item"
         onClick={() => navigate(`${location.pathname}/participants`)}
       >
@@ -31,10 +32,11 @@ export default function PartyDetailDropdownContents() {
       </button>
       <div className="border-b border-gray-300 w-full" />
       <button
+        disabled={!partyId}
         className="text-red-500 dropdown-menu-item"
         onClick={clickDelete}
       >
-        삭제하기
+        취소하기
       </button>
     </div>
   );

@@ -4,6 +4,7 @@ import PayDeliveryButton from "@/components/admin/party/common/PayDeliveryButton
 import { generateDetailValues, type PartyDetailKey } from "@/utils/admin/party/generateDetailValues.ts";
 import { useSideButtonHandlers } from "@/hooks/admin/party/common/useSideButtonHandlers.ts";
 
+
 interface DetailSectionProps {
   title: string;
   data: Record<string, any> | undefined;
@@ -11,10 +12,10 @@ interface DetailSectionProps {
   labelWidth?: string;
   headerButtonType?: "host" | "payDelivery";
   headerButtonProps?: Record<string, any>;
-  onOpen?: (v?: boolean) => void;
+  setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
   isDetail?: boolean;
-
 }
+
 
 export default function DetailSection(
   {
@@ -24,20 +25,24 @@ export default function DetailSection(
     labelWidth = "w-[45px]",
     headerButtonType,
     headerButtonProps,
-    onOpen,
+    setOpenModal,
     isDetail,
   }: DetailSectionProps) {
+
+
+
 
   const buttonRender = () => {
     switch (headerButtonType) {
       case "host":
         return <HostInfoDropdown />;
       case "payDelivery":
-        return <PayDeliveryButton onOpen={onOpen} />;
+        return <PayDeliveryButton setOpenModal={setOpenModal} data={data} />;
       default:
         return null;
     }
   };
+
 
   const getSideButton = useSideButtonHandlers();
 
@@ -64,7 +69,7 @@ export default function DetailSection(
                 <h4 className="font-medium text-base text-[#555558]">{value == null ? "-" : String(value)}</h4>
               </div>
 
-              {isDetail && SIDE_BUTTON_TEXT[key] &&
+              {isDetail && data?.partyId && SIDE_BUTTON_TEXT[key] &&
                 <button
                   onClick={() => {
                     if (key in getSideButton) {

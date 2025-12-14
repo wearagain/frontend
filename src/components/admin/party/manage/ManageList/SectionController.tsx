@@ -39,16 +39,6 @@ export default function SectionController(
         >
           변경
         </button>
-        <button
-          type="button"
-          onClick={() => {
-            setAction?.("delete");
-            setOpenModal?.(true);
-          }}
-          disabled={!isActive}
-        >
-          삭제
-        </button>
       </div>
     </div>);
 }

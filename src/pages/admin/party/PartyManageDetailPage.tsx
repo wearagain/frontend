@@ -51,8 +51,12 @@ export default function PartyManageDetailPage() {
         />
         <div className="divider" />
         <DetailSection
-          isDetail title="결제 및 배송" data={orderData} keys={GROUP3_KEYS} labelWidth="w-[102px]"
-          onOpen={() => setOpenDeliveryModal(true)}
+          isDetail
+          title="결제 및 배송"
+          data={orderData}
+          keys={GROUP3_KEYS}
+          labelWidth="w-[102px]"
+          setOpenModal={setOpenDeliveryModal}
           headerButtonType="payDelivery"
           headerButtonProps={{
             taxReceipt: () => setOpenTaxModal(true),

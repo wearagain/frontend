@@ -120,7 +120,7 @@ const adminRoutes: RouteObject = {
           handle: { header: { type: "adminBase", label: "참여 신청자 관리", showBack: true } },
         },
         {
-          path: "manage/:partyId/participants/detail",
+          path: "manage/:partyId/participants/:participantId",
           element: <PartyParticipantDetailPage />,
           handle: {
             header: {

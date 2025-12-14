@@ -138,7 +138,7 @@ export interface PartyParticipantsResponse {
 
 export interface OrderResponse {
   id: string;
-  // partyId: string;
+  partyId: string | null;
   partyTitle: string;
   price: number;
   desiredDate: string;
@@ -171,6 +171,7 @@ export interface OrderDetailResponse {
   trackingNumber: string;
   taxReceipt: boolean;
   taxId: string;
+  applicationStatus: ApplicationStatus;
 }
 
 
@@ -206,7 +207,7 @@ export interface OrderItem {
   id: string;
   desiredDate?: string;
   maxAttendeeCnt?: number;
-  price?: string;
+  price?: number;
 }
 
 export interface AdminPartyModalProps<TAction extends string> {

@@ -32,6 +32,7 @@ export default function PartyOrderDetailPage() {
           isGroup={data?.isGroup}
           partyStatus={data?.partyStatus}
           deliveryStatus={data?.deliveryStatus}
+          applicationStatus={data?.applicationStatus}
         />
         <div className="divider" />
         <DetailSection
@@ -48,8 +49,12 @@ export default function PartyOrderDetailPage() {
         />
         <div className="divider" />
         <DetailSection
-          isDetail title="결제 및 배송" data={data} keys={GROUP3_KEYS} labelWidth="w-[102px]"
-          onOpen={() => setOpenDeliveryModal(true)}
+          isDetail
+          title="결제 및 배송"
+          data={data}
+          keys={GROUP3_KEYS}
+          labelWidth="w-[102px]"
+          setOpenModal={setOpenDeliveryModal}
           headerButtonType="payDelivery"
           headerButtonProps={{
             taxReceipt: () => setOpenTaxModal(true),

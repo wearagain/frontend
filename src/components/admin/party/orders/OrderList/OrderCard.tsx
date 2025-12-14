@@ -9,6 +9,7 @@ import type { OrderResponse } from "@/types/admin/party.ts";
 export const OrderCard = (item: OrderResponse) => {
   const {
     id,
+    partyId,
     partyTitle,
     desiredDate,
     maxAttendeeCnt,
@@ -21,7 +22,10 @@ export const OrderCard = (item: OrderResponse) => {
   return (
     <div
       className="flex flex-1 min-w-0 max-w-full items-center gap-4 bg-white pl-[6px] mr-5 py-[10px] hover:bg-gray-200 cursor-pointer"
-      onClick={() => navigate(`${id}`)}
+      onClick={() => {
+        if (!partyId) navigate(`${id}`);
+        else navigate(`/admin/party/manage/${partyId}`);
+      }}
     >
       {/* 썸네일 */}
       <div className="h-22 w-22 shrink-0 rounded-lg bg-gray-100">

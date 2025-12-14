@@ -22,7 +22,7 @@ export default function ActionBottomBar(
     setOpenModal,
   }: ActionBottomBarProps) {
 
-  const needTrackingNumber = ["IN_TRANSIT", "DELIVERED"];
+  const needTrackingNumber = ["IN_TRANSIT"];
 
   const navigate = useNavigate();
 

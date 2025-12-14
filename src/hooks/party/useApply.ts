@@ -30,6 +30,22 @@ interface ApplyData {
   selectedTime: string | null;
 }
 
+
+const base64ToFile = (base64: string, filename: string): File => {
+  const [meta, data] = base64.split(",");
+  const mime = meta.match(/:(.*?);/)?.[1] ?? "image/jpeg";
+
+  const binary = atob(data);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+
+  return new File([bytes], filename, { type: mime });
+};
+
+
 // 교환 의류 내역
 export const useGetMyTakenClothes = () => {
   return useQuery<MyTakenClothingResponse[], Error>({
@@ -50,21 +66,23 @@ export const useApplySubmit = (partyId: string) => {
 
       const { selectedItems, itemsInfo, selectedDate, selectedTime } = applyData;
 
-      const images: string[] = [];
+      const payload = new FormData();
+
       const clothingItems = selectedItems.flatMap((item) => {
         return Array.from({ length: item.count }, (_, index) => {
           const itemId = `${item.code}-${index}`;
           const info = itemsInfo.get(itemId) || { images: [], description: "" };
 
-          info.images.forEach((image) => {
-            images.push(image);
+          info.images.forEach((image,index) => {
+            const file = base64ToFile(image, `image_${itemId}_${index}.jpg`);
+            payload.append("images", file);
           });
+
           return {
             mainCategory: item.mainCategory,
             subCategory: item.subCategory,
             description: info.description || "",
             imageCount: info.images.length,
-            // imageUrls: info.images,
           };
         });
       });
@@ -79,33 +97,17 @@ export const useApplySubmit = (partyId: string) => {
       const dateOfMonth = selectedDate.getDate();
       const timestamp = Date.UTC(year, month, dateOfMonth, hours, minutes, 0, 0);
       const attendanceDateTime = new Date(timestamp);
-      const attendanceDate = attendanceDateTime.toISOString();
+      const attendanceDate = attendanceDateTime.toISOString().replace("Z", "");;
 
-      const payload = new FormData();
-
-      images.forEach((file) => {
-        payload.append("images", file);
-      });
 
       payload.append("name", userData.nickname);
-      payload.append("phone", "");
+      payload.append("phone", "010-4444-4444");
       payload.append("email", userData.email);
-      payload.append("clothingItems", JSON.stringify(clothingItems));  // 배열이나 객체는 JSON 문자열로
+      payload.append("clothingItemsJson", JSON.stringify(clothingItems));
       payload.append("attendanceDate", attendanceDate);
 
-      // const payload = {
-      //   images: images,
-      //   request: {
-      //     name: userData.nickname,
-      //     phone: "", // TODO: useMe에 phone 정보 추가 시 사용
-      //     email: userData.email,
-      //     clothingItems,
-      //     attendanceDate,
-      //   },
-      // };
-
       for (const [key, value] of payload.entries()) {
-        console.log(key, value);
+        if (key != "images")  console.log(key, value);
       }
 
       const res = await postPartyParticipant(partyId, payload);

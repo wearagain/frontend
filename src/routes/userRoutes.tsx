@@ -26,6 +26,7 @@ import {
   ClothDetailPage,
   RequestInfoPage,
   PartyHelpPage,
+  ImpactReceiptPage,
   SettingsPage,
   UserProfilePage,
 } from "@/pages";
@@ -270,7 +271,7 @@ const userRoutes: RouteObject = {
           handle: { header: { type: "base", label: "환경설정", showBack: true } },
         },
         {
-          path: 'profile',
+          path: "profile",
           element: <UserProfilePage />,
           handle: { header: { type: "back", label: "프로필", showBack: true } },
         },
@@ -283,6 +284,20 @@ const userRoutes: RouteObject = {
       element: <QrCheckinPage />,
       handle: { header: { type: "none" } },
     }, // /qr?type=checkin or /qr?type=scan
+
+    // Impact
+    {
+      path: "impact",
+      children: [
+        {
+          path: "receipt",
+          element: <ImpactReceiptPage />,
+          handle: {
+            header: { type: "base", label: "환경영수증", showBack: true },
+          },
+        },
+      ],
+    }, // /impact/receipt
   ],
 };
 

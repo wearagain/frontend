@@ -11,8 +11,9 @@ export function SortFilter({ value, onChange }: Props) {
 
   return (
     <Button
+      theme={"normalOutlined"}
       onClick={toggleSort}
-      className='h-10 rounded-full border-gray-300 bg-white border text-gray-700 hover:bg-gray-100'
+      className='h-9 w-fit min-w-max rounded-full border transition-colors text-[#222222] hover:bg-(--color-mint-light) hover:border-(--color-mint-light) hover:text-white'
     >
       {value === "popular" ? "인기순" : "최신순"}
       <ArrowUpDownIcon className='ml-1 size-4' />

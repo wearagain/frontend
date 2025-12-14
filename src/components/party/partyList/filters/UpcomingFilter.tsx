@@ -9,8 +9,9 @@ export function UpcomingFilter({ active, onToggle }: Props) {
   return (
     <Button
       onClick={onToggle}
-      className={`h-10 rounded-full border border-gray-300 ${
-        active ? "bg-gray-700 text-white" : "bg-white text-gray-700"
+      theme = {"mint"}
+      className={`h-9 w-fit min-w-max rounded-full border transition-colors hover:border-(--color-mint-dark) ${
+          active ? "bg-(--color-mint-lighter) text-(--color-mint-light)" : "bg-white border-gray-200 text-[#222222]"
       }`}
     >
       진행예정

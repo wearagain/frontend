@@ -42,7 +42,7 @@ export const PartyCard = ({ party }: PartyCardProps) => {
 
   return (
     <div
-      className='flex items-center gap-4 bg-white px-4 py-2 hover:bg-gray-200 cursor-pointer'
+      className='flex items-center gap-4 bg-white px-4 py-4 hover:bg-gray-200 cursor-pointer'
       onClick={() => navigate(`/party/${id}`)}
     >
       {/* 썸네일 */}

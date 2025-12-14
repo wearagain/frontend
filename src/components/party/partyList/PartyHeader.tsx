@@ -22,7 +22,7 @@ export function PartyHeader({
   onChangeStatus,
 }: PartyHeaderProps) {
   return (
-    <div className='flex gap-3 overflow-x-auto no-scrollbar px-2 py-1'>
+    <div className='main-inner min-h-max flex h-fit gap-x-[6px] overflow-x-auto no-scrollbar custom-scroll py-3 border-b border-[#E0E2E4]'>
       <SortFilter value={sort} onChange={onChangeSort} />
       <RegionFilter value={region} onChange={onChangeRegion} />
       <ProgressFilter active={status === "ONGOING"} onToggle={() => onChangeStatus("ONGOING")} />

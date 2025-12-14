@@ -26,4 +26,5 @@ export {
   SearchIcon,
   MessageSquareText,
   EllipsisVertical,
+  CircleAlert,
 } from "lucide-react";

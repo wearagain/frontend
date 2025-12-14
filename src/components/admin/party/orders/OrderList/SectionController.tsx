@@ -1,5 +1,8 @@
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import type { AdminPartyModalProps, OrderAction } from "@/types/admin/party.ts";
+import { useOrderSelectionStore } from "@/store/useOrderSelectionStore.ts";
+import { useNavigate } from "react-router-dom";
+import { clickDeliveryHeaderButton } from "@/utils/admin/party/clickDeliveryButton.ts";
 
 interface SectionControllerProps
   extends AdminPartyModalProps<OrderAction> {
@@ -18,6 +21,13 @@ export default function SectionController(
   }: SectionControllerProps,
 ) {
 
+  const { selected } = useOrderSelectionStore();
+  const navigate = useNavigate();
+
+  const handleDeliveryClick = () => {
+    clickDeliveryHeaderButton({ nextStatus: selected?.nextStatus, setOpenModal, navigate });
+  };
+
   return (
     <div className="flex justify-between items-center w-full px-5 mb-2">
       <div className="flex items-center gap-2">
@@ -33,7 +43,7 @@ export default function SectionController(
           type="button"
           onClick={() => {
             setAction?.("confirm");
-            setOpenModal?.(true);
+            handleDeliveryClick();
           }}
           disabled={!isActive}
         >

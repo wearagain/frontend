@@ -2,7 +2,7 @@ import { create } from "zustand";
 import type { DeliveryStatus } from "@/types/admin/party";
 import type { SelectedOrderItems } from "@/types/admin/party";
 
-interface OrderSelectionState {
+export interface OrderSelectionState {
   selected: SelectedOrderItems<DeliveryStatus>;
   activeSection: DeliveryStatus | null;
 

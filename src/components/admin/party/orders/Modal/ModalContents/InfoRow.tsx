@@ -18,9 +18,9 @@ export default function InfoRow(item: OrderItem) {
 
   return (
     <div
-      className="flex flex-col flex-1 min-w-0 max-w-full items-center gap-4 bg-white pb-5 pl-[6px] mr-5 py-[10px]"
+      className="flex flex-col flex-1 min-w-0 max-w-full items-center gap-4 bg-white p-5"
     >
-      <div className="flex w-full items-center gap-4 bg-white pl-[6px] mr-5 py-[10px]">
+      <div className="flex w-full items-center gap-4">
         {/* 썸네일 */}
         <div className="h-22 w-22 shrink-0 rounded-lg bg-gray-100">
           <img
@@ -35,7 +35,7 @@ export default function InfoRow(item: OrderItem) {
         </div>
 
         {/* 카드 본문 */}
-        <div className="flex flex-col min-w-0">
+        <div className="flex flex-1 flex-col min-w-0">
           <h4 className="text-base font-bold truncate">{partyTitle}</h4>
 
           <div className="flex items-center gap-1 text-sm text-[#939396] truncate">

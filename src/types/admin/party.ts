@@ -207,7 +207,7 @@ export interface OrderItem {
   id: string;
   desiredDate?: string;
   maxAttendeeCnt?: number;
-  price?: string;
+  price?: number;
 }
 
 export interface AdminPartyModalProps<TAction extends string> {

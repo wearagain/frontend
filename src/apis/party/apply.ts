@@ -1,16 +1,15 @@
 import { axiosInstance } from "../axios-instance";
 import type {
-  PartyParticipantRequest,
   PartyParticipantResponse,
   HostApplicationResponse,
   MyTakenClothingResponse,
 } from "@/types/apply";
 
 // 신청 관련
-export const postPartyParticipant = async (partyId: string, payload: PartyParticipantRequest) => {
+export const postPartyParticipant = async (partyId: string, payload: FormData) => {
   const { data } = await axiosInstance.post(`/api/parties/${partyId}/participants`, payload, {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
     },
   });
   return data;

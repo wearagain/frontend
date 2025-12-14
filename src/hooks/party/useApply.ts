@@ -30,6 +30,22 @@ interface ApplyData {
   selectedTime: string | null;
 }
 
+
+const base64ToFile = (base64: string, filename: string): File => {
+  const [meta, data] = base64.split(",");
+  const mime = meta.match(/:(.*?);/)?.[1] ?? "image/jpeg";
+
+  const binary = atob(data);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+
+  return new File([bytes], filename, { type: mime });
+};
+
+
 // 교환 의류 내역
 export const useGetMyTakenClothes = () => {
   return useQuery<MyTakenClothingResponse[], Error>({
@@ -50,16 +66,23 @@ export const useApplySubmit = (partyId: string) => {
 
       const { selectedItems, itemsInfo, selectedDate, selectedTime } = applyData;
 
+      const payload = new FormData();
+
       const clothingItems = selectedItems.flatMap((item) => {
         return Array.from({ length: item.count }, (_, index) => {
           const itemId = `${item.code}-${index}`;
           const info = itemsInfo.get(itemId) || { images: [], description: "" };
 
+          info.images.forEach((image,index) => {
+            const file = base64ToFile(image, `image_${itemId}_${index}.jpg`);
+            payload.append("images", file);
+          });
+
           return {
             mainCategory: item.mainCategory,
             subCategory: item.subCategory,
             description: info.description || "",
-            imageUrls: info.images,
+            imageCount: info.images.length,
           };
         });
       });
@@ -74,15 +97,18 @@ export const useApplySubmit = (partyId: string) => {
       const dateOfMonth = selectedDate.getDate();
       const timestamp = Date.UTC(year, month, dateOfMonth, hours, minutes, 0, 0);
       const attendanceDateTime = new Date(timestamp);
-      const attendanceDate = attendanceDateTime.toISOString();
+      const attendanceDate = attendanceDateTime.toISOString().replace("Z", "");;
 
-      const payload = {
-        name: userData.nickname,
-        phone: "", // TODO: useMe에 phone 정보 추가 시 사용
-        email: userData.email,
-        clothingItems,
-        attendanceDate,
-      };
+
+      payload.append("name", userData.nickname);
+      payload.append("phone", "010-4444-4444");
+      payload.append("email", userData.email);
+      payload.append("clothingItemsJson", JSON.stringify(clothingItems));
+      payload.append("attendanceDate", attendanceDate);
+
+      for (const [key, value] of payload.entries()) {
+        if (key != "images")  console.log(key, value);
+      }
 
       const res = await postPartyParticipant(partyId, payload);
       return res;

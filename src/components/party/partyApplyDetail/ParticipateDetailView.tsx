@@ -84,7 +84,7 @@ export const ParticipateDetailView = ({ data }: ParticipateDetailViewProps) => {
     <div className='flex flex-col h-screen'>
       {/* 헤더 */}
       <div className='bg-white shrink-0 sticky top-0 p-5 z-10'>
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center justify-between gap-2'>
           <h2>{partyTitle}</h2>
           <StatusBadge status={status} />
         </div>

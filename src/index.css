@@ -219,6 +219,11 @@ textarea:focus {
   @apply border-b-4 border-gray-100;
 }
 
+.divider-between > *:not(:last-child) {
+  border-bottom-width: 4px;
+  border-color: #f3f4f6;
+}
+
 .main-inner {
   @apply pl-5;
 }
@@ -255,3 +260,4 @@ textarea:focus {
 .dropdown-menu-item {
   @apply cursor-pointer px-2
 }
+

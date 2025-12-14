@@ -27,6 +27,8 @@ import {
   RequestInfoPage,
   PartyHelpPage,
   ImpactReceiptPage,
+  SettingsPage,
+  UserProfilePage,
 } from "@/pages";
 import ChatPageWrapper from "@/pages/chat/ChatPageWrapper";
 import PartyChatPageWrapper from "@/pages/chat/PartyChatPageWrapper";
@@ -258,6 +260,22 @@ const userRoutes: RouteObject = {
       path: "mypage",
       element: <MyPage />,
       handle: { header: { type: "base", label: "마이페이지", showBack: true } },
+    }, // /mypage
+
+    {
+      path: "settings",
+      children: [
+        {
+          index: true,
+          element: <SettingsPage />,
+          handle: { header: { type: "base", label: "환경설정", showBack: true } },
+        },
+        {
+          path: "profile",
+          element: <UserProfilePage />,
+          handle: { header: { type: "back", label: "프로필", showBack: true } },
+        },
+      ], // /editProfile
     }, // /mypage
 
     // QR 체크인/스캔

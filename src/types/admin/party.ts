@@ -1,4 +1,4 @@
-import type { PartyAdminStatus } from "@/types/adminTypes.ts";
+import type { PartyStatus } from "@/types/party.ts";
 
 export interface PartyApplicationResponse {
   id: string;
@@ -25,7 +25,6 @@ export interface PartyApplicationResponse {
 
   deliverAddress: string;
   deliverAddressDetail: string | null;
-
   desiredDate: string;
 
   taxReceipt: boolean;
@@ -48,6 +47,14 @@ export interface PartyApplicationResponse {
   ymap?: number | null;
 }
 
+export type PartyApplicationView = Omit<
+  PartyApplicationResponse,
+  "openAt" | "closeAt"
+> & {
+  dateFromTo: string;
+  timeFromTo: string;
+};
+
 export type ApplicationStatus = "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED";
 
 export type DeliveryStatus = "PENDING" | "PREPARING" | "IN_TRANSIT" | "DELIVERED" | "RETURNED";
@@ -63,7 +70,7 @@ export interface PartyManageResponse {
   addressDetail: string | null;
   maxAttendeeCnt: number;
   currentAttendeeCnt: number;
-  status: PartyAdminStatus;
+  status: PartyStatus;
   hostName: string;
   isGroup: boolean;
   isFull: boolean;
@@ -72,6 +79,143 @@ export interface PartyManageResponse {
   ymap: number | null;
 }
 
-export type ManageAction = "confirm" | "delete" | null;
+export interface PartyManageDetail {
+  id: string;
+  applicationId: string;
 
-export type ManageBarStatus = "control" | "confirm" | "delete" | null;
+  isGroup: boolean;
+
+  hostId: string;
+  hostName: string;
+  hostEmail: string;
+
+  openAt: string;
+  closeAt: string;
+
+  address: string;
+  addressDetail: string | null;
+
+  maxChangeCnt: number;
+  maxAttendeeCnt: number;
+
+  title: string;
+  description: string;
+
+  currentAttendeeCnt: number;
+  status: PartyStatus;
+
+  imageUrl: string | null;
+  xmap: number | null;
+  ymap: number | null;
+}
+
+export interface ClothingItem {
+  clothingNumber: string;
+  mainCategory: string;
+  subCategory: string;
+  description: string;
+  imageUrls: string[];
+}
+
+export interface PartyParticipantsResponse {
+  id: string;
+  partyId: string;
+  partyTitle: string;
+  address: string;
+  addressDetail: string;
+  userId: string;
+  name: string;
+  phone: string;
+  email: string;
+  clothingItems: ClothingItem[];
+  attendanceDate: string;
+  status: ApplicationStatus
+  appliedAt: string;
+  processedAt: string;
+  qrCode: string;
+  qrExpiresAt: string;
+}
+
+export interface OrderResponse {
+  id: string;
+  // partyId: string;
+  partyTitle: string;
+  price: number;
+  desiredDate: string;
+  maxAttendeeCnt: number;
+  deliveryStatus: DeliveryStatus;
+  imgUrl: string;
+}
+
+export interface OrderDetailResponse {
+  appliedAt: string;
+  isGroup: boolean;
+  name: string;
+  groupName: string;
+  phone: string;
+  email: string;
+  partyTitle: string;
+  partyStatus: PartyStatus;
+  partyId: string;
+  openAt: string;
+  closeAt: string;
+  address: string;
+  maxAttendeeCnt: number;
+  currentAttendeeCnt: number;
+  maxChangeCnt: number;
+  description: string;
+  deliveryStatus: DeliveryStatus;
+  price: number;
+  deliveryAddress: string;
+  desiredDate: string;
+  trackingNumber: string;
+  taxReceipt: boolean;
+  taxId: string;
+}
+
+
+export type ManageAction = "control" | "confirm" | "delete";
+
+export type OrderAction = "confirm" | "tracking";
+
+export interface DeliveryStatusUpdateRequest {
+  deliveryStatus: DeliveryStatus;
+  deliveryMemo?: string | null;
+  trackingNumber?: string | null;
+  courierName?: string | null;
+}
+
+export interface TaxUpdateRequest {
+  taxId?: string;
+  name?: string;
+}
+
+export interface SelectedItemStatus<TStatus extends string> {
+  nextStatus?: TStatus;
+  ids?: string[];
+}
+
+export interface SelectedOrderItems<TStatus extends string> {
+  nextStatus: TStatus;
+  items?: OrderItem[];
+}
+
+export interface OrderItem {
+  imgUrl?: string;
+  partyTitle: string;
+  id: string;
+  desiredDate?: string;
+  maxAttendeeCnt?: number;
+  price?: string;
+}
+
+export interface AdminPartyModalProps<TAction extends string> {
+  setOpenModal?: (v: boolean) => void;
+  setAction?: React.Dispatch<React.SetStateAction<TAction | null>>;
+}
+
+
+export interface PatchDeliveryStatusParams {
+  applicationId: string;
+  params: DeliveryStatusUpdateRequest;
+}

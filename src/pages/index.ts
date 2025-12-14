@@ -26,6 +26,8 @@ import ClothDetailPage from "./community/exchange/ClothDetailPage.tsx";
 import ExchangeRequestPage from "./community/exchange/ExchangeRequestPage";
 import RequestInfoPage from "./community/exchange/RequestInfoPage";
 import ImpactReceiptPage from "./impact/ImpactReceiptPage";
+import SettingsPage from "@/pages/settings/SettingsPage";
+import UserProfilePage from "@/pages/settings/UserProfilePage.tsx";
 
 export {
   NotFound,
@@ -56,4 +58,6 @@ export {
   ExchangeRequestPage,
   RequestInfoPage,
   ImpactReceiptPage,
+  SettingsPage,
+  UserProfilePage,
 };

@@ -28,6 +28,8 @@ import RequestInfoPage from "./community/exchange/RequestInfoPage";
 import ImpactReceiptPage from "./impact/ImpactReceiptPage";
 import SettingsPage from "@/pages/settings/SettingsPage";
 import UserProfilePage from "@/pages/settings/UserProfilePage.tsx";
+import InspectionTicketPage from "./inspection-ticket/InspectionTicketPage";
+import PartyClothingListPage from "./inspection-ticket/PartyClothingListPage";
 
 export {
   NotFound,
@@ -60,4 +62,6 @@ export {
   ImpactReceiptPage,
   SettingsPage,
   UserProfilePage,
+  InspectionTicketPage,
+  PartyClothingListPage,
 };

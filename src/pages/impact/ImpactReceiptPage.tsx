@@ -4,7 +4,6 @@ interface DataPoint {
   label: string;
   value: number;
 }
-import { FilterHeader } from "@/components/common/FilterHeader";
 import SectionTitle from "@/components/community/exchange/requestApply/SectionTitle";
 import { SummaryCard } from "@/components/impact/SummaryCard";
 import { EnvironmentalMetrics } from "@/components/impact/EnvironmentalMetrics";

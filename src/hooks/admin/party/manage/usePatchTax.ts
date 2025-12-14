@@ -1,14 +1,16 @@
 import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "@/lib/queryClient.ts";
-import type {  TaxUpdateRequest } from "@/types/admin/party.ts";
+import type { TaxUpdateRequest } from "@/types/admin/party.ts";
 import { patchTax } from "@/apis/admin/party/manage/patchTax.ts";
-
 
 export const usePatchTax = () => {
   return useMutation({
     mutationKey: ["tax"],
     mutationFn: async ({ taxId, name }: TaxUpdateRequest) => {
+      if (!taxId || !name) {
+        throw new Error("taxId와 name은 필수입니다.");
+      }
       return await patchTax({ taxId, name });
     },
     onSuccess: () => {

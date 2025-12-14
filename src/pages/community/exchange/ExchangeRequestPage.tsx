@@ -45,12 +45,7 @@ const ExchangeRequestPage = () => {
     isError: isErrorVouchers,
     error: errorVouchers,
   } = useGetAvailableVouchers();
-  const {
-    data: baseAreas,
-    isLoading: isLoadingAreas,
-    isError: isErrorAreas,
-    error: errorAreas,
-  } = useGetBaseAreas();
+  const { isLoading: isLoadingAreas, isError: isErrorAreas, error: errorAreas } = useGetBaseAreas();
   const { mutate: postExchangeRequest, isPending } = usePostExchangeRequest();
 
   const isLoading = isLoadingVouchers || isLoadingAreas;

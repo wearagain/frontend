@@ -10,6 +10,9 @@ interface UserStore {
   reduceCarbonAmount: number | null;
   voucherCount: number | null;
 
+  ongoingPartyCount?: number;
+  noticeCount?: number;
+
   setUser: (user: UserProfile) => void;
   setIsAdmin: (isAdmin: boolean) => void;
   setHomeUserInfo: (payload: {
@@ -30,6 +33,7 @@ export const useUserStore = create<UserStore>((set) => ({
   userImageUrl: null,
   reduceCarbonAmount: null,
   voucherCount: null,
+
 
   setUser: (user) => set({ user }),
   setIsAdmin: (isAdmin) => set({ isAdmin }),

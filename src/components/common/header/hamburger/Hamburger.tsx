@@ -25,11 +25,8 @@ interface HamburgerProps {
 export default function Hamburger({ open, setOpen }: HamburgerProps) {
   const { mutate: signout, isPending } = useSignout();
   const {
-    user,
     isAdmin,
     isLoggedIn,
-    voucherCount: ticket,
-    reduceCarbonAmount: impact,
   } = useUserStore();
 
   const handleClose = () => setOpen(false);
@@ -52,10 +49,12 @@ export default function Hamburger({ open, setOpen }: HamburgerProps) {
 
       <SheetContent side="right" className="overflow-y-auto custom-scroll bottombar-p">
         <SheetHeader className="sticky top-0 bg-white z-10 px-5 pt-3 pb-4">
-          <HeaderActions onClose={handleClose} nickname={user?.nickname ?? ""} />
+          <HeaderActions onClose={handleClose} isAdmin={isAdmin} isLoggedIn={isLoggedIn} />
           <SheetTitle>
             {/* 헤더 */}
-            {user?.nickname ? (<UserProfile nickname={user.nickname} ticket={ticket} impact={impact} />) : (
+            {isLoggedIn
+              ? (<UserProfile />)
+              : (
               <Link to="/auth/signin" onClick={() => setOpen(false)}>
                 로그인 하러가기
               </Link>

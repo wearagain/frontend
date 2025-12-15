@@ -10,9 +10,10 @@ const getIconPath = (icon: string) => `/images/${icon}`;
 interface Props {
   selectedItems: Map<ClothingCategoryCode, number>;
   onItemToggle: (code: ClothingCategoryCode) => void;
+  isModalOpen: boolean;
 }
 
-export default function ClothingCategoryDisplay({ selectedItems, onItemToggle }: Props) {
+export default function ClothingCategoryDisplay({ selectedItems, onItemToggle, isModalOpen }: Props) {
   const [activeCategory, setActiveCategory] = useState<MainCategory>("상의");
   const categories = Object.keys(CLOTHING_CATEGORIES) as MainCategory[];
 
@@ -44,7 +45,7 @@ export default function ClothingCategoryDisplay({ selectedItems, onItemToggle }:
       </div>
 
       {/* 우측 카테고리 */}
-      <div className='flex-1 pb-[64px] overflow-y-auto custom-scroll'>
+      <div className={`flex-1 overflow-y-auto custom-scroll ${isModalOpen ? "pb-64" :"bottombar-p"}`}>
         {categories.map((category) => (
           <div key={category} id={`category-${category}`} className='px-5 py-5'>
             <h3 className='text-base text-[#222222] font-bold mb-6'>{category}</h3>

@@ -46,8 +46,8 @@ export default function ClothingSelectedModal({
   });
 
   return (
-    <div className='px-5 pb-8 bg-white sticky bottom-0 rounded-t-2xl drop-shadow-lg'>
-      <div className='py-5 space-y-3'>
+    <div className='px-5 pt-5 pb-8 bg-white sticky bottom-0 rounded-t-2xl drop-shadow-lg'>
+      <div className='mb-5 space-y-3 max-h-[80px] overflow-x-auto custom-scroll'>
         {flattenedItems.map((item) => (
           <div key={`${item.code}-${item.index}`} className='flex items-center justify-between'>
             <div>

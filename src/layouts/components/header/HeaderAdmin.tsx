@@ -29,8 +29,7 @@ export default function HeaderAdmin({
   }, [location.pathname]);
 
   const nickname = data?.nickname ?? null;
-  const dummyTicket = 2;
-  const dummyCo2 = 12.5;
+  const role = data?.role ?? null;
 
   return (
     <HeaderContainer>
@@ -47,8 +46,7 @@ export default function HeaderAdmin({
           nickname={nickname}
           open={open}
           setOpen={setOpen}
-          ticket={dummyTicket}
-          co2={dummyCo2}
+          isAdmin={role === "ADMIN"}
         />
       </div>
     </HeaderContainer>

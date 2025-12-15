@@ -8,22 +8,23 @@ import {
 } from "@/components/ui/sheet.tsx";
 import { Menu } from "@/assets/icons";
 import { Link } from "react-router-dom";
-import { mainMenu } from "@/config/navMenu.ts";
+import { userMenu, adminMenu } from "@/config/navMenu.ts";
 import { useSignout } from "@/hooks/auth/useAuth.ts";
 import HeaderActions from "@/components/common/header/hamburger/HeaderActions.tsx";
 import UserProfile from "@/components/common/header/hamburger/UserProfile.tsx";
 import MenuItem from "@/components/common/header/hamburger/MenuItem.tsx";
+import MenuTab from "@/components/home/MenuTab.tsx";
 
 interface HamburgerProps {
   open: boolean;
   setOpen: (value: boolean) => void;
   nickname: string | null;
-  ticket: number;
-  co2: number;
-  isHost?: boolean;
+  ticket?: number;
+  impact?: number;
+  isAdmin?: boolean;
 }
 
-export default function Hamburger({ open, setOpen, nickname, ticket, co2, isHost }: HamburgerProps) {
+export default function Hamburger({ open, setOpen, nickname, ticket, impact, isAdmin = "true" }: HamburgerProps) {
   const { mutate: signout, isPending } = useSignout();
 
   const handleClose = () => setOpen(false);
@@ -34,9 +35,7 @@ export default function Hamburger({ open, setOpen, nickname, ticket, co2, isHost
     });
   };
 
-  const filteredMenu = mainMenu.filter(
-      (item) => !item.host || (item.host && isHost)
-  );
+  const currentMenu = isAdmin ? adminMenu : userMenu;
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -46,12 +45,12 @@ export default function Hamburger({ open, setOpen, nickname, ticket, co2, isHost
         </button>
       </SheetTrigger>
 
-      <SheetContent side='right' className='overflow-y-auto px-5'>
-        <SheetHeader className='sticky top-0 bg-white z-10 pt-3 pb-4'>
+      <SheetContent side='right' className='overflow-y-auto custom-scroll bottombar-p'>
+        <SheetHeader className='sticky top-0 bg-white z-10 px-5 pt-3 pb-4'>
           <HeaderActions onClose={handleClose} nickname={nickname} />
           <SheetTitle>
             {/* 헤더 */}
-            {nickname ? (<UserProfile nickname={nickname} ticket={ticket} co2={co2}/>) : (
+            {nickname ? (<UserProfile nickname={nickname} ticket={ticket} impact={impact}/>) : (
                 <Link to='/auth/signin' onClick={() => setOpen(false)}>
                   로그인 하러가기
                 </Link>
@@ -59,9 +58,18 @@ export default function Hamburger({ open, setOpen, nickname, ticket, co2, isHost
           </SheetTitle>
           <SheetDescription/>
         </SheetHeader>
+        {isAdmin && (
+            <>
+              <div className='divider-compact'/>
+            <MenuTab userRole={"ADMIN"}/>
+              <div className='divider-compact'/>
+              {/* 일간 의류 교환 수 */}
+              <div className='divider-compact'/>
+            </>
+        )}
         {/* 메뉴 */}
-        <nav className='flex flex-col gap-4 my-5 text-[#222222] font-medium'>
-          {filteredMenu.map((item, index) => (
+        <nav className='flex flex-col gap-4 mt-5 px-5 text-[#222222] font-medium'>
+          {currentMenu.map((item, index) => (
               <div key={`${item.label}-${index}`}>
                 <MenuItem item={item} onClose={handleClose}/>
                 {item.divider && (

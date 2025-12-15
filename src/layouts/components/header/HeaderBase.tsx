@@ -55,8 +55,7 @@ export default function HeaderBase({
         setOpen={setOpen}
         nickname={nickname}
         ticket={dummyTicket}
-        co2={dummyCo2}
-        isHost={false}
+        impact={dummyCo2}
       />
     </HeaderContainer>
   );

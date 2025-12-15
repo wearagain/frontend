@@ -5,7 +5,7 @@ export interface HomeResponse {
   isLoggedIn: boolean,
   nickname: string,
   userImageUrl: string,
-  ReduceCarbonAmount?: number,
+  reduceCarbonAmount?: number,
   ongoingParties: OngoingParty[],
   noticeDocuments: NoticeDocument[],
   voucherCount?: number,

@@ -21,7 +21,7 @@ export const useGetHome = () => {
     setHomeUserInfo({
       isLoggedIn: query.data.isLoggedIn,
       userImageUrl: query.data.userImageUrl,
-      reduceCarbonAmount: query.data.ReduceCarbonAmount,
+      reduceCarbonAmount: query.data.reduceCarbonAmount,
       voucherCount: query.data.voucherCount,
     });
   }, [query.data, setHomeUserInfo]);

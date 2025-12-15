@@ -5,22 +5,20 @@ import { useEffect } from "react";
 import { getUserRole } from "@/utils/common/getUserRole.ts";
 
 export const useMe = () => {
-  const { user, setUser, setIsAdmin } = useUserStore();
+  const {  setUser, setIsAdmin } = useUserStore();
 
   const query = useQuery<UserProfile>({
     queryKey: ["me"],
     queryFn: getMe,
     staleTime: 1000 * 60 * 5,
     retry: false,
-    enabled: !user?.id
   });
 
   useEffect(() => {
-    if (query?.data) {
-      setUser(query?.data);
-      setIsAdmin(getUserRole(query?.data.role));
-    }
-  }, [query?.data, setUser, setIsAdmin]);
+    if (!query.data)  return;
+    setUser(query?.data);
+    setIsAdmin(getUserRole(query?.data.role));
+  }, [query.data]);
 
   return query;
 };

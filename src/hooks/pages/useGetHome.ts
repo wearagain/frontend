@@ -6,7 +6,7 @@ import type { HomeResponse } from "@/types/pages.ts";
 import { useAdminStore } from "@/store/useAdminStore.ts";
 
 export const useGetHome = () => {
-  const { user, setHomeUserInfo } = useUserStore();
+  const { setHomeUserInfo } = useUserStore();
   const { setHomeAdminInfo } = useAdminStore();
 
   const query = useQuery<HomeResponse>({
@@ -14,7 +14,6 @@ export const useGetHome = () => {
     queryFn: getHome,
     staleTime: 1000 * 60 * 5,
     retry: false,
-    enabled: !user?.id,
   });
 
   useEffect(() => {
@@ -23,7 +22,9 @@ export const useGetHome = () => {
     setHomeUserInfo({
       isLoggedIn: query.data.isLoggedIn,
       userImageUrl: query.data.userImageUrl,
-      reduceCarbonAmount: query.data.reduceCarbonAmount ? Number(query.data.reduceCarbonAmount.toFixed(1)) : query.data.reduceCarbonAmount,
+      reduceCarbonAmount: query.data.reduceCarbonAmount
+        ? Number(query.data.reduceCarbonAmount.toFixed(1))
+        : query.data.reduceCarbonAmount,
       voucherCount: query.data.voucherCount,
     });
 

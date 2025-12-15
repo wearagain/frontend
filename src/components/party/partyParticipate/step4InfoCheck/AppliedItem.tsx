@@ -1,16 +1,15 @@
 import { type SelectedItem } from "@/types/clothingCategory.ts";
 
 interface AppliedItemProps {
-  item: SelectedItem & { itemId: string; itemName: string };
+  item: SelectedItem & { itemId: string; itemName: string; description?: string };
   itemInfo: { images: string[]; description: string };
   showCode?: boolean;
 }
 
 export default function AppliedItem({ item, itemInfo, showCode }: AppliedItemProps) {
   const imageUrl = itemInfo.images?.[0];
-  // clothingNumber가 있으면 교환 이력 있음으로 판단
-  const hasExchangeHistory = !!item.itemId;
-  const exchangeHistoryText = hasExchangeHistory ? "교환 이력 있음" : "교환 이력 없음";
+  // description이 있으면 그대로 사용
+  const exchangeHistoryText = item.description || "교환 이력 없음";
 
   return (
     <div className='flex items-center gap-4 py-2'>

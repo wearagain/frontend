@@ -42,6 +42,7 @@ export default function ClothingSelectedModal({
       clothingNumber,
       index,
       itemNumber: index + 1,
+      totalCount: item.count,
     }));
   });
 

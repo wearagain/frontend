@@ -69,12 +69,18 @@ export const useApplyStore = create<ApplyState>()(
           if (currentItem.count > 1) {
             const currentClothingNumbers =
               currentItem.clothingNumbers ?? Array(currentItem.count).fill(null);
+            const currentDescriptions =
+              currentItem.descriptions ?? Array(currentItem.count).fill("");
             const newClothingNumbers = [...currentClothingNumbers];
+            const newDescriptions = [...currentDescriptions];
+
             newClothingNumbers.splice(index, 1);
+            newDescriptions.splice(index, 1);
             newItems[itemIndex] = {
               ...currentItem,
               count: currentItem.count - 1,
               clothingNumbers: newClothingNumbers,
+              descriptions: newDescriptions,
             };
             updatedItems = newItems;
           } else {
@@ -110,6 +116,7 @@ export const useApplyStore = create<ApplyState>()(
           state.selectedItems = state.selectedItems.map((item) => ({
             ...item,
             clothingNumbers: item.clothingNumbers ?? Array(item.count).fill(null),
+            descriptions: item.descriptions ?? Array(item.count).fill(""),
           }));
         }
       },

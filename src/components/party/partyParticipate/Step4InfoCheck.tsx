@@ -7,8 +7,7 @@ import TermsItem from "../../signup/TermsItem";
 import AlertItem from "./step4InfoCheck/AlertItem.tsx";
 import AppliedItem from "./step4InfoCheck/AppliedItem.tsx";
 import Modal from "@/components/ui/modal.tsx";
-import InfoModalContent
-  from "@/components/party/partyParticipate/step4InfoCheck/InfoModalContent.tsx";
+import InfoModalContent from "@/components/party/partyParticipate/step4InfoCheck/InfoModalContent.tsx";
 
 interface InfoCheckProps {
   onFinalSubmit: () => void;
@@ -29,7 +28,12 @@ const formatDateTime = (date: Date | null | undefined, time: string | null): str
   return "날짜 및 시간 정보 없음";
 };
 
-export default function Step4InfoCheck({ onFinalSubmit, partyName, onBack, isPending }: InfoCheckProps) {
+export default function Step4InfoCheck({
+  onFinalSubmit,
+  partyName,
+  onBack,
+  isPending,
+}: InfoCheckProps) {
   const { selectedItems, selectedDate, selectedTime, itemsInfo } = useApplyStore();
   useEffect(() => {
     if (selectedItems.length === 0) {
@@ -73,6 +77,7 @@ export default function Step4InfoCheck({ onFinalSubmit, partyName, onBack, isPen
         ...item,
         itemId: `${item.code}-${index}`,
         itemName: `${item.subCategory} ${index + 1}`,
+        description: item.descriptions?.[index] ?? "",
       }))
     );
   }, [selectedItems]);
@@ -108,9 +113,7 @@ export default function Step4InfoCheck({ onFinalSubmit, partyName, onBack, isPen
         {/* 신청 확인 정보 */}
         <div className='pb-5 px-5'>
           <h3 className='mt-5 mb-4'>신청 확인 정보</h3>
-          <p className='text-[#222222] font-medium mb-5'>
-            {participateDate}
-          </p>
+          <p className='text-[#222222] font-medium mb-5'>{participateDate}</p>
           <AlertItem message='시간 상관 없이 방문 가능합니다' />
         </div>
         <div className='divider'></div>
@@ -121,12 +124,11 @@ export default function Step4InfoCheck({ onFinalSubmit, partyName, onBack, isPen
             className='flex items-center justify-between cursor-pointer'
             onClick={() => setIsDetailsOpen((prev) => !prev)}
           >
-            <h3 className='font-bold'>신청 품목 정보 <span className='text-[var(--color-mint-light)]'>{totalItemsCount}</span></h3>
-            {isDetailsOpen ? (
-              <ChevronUp size={20}/>
-            ) : (
-              <ChevronDown size={20}/>
-            )}
+            <h3 className='font-bold'>
+              신청 품목 정보{" "}
+              <span className='text-[var(--color-mint-light)]'>{totalItemsCount}</span>
+            </h3>
+            {isDetailsOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
           </div>
 
           {isDetailsOpen && (
@@ -208,17 +210,21 @@ export default function Step4InfoCheck({ onFinalSubmit, partyName, onBack, isPen
       {/* 확인 모달 */}
       {showConfirmModal && (
         <Modal
-        header='해당 정보로 신청하겠습니까?'
-        confirmText='신청하기'
-        theme='mint'
-        onClose={() => setShowConfirmModal(false)}
-      confirmDisabled={!isValid}
-      onConfirm={handleConfirmSubmit}
-    >
-      <div className='flex flex-col gap-5'>
-        <InfoModalContent partyDate={participateDate} partyName={partyName} totalCount={totalItemsCount}/>
-      </div>
-    </Modal>
+          header='해당 정보로 신청하겠습니까?'
+          confirmText='신청하기'
+          theme='mint'
+          onClose={() => setShowConfirmModal(false)}
+          confirmDisabled={!isValid}
+          onConfirm={handleConfirmSubmit}
+        >
+          <div className='flex flex-col gap-5'>
+            <InfoModalContent
+              partyDate={participateDate}
+              partyName={partyName}
+              totalCount={totalItemsCount}
+            />
+          </div>
+        </Modal>
       )}
     </div>
   );

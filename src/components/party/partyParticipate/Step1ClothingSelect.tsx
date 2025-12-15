@@ -3,6 +3,7 @@ import { useApplyStore } from "@/store/useApplyStore";
 import { useGetMyTakenClothes } from "@/hooks/party/useApply";
 import { findCategoryByCode } from "@/utils/apply/clothingUtils";
 import { type ClothingCategoryCode, type SelectedItem } from "@/types/clothingCategory";
+import { getExchangeDescription } from "@/constants/participateConstants";
 
 import ClothingCategoryDisplay from "./step1ClothingSelect/ClothingCategoryDisplay";
 import ClothingSelectedModal from "./step1ClothingSelect/ClothingSelectedModal";
@@ -20,7 +21,7 @@ export default function Step1ClothingSelect({ maxItemLimit, onNext }: Participan
   const { data: exchangedClothings = [] } = useGetMyTakenClothes();
 
   const [historyModalOpen, setHistoryModalOpen] = useState(false);
-  const isModalOpen = (selectedItems.length > 0);
+  const isModalOpen = selectedItems.length > 0;
 
   const [currentItemCode, setCurrentItemCode] = useState<ClothingCategoryCode | null>(null);
 
@@ -34,16 +35,19 @@ export default function Step1ClothingSelect({ maxItemLimit, onNext }: Participan
     (code: ClothingCategoryCode, clothingNumber: string | null) => {
       const category = findCategoryByCode(code)!;
       const existingItem = selectedItems.find((item) => item.code === code);
+      const description = getExchangeDescription(clothingNumber);
 
       if (existingItem) {
         const currentClothingNumbers =
           existingItem.clothingNumbers ?? Array(existingItem.count).fill(null);
+        const currentDescriptions = existingItem.descriptions ?? [];
         const updatedItems = selectedItems.map((item) =>
           item.code === code
             ? {
                 ...item,
                 count: item.count + 1,
                 clothingNumbers: [...currentClothingNumbers, clothingNumber],
+                descriptions: [...currentDescriptions, description],
               }
             : item
         );
@@ -57,12 +61,19 @@ export default function Step1ClothingSelect({ maxItemLimit, onNext }: Participan
             subCategory: category.subCategory,
             count: 1,
             clothingNumbers: [clothingNumber],
+            descriptions: [description],
           },
         ]);
       }
     },
     [selectedItems, setSelectedItems]
   );
+
+  const currentItemCount = useMemo(() => {
+    if (!currentItemCode) return 1;
+    const item = selectedItems.find((item) => item.code === currentItemCode);
+    return item ? item.count + 1 : 1;
+  }, [currentItemCode, selectedItems]);
 
   const handleItemToggle = useCallback(
     (code: ClothingCategoryCode) => {
@@ -103,12 +114,20 @@ export default function Step1ClothingSelect({ maxItemLimit, onNext }: Participan
       } else {
         const currentClothingNumbers =
           existingItem.clothingNumbers ?? Array(existingItem.count).fill(null);
+        const currentDescriptions = existingItem.descriptions ?? [];
         const newClothingNumbers = [...currentClothingNumbers];
+        const newDescriptions = [...currentDescriptions];
         newClothingNumbers.splice(index, 1);
+        newDescriptions.splice(index, 1);
         setSelectedItems(
           selectedItems.map((item) =>
             item.code === code
-              ? { ...item, count: item.count - 1, clothingNumbers: newClothingNumbers }
+              ? {
+                  ...item,
+                  count: item.count - 1,
+                  clothingNumbers: newClothingNumbers,
+                  descriptions: newDescriptions,
+                }
               : item
           )
         );
@@ -153,7 +172,7 @@ export default function Step1ClothingSelect({ maxItemLimit, onNext }: Participan
       {historyModalOpen && currentCategory && (
         <ExchangeHistoryModal
           itemName={currentCategory.subCategory}
-          itemCount={1}
+          itemCount={currentItemCount}
           exchangedClothings={exchangedClothings}
           onConfirm={handleHistoryConfirm}
           onClose={handleHistoryClose}

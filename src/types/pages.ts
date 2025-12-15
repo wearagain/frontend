@@ -52,6 +52,14 @@ export interface AdminTotalImpactResponse {
   partyImpacts: PartyImpact
 }
 
+export interface AdminTotalImpact {
+  totalUsers: number,
+  totalItemCount: number,
+  totalMetrics: Metric,
+  partyImpacts: PartyImpact[]
+}
+
+
 export interface PartyImpact {
   partyId: string,
   partyName: string | null,

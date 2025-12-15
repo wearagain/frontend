@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import HeaderContainer from "./HeaderContainer";
 import { useLocation, useParams } from "react-router-dom";
-import { useMe } from "@/hooks/auth/useMe";
 import { useNavigate } from "react-router-dom";
 import { useGetParty } from "@/hooks/party/useGetParty";
 import { Back, Hamburger } from "@/components/common/header";
@@ -20,11 +19,8 @@ export default function HeaderBase({
   to,
 }: HeaderProps) {
   const [open, setOpen] = useState(false);
-  const dummyTicket = 2;
-  const dummyCo2 = 12.5;
   const location = useLocation();
   const params = useParams();
-  const { data } = useMe();
 
   const navigate = useNavigate();
 
@@ -40,8 +36,6 @@ export default function HeaderBase({
     setOpen(false);
   }, [location.pathname]);
 
-  const nickname = data?.nickname ?? null;
-  // const isHost = data?.isHost ?? false;
 
   return (
     <HeaderContainer>
@@ -53,10 +47,6 @@ export default function HeaderBase({
       <Hamburger
         open={open}
         setOpen={setOpen}
-        nickname={nickname}
-        ticket={dummyTicket}
-        co2={dummyCo2}
-        isHost={false}
       />
     </HeaderContainer>
   );

@@ -261,3 +261,13 @@ textarea:focus {
   @apply cursor-pointer px-2
 }
 
+.recharts-wrapper svg:focus,
+.recharts-wrapper svg:focus-visible,
+.recharts-layer svg:focus,
+.recharts-layer svg:focus-visible {
+  outline: none;
+}
+
+.recharts-line * {
+  outline: none !important;
+}

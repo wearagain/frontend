@@ -13,7 +13,13 @@ import {
   RefreshCw,
   Mail,
   User,
-  Headset
+  Headset,
+  Megaphone,
+  Truck,
+  Notebook,
+  CircleUserRound,
+  Gem,
+  BadgeCheck
 } from "lucide-react";
 
 export interface NavCategory {
@@ -21,11 +27,10 @@ export interface NavCategory {
   path?: string;
   icon?: LucideIcon;
   divider?: boolean;
-  host?: boolean;
   external?: boolean;
 }
 
-export const mainMenu: NavCategory[] = [
+export const userMenu: NavCategory[] = [
   {
     label: "홈",
     icon: Home,
@@ -33,10 +38,9 @@ export const mainMenu: NavCategory[] = [
     divider: true
   },
   {
-    label: "QR 스캔",
+    label: "티켓 스캔",
     icon: ScanQrCode,
-    path: "/qr?type=scan",
-    host: true
+    path: "/inspection-ticket",
   },
   {
     label: "파티 입장",
@@ -123,5 +127,92 @@ export const mainMenu: NavCategory[] = [
   {
     label: "고객센터",
     path: "/support"
+  }
+];
+
+export const adminMenu: NavCategory[] = [
+  {
+    label: "홈",
+    icon: Home,
+    path: "/",
+    divider: true
+  },
+  {
+    label: "티켓 스캔",
+    icon: ScanQrCode,
+    path: "/inspection-ticket",
+  },
+  {
+    label: "파티 입장 스캔",
+    icon: ScanQrCode,
+    path: "/qr?type=scan"
+  },
+  {
+    label: "파티 관리",
+    icon: Users,
+    path: "/admin/party/manage"
+  },
+  {
+    label: "주최 관리",
+    icon: ClipboardCheck,
+    path: "/admin/party/applications"
+  },
+  {
+    label: "결제 및 배송 관리",
+    icon: Truck,
+    path: "/admin/party/orders",
+    divider: true
+  },
+  {
+    label: "환경임팩트",
+    icon: Leaf,
+    path: "/admin/impact",
+    divider: true
+  },
+  {
+    label: "자유게시판 관리",
+    icon: Notebook,
+    path: "/admin/board"
+  },
+  {
+    label: "수선의류교환 관리",
+    icon: RefreshCw,
+    path: "/admin/exchange",
+    divider: true
+  },
+  {
+    label: "회원 관리",
+    icon: CircleUserRound,
+    path: "/admin/users"
+  },
+  {
+    label: "후원자 관리",
+    icon: Gem,
+    path: "/admin/donor"
+  },
+  {
+    label: "수선예술가 관리",
+    icon: BadgeCheck,
+    path: "/admin/",
+    divider: true
+  },
+  {
+    label: "공지시항 관리",
+    icon: Megaphone,
+    path: "/admin/notice"
+  },
+  {
+    label: "1대1 문의 관리",
+    icon: Headset,
+    path: "/admin/support",
+    divider: true
+  },
+  {
+    label: "다시입다연구소 정책",
+    path: "/policy"
+  },
+  {
+    label: "환경설정",
+    path: "/settings"
   }
 ];

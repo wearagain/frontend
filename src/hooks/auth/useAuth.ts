@@ -11,6 +11,7 @@ import { startSocialLogin } from "@/apis/auth/social";
 import { handleApiError } from "@/utils/handleApiError";
 import { useNavigate } from "react-router-dom";
 import { clearCsrfTokenCache } from "@/apis/axios-instance";
+import { useUserStore } from "@/store/useUserStore.ts";
 
 // 회원가입 관련
 export const useEmailVerification = () => {
@@ -81,7 +82,8 @@ export const useSignin = () => {
       return await postSignin(credentials.email, credentials.password);
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["me"] });
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+      queryClient.invalidateQueries({ queryKey: ["home"] });
     },
     onError: (error: unknown) => {
       console.error("로그인 실패:", error);
@@ -102,6 +104,7 @@ export const useSocialLogin = () => {
 export const useSignout = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { clearUser } = useUserStore();
 
   const mutation = useMutation({
     mutationKey: ["signout"],
@@ -116,6 +119,8 @@ export const useSignout = () => {
     onSuccess: () => {
       // 모든 쿼리 제거
       queryClient.clear();
+      // store 정리
+      clearUser();
       // 쿠키 정리
       document.cookie = "XSRF-TOKEN=; Max-Age=0; path=/;";
       // CSRF 토큰 캐시 초기화

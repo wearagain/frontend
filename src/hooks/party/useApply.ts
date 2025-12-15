@@ -14,9 +14,9 @@ import type {
   HostApplicationResponse,
   MyTakenClothingResponse,
 } from "@/types/apply";
-import { useMe } from "@/hooks/auth/useMe";
 import { handleApiError } from "@/utils/handleApiError";
 import type { SelectedItem } from "@/types/clothingCategory";
+import { useUserStore } from "@/store/useUserStore.ts";
 
 interface ItemInfo {
   images: string[];
@@ -55,12 +55,12 @@ export const useGetMyTakenClothes = () => {
 };
 
 export const useApplySubmit = (partyId: string) => {
-  const { data: userData } = useMe();
+  const { user } = useUserStore();
 
   return useMutation({
     mutationKey: ["applySubmit", partyId],
     mutationFn: async (applyData: ApplyData) => {
-      if (!userData) {
+      if (!user) {
         throw new Error("사용자 정보가 없습니다. 다시 로그인해주세요.");
       }
 
@@ -100,9 +100,9 @@ export const useApplySubmit = (partyId: string) => {
       const attendanceDate = attendanceDateTime.toISOString().replace("Z", "");;
 
 
-      payload.append("name", userData.nickname);
-      payload.append("phone", "010-4444-4444");
-      payload.append("email", userData.email);
+      payload.append("name", user.nickname);
+      payload.append("phone", user?.phone ?? "01000000000");
+      payload.append("email", user.email);
       payload.append("clothingItemsJson", JSON.stringify(clothingItems));
       payload.append("attendanceDate", attendanceDate);
 

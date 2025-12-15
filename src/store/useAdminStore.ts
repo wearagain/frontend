@@ -1,28 +1,30 @@
 import { create } from "zustand";
-import type { OngoingParty } from "@/types/pages.ts";
-import type { NoticeDocument } from "@/types/notice.ts";
 
 interface AdminStore {
-  ongoingPartyCount: number;
-  noticeCount: number;
+  partyApplicationCount: number;
+  inquiryCount: number;
 
-  setHomeAdminInfo: (payload: {
-    ongoingParties: OngoingParty[];
-    noticeDocuments: NoticeDocument[];
+  setAdminInfo: (payload: {
+    partyApplicationCount: number;
+    inquiryCount: number;
   }) => void;
 
   clearAdmin: () => void;
 }
 
 export const useAdminStore = create<AdminStore>((set) => ({
-  ongoingPartyCount: 0,
-  noticeCount: 0,
+  partyApplicationCount: 0,
+  inquiryCount: 0,
 
-  setHomeAdminInfo: ({ ongoingParties, noticeDocuments }) =>
+  setAdminInfo: ({ partyApplicationCount, inquiryCount }) =>
     set({
-      ongoingPartyCount: ongoingParties?.length,
-      noticeCount: noticeDocuments?.length,
+      partyApplicationCount,
+      inquiryCount,
     }),
 
-  clearAdmin: () => set({ ongoingPartyCount: 0, noticeCount: 0 }),
+  clearAdmin: () =>
+    set({
+      partyApplicationCount: 0,
+      inquiryCount: 0,
+    }),
 }));

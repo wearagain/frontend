@@ -3,21 +3,17 @@ import type { UserProfile } from "@/apis/user/getMe.ts";
 
 interface UserStore {
   user: UserProfile | null;
-  isAdmin: boolean;
-
   isLoggedIn: boolean;
+  isAdmin: boolean;
   userImageUrl: string | null;
   reduceCarbonAmount: number | null;
   voucherCount: number | null;
 
-  ongoingPartyCount?: number;
-  noticeCount?: number;
-
   setUser: (user: UserProfile) => void;
   setIsAdmin: (isAdmin: boolean) => void;
-  setHomeUserInfo: (payload: {
+  setUserInfo: (payload: {
     isLoggedIn: boolean;
-    userImageUrl: string;
+    userImageUrl?: string;
     reduceCarbonAmount?: number;
     voucherCount?: number;
   }) => void;
@@ -37,7 +33,7 @@ export const useUserStore = create<UserStore>((set) => ({
 
   setUser: (user) => set({ user }),
   setIsAdmin: (isAdmin) => set({ isAdmin }),
-  setHomeUserInfo: (
+  setUserInfo: (
     {
       isLoggedIn,
       userImageUrl,

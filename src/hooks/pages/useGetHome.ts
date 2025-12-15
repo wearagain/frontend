@@ -6,8 +6,8 @@ import type { HomeResponse } from "@/types/pages.ts";
 import { useAdminStore } from "@/store/useAdminStore.ts";
 
 export const useGetHome = () => {
-  const { setHomeUserInfo } = useUserStore();
-  const { setHomeAdminInfo } = useAdminStore();
+  const { isAdmin, setUserInfo } = useUserStore();
+  const { setAdminInfo } = useAdminStore();
 
   const query = useQuery<HomeResponse>({
     queryKey: ["home"],
@@ -19,7 +19,7 @@ export const useGetHome = () => {
   useEffect(() => {
     if (!query.data) return;
 
-    setHomeUserInfo({
+    setUserInfo({
       isLoggedIn: query.data.isLoggedIn,
       userImageUrl: query.data.userImageUrl,
       reduceCarbonAmount: query.data.reduceCarbonAmount
@@ -28,12 +28,12 @@ export const useGetHome = () => {
       voucherCount: query.data.voucherCount,
     });
 
-    setHomeAdminInfo({
-      ongoingParties: query.data.ongoingParties,
-      noticeDocuments: query.data.noticeDocuments,
+    setAdminInfo({
+      partyApplicationCount: query.data.partyApplicationCount,
+      inquiryCount: query.data.inquiryCount,
     });
 
-  }, [query.data, setHomeUserInfo]);
+  }, [query.data, isAdmin]);
 
   return query;
 };

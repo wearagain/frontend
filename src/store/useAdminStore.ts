@@ -20,8 +20,8 @@ export const useAdminStore = create<AdminStore>((set) => ({
 
   setHomeAdminInfo: ({ ongoingParties, noticeDocuments }) =>
     set({
-      ongoingPartyCount: ongoingParties.length,
-      noticeCount: noticeDocuments.length,
+      ongoingPartyCount: ongoingParties?.length,
+      noticeCount: noticeDocuments?.length,
     }),
 
   clearAdmin: () => set({ ongoingPartyCount: 0, noticeCount: 0 }),

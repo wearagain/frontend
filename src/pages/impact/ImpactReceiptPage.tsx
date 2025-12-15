@@ -11,7 +11,6 @@ import { StatisticsChart } from "@/components/impact/StatisticsChart";
 import { PeriodSelector } from "@/components/impact/PeriodSelector";
 import { ChevronDownIcon, SearchIcon } from "@/assets/icons";
 import { Download, Calendar } from "lucide-react";
-import { useMe } from "@/hooks/auth/useMe";
 import { exportToCSV } from "@/utils/csvExport";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -24,6 +23,7 @@ import {
 } from "@/components/ui/dropdown-long";
 import { useGetEnvironmentalImpacts } from "@/hooks/impact/useGetEnvironmentalImpacts";
 import StatusHandler from "@/components/common/StatusHandler";
+import { useUserStore } from "@/store/useUserStore.ts";
 
 type TabType = "period" | "party";
 type PartyFilterType = "all" | "hosted" | "participated";
@@ -34,7 +34,7 @@ const ImpactReceiptPage = () => {
   const [partyFilter, setPartyFilter] = useState<PartyFilterType>("all");
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
   const [showPeriodSelector, setShowPeriodSelector] = useState(false);
-  const { data: meData } = useMe();
+  const { user } = useUserStore();
 
   // API 쿼리 파라미터 준비
   const queryParams = useMemo(() => {
@@ -334,7 +334,7 @@ const ImpactReceiptPage = () => {
       <div className='flex flex-col h-full bottombar-p'>
         {/* 사용자 인사말 */}
         <div className='main-inner py-4'>
-          <p className='text-lg font-semibold'>{meData?.nickname || "사용자"} 님은 지금까지</p>
+          <p className='text-lg font-semibold'>{user?.nickname || "사용자"} 님은 지금까지</p>
           <p className='text-lg font-semibold'>환경 UX라이팅</p>
         </div>
 

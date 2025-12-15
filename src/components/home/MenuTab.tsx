@@ -1,5 +1,6 @@
 import { CalendarCheck, MessagesSquare, ReceiptText, ScanQrCode, Users, MessageSquareText, ChartLine } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "@/store/useUserStore.ts";
 
 const menuItems = [
     // 사용자
@@ -15,12 +16,12 @@ const menuItems = [
   {label: "통계", icon: ChartLine, route: "/admin", role: "ADMIN"},
 ];
 
-interface MenuTabProps {
-  userRole: string;
-}
 
-function MenuTab({ userRole }: MenuTabProps) {
-  const isAdmin = userRole === "ADMIN";
+
+function MenuTab() {
+  const { isAdmin } = useUserStore();
+  const userRole = isAdmin ? "ADMIN" : "USER";
+
   const navigate = useNavigate();
 
   const displayedMenuItems = menuItems.filter(

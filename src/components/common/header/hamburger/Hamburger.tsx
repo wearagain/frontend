@@ -15,26 +15,30 @@ import UserProfile from "@/components/common/header/hamburger/UserProfile.tsx";
 import MenuItem from "@/components/common/header/hamburger/MenuItem.tsx";
 import MenuTab from "@/components/home/MenuTab.tsx";
 import DailyClothingGraph from "@/components/common/header/hamburger/DailyClothingGraph.tsx";
+import { useUserStore } from "@/store/useUserStore.ts";
 
 interface HamburgerProps {
   open: boolean;
   setOpen: (value: boolean) => void;
-  nickname: string | null;
-  ticket?: number;
-  impact?: number;
-  isAdmin?: boolean;
 }
 
-export default function Hamburger({ open, setOpen, nickname, ticket, impact, isAdmin = true }: HamburgerProps) {
+export default function Hamburger({ open, setOpen }: HamburgerProps) {
   const { mutate: signout, isPending } = useSignout();
+  const {
+    user,
+    isAdmin,
+    isLoggedIn,
+    voucherCount: ticket,
+    reduceCarbonAmount: impact,
+  } = useUserStore();
 
   const handleClose = () => setOpen(false);
   const handleSignout = () => {
     if (isPending) return;
-    signout(undefined, {
-      onSettled: () => setOpen(false),
-    });
+    signout();
+    setOpen(false);
   };
+
 
   const currentMenu = isAdmin ? adminMenu : userMenu;
 
@@ -48,10 +52,10 @@ export default function Hamburger({ open, setOpen, nickname, ticket, impact, isA
 
       <SheetContent side="right" className="overflow-y-auto custom-scroll bottombar-p">
         <SheetHeader className="sticky top-0 bg-white z-10 px-5 pt-3 pb-4">
-          <HeaderActions onClose={handleClose} nickname={nickname} />
+          <HeaderActions onClose={handleClose} nickname={user?.nickname ?? ""} />
           <SheetTitle>
             {/* 헤더 */}
-            {nickname ? (<UserProfile nickname={nickname} ticket={ticket} impact={impact} />) : (
+            {user?.nickname ? (<UserProfile nickname={user.nickname} ticket={ticket} impact={impact} />) : (
               <Link to="/auth/signin" onClick={() => setOpen(false)}>
                 로그인 하러가기
               </Link>
@@ -62,7 +66,7 @@ export default function Hamburger({ open, setOpen, nickname, ticket, impact, isA
         {isAdmin && (
           <>
             <div className="divider-compact" />
-            <MenuTab userRole={"ADMIN"} />
+            <MenuTab />
             <div className="divider-compact" />
             <DailyClothingGraph />
             <div className="divider-compact" />
@@ -80,7 +84,7 @@ export default function Hamburger({ open, setOpen, nickname, ticket, impact, isA
           ))}
 
           {/* 로그아웃 */}
-          {nickname && (
+          {isLoggedIn && (
             <div className="mt-11 underline cursor-pointer text-sm text-[#939396] hover:text-gray-800 transition"
                  onClick={handleSignout}
             >

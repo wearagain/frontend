@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import HeaderContainer from "./HeaderContainer";
 import { useLocation } from "react-router-dom";
-import { useMe } from "@/hooks/auth/useMe";
 import { useNavigate } from "react-router-dom";
 import { Message, Hamburger, Back } from "@/components/common/header";
 
@@ -20,16 +19,12 @@ export default function HeaderAdmin({
 }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const { data } = useMe();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
-
-  const nickname = data?.nickname ?? null;
-  const role = data?.role ?? null;
 
   return (
     <HeaderContainer>
@@ -43,10 +38,8 @@ export default function HeaderAdmin({
       <div className='flex gap-3'>
         <Message />
         <Hamburger
-          nickname={nickname}
           open={open}
           setOpen={setOpen}
-          isAdmin={role === "ADMIN"}
         />
       </div>
     </HeaderContainer>

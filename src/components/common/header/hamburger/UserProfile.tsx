@@ -2,8 +2,8 @@ import ProfileIcon from "@/assets/icons/ProfileIcon.tsx";
 
 interface UserProfileProps {
   nickname: string | null;
-  ticket?: number;
-  impact?: number;
+  ticket: number | null;
+  impact: number | null;
 }
 
 export default function UserProfile({nickname, ticket, impact}: UserProfileProps) {

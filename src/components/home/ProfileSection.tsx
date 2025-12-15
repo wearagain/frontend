@@ -17,7 +17,7 @@ function ProfileSection({ toLogIn }: ProfileProps) {
     reduceCarbonAmount,
   } = useUserStore();
 
-  const { ongoingPartyCount, noticeCount } = useAdminStore();
+  const { partyApplicationCount, inquiryCount } = useAdminStore();
 
 
   if (!isLoggedIn) {
@@ -49,9 +49,9 @@ function ProfileSection({ toLogIn }: ProfileProps) {
             ) : (
               <>
 
-                <p>주최신청 <span className="font-bold">{ongoingPartyCount}</span></p>
+                <p>주최신청 <span className="font-bold">{partyApplicationCount}</span></p>
                 <div className="w-0.5 h-0.5 rounded-full bg-[#D9D9D9]" />
-                <p>답변대기 문의 <span className="font-bold">{noticeCount}</span></p>
+                <p>답변대기 문의 <span className="font-bold">{inquiryCount}</span></p>
               </>)}
         </div>
       </div>

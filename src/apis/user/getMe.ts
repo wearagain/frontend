@@ -6,14 +6,14 @@ export interface Role {
 }
 
 export interface UserProfile {
+  pkId: string;
   id: number;
   email: string;
   nickname: string;
-  phoneNumber: string;
-  pkId: string;
-  phone: string;
   provider: "LOCAL" | "GOOGLE" | "KAKAO" | "NAVER" | any;
   role: Role[];
+  phoneNumber: string;
+  isLoggedIn: boolean;
 }
 
 export const getMe = async (): Promise<UserProfile> => {

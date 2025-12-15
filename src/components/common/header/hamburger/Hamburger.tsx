@@ -27,7 +27,9 @@ export default function Hamburger({ open, setOpen }: HamburgerProps) {
   const {
     isAdmin,
     isLoggedIn,
+    user
   } = useUserStore();
+  console.log(isLoggedIn, user)
 
   const handleClose = () => setOpen(false);
   const handleSignout = () => {

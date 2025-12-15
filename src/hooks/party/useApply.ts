@@ -101,7 +101,7 @@ export const useApplySubmit = (partyId: string) => {
 
 
       payload.append("name", user.nickname);
-      payload.append("phone", user?.phone ?? "01000000000");
+      payload.append("phone", user?.phoneNumber ?? "01000000000");
       payload.append("email", user.email);
       payload.append("clothingItemsJson", JSON.stringify(clothingItems));
       payload.append("attendanceDate", attendanceDate);

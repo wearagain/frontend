@@ -300,7 +300,7 @@ const QrCheckinPage = () => {
         </div>
 
         {/* 컨텐츠 영역 */}
-        <div className='flex-1 flex flex-col overflow-y-auto'>
+        <div className='flex-1 flex flex-col overflow-y-auto bottombar-p custom-scroll'>
           {activeTab === "checkin" && (
             <>
               {hasParties && selectedParty ? (

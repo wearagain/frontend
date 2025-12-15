@@ -16,6 +16,7 @@ import PartyParticipantDetailPage from "@/pages/admin/party/PartyParticipantDeta
 import PartyParticipantDropdownContents
   from "@/components/common/header/DropdownMenu/PartyParticipantDropdownContents.tsx";
 import RejectParticipantModal from "@/components/admin/party/participants/Modal/RejectParticipantModal.tsx";
+import AdminImpactPage from "@/pages/admin/impact/AdminImpactPage.tsx";
 
 const adminRoutes: RouteObject = {
   path: "/admin",
@@ -144,6 +145,11 @@ const adminRoutes: RouteObject = {
           },
         },
       ],
+    },
+    {
+      path: "impact",
+      element: <AdminImpactPage />,
+      handle: { header: { type: "adminBase", label: "환경임팩트", showBack: true } },
     },
   ],
 };

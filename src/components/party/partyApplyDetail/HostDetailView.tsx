@@ -10,6 +10,7 @@ import { formatDateKR } from "@/utils/formatDate";
 import { useCancelHostApplication } from "@/hooks/party/useApply";
 import type { HostApplicationResponse } from "@/types/apply";
 import { Headset } from "lucide-react";
+import {DeliveryStatusDescription} from "@/constants/adminConstants.ts";
 
 interface HostDetailViewProps {
   data: HostApplicationResponse;
@@ -23,6 +24,7 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
   const {
     id,
     status,
+    partyId,
     partyTitle,
     partyDescription,
     isGroup,
@@ -57,6 +59,10 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
     });
   };
 
+  const handleManage = () => {
+    navigate(`/admin/party/manage/${partyId}/participants`)
+  }
+
   const renderAlert = () => {
     switch (status) {
       case "PENDING":
@@ -90,7 +96,7 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
       return (
         <Button
           theme='purple'
-          onClick={() => navigate("/party/help", { state: { partyTitle } })}
+          onClick={() => navigate(`/party/help`, { state: { partyTitle } })}
           className='w-full'
         >
           문의하기
@@ -104,7 +110,7 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
     <div className='flex flex-col h-screen'>
       {/* 헤더 */}
       <div className='bg-white shrink-0 sticky top-0 p-5 z-10'>
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center justify-between gap-2'>
           <h2>{partyTitle}</h2>
           <StatusBadge status={status} />
         </div>
@@ -153,7 +159,16 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
                   value={`${formatDateKR(openAt)} ~ ${formatDateKR(closeAt)}`}
                 />
                 <InfoRow label='장소' value={`${address} ${addressDetail}`} />
+                <div className='flex justify-between'>
                 <InfoRow label='최대 참석자 수' value={`${maxAttendeeCnt}명`} />
+                {data?.partyId &&
+                    <button
+                        onClick={handleManage}
+                        className="min-w-max font-regular text-sm underline text-[#939396]"
+                    >
+                      참여자 관리
+                    </button>
+                } </div>
                 <InfoRow label='최대 의류 수량' value={`${maxChangeCnt}벌`} />
                 <InfoRow label='소개' value={partyDescription} />
               </div>
@@ -164,7 +179,7 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
             <div className='px-5 mb-5'>
               <h4 className='font-semibold mb-3'>결제 및 배송</h4>
               <div className='flex flex-col gap-2'>
-                {deliveryStatus && <InfoRow label='상태' value={deliveryStatus || "-"} />}
+                {deliveryStatus && <InfoRow label='상태' value={DeliveryStatusDescription[deliveryStatus] || "-"} />}
                 <InfoRow
                   label='주소'
                   value={`${deliverAddress || ""} ${deliverAddressDetail || ""}`}

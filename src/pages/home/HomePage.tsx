@@ -5,24 +5,29 @@ import NoticeList from "@/components/home/NoticeList";
 import PartyCardList from "@/components/home/PartyCardList";
 import ProfileSection from "@/components/home/ProfileSection";
 import RedirectHome from "@/components/home/RedirectHome";
+import { useGetHome } from "@/hooks/pages/useGetHome.ts";
+import { useUserStore } from "@/store/useUserStore.ts";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const handleLoginNavigation = () => {
     navigate("/auth/signin");
   };
+  const { data } = useGetHome();
+
+  const {isAdmin} = useUserStore();
 
   return (
-    <div className='flex flex-col h-full overflow-y-auto custom-scroll'>
+    <div className="flex flex-col h-full overflow-y-auto custom-scroll">
       <ProfileSection
         toLogIn={handleLoginNavigation}
       />
-      <div className='divider-compact' />
-      <PartyCardList />
+      <div className="divider-compact" />
+      {!isAdmin && <PartyCardList data={data?.ongoingParties}/>}
       <MenuTab />
       <MagazineList />
       <RedirectHome />
-      <NoticeList />
+      <NoticeList data={data?.noticeDocuments} />
     </div>
   );
 };

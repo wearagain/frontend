@@ -6,7 +6,7 @@ import type { HomeResponse } from "@/types/pages.ts";
 import { useAdminStore } from "@/store/useAdminStore.ts";
 
 export const useGetHome = () => {
-  const { isAdmin, setUserInfo } = useUserStore();
+  const { setUserInfo } = useUserStore();
   const { setAdminInfo } = useAdminStore();
 
   const query = useQuery<HomeResponse>({
@@ -17,23 +17,31 @@ export const useGetHome = () => {
   });
 
   useEffect(() => {
-    if (!query.data) return;
+    const data = query.data;
+    if (!data) return;
 
-    setUserInfo({
-      isLoggedIn: query.data.isLoggedIn,
-      userImageUrl: query.data.userImageUrl,
-      reduceCarbonAmount: query.data.reduceCarbonAmount
-        ? Number(query.data.reduceCarbonAmount.toFixed(1))
-        : query.data.reduceCarbonAmount,
-      voucherCount: query.data.voucherCount,
-    });
+    if ("voucherCount" in data || "reduceCarbonAmount" in data) {
+      setUserInfo({
+        isLoggedIn: data.isLoggedIn,
+        userImageUrl: data.userImageUrl,
+        reduceCarbonAmount: data.reduceCarbonAmount
+          ? Number(data.reduceCarbonAmount.toFixed(1))
+          : data.reduceCarbonAmount,
+        voucherCount: data.voucherCount,
+      });
+    }
 
-    setAdminInfo({
-      partyApplicationCount: query.data.partyApplicationCount,
-      inquiryCount: query.data.inquiryCount,
-    });
+    if ("partyApplicationCount" in data) {
+      setUserInfo({
+        isLoggedIn: data.isLoggedIn,
+      });
+      setAdminInfo({
+        partyApplicationCount: data.partyApplicationCount,
+        inquiryCount: data.inquiryCount,
+      });
+    }
 
-  }, [query.data, isAdmin]);
+  }, [query.data]);
 
   return query;
 };

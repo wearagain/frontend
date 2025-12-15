@@ -1,15 +1,42 @@
 import type { NoticeDocument } from "@/types/notice.ts";
 
 // HomeResponseDto
-export interface HomeResponse extends AdminHomeResponse{
-  isLoggedIn: boolean,
-  nickname: string,
-  userImageUrl?: string,
-  voucherCount?: number,
-  reduceCarbonAmount?: number,
-  ongoingParties?: OngoingParty[],
-  noticeDocuments?: NoticeDocument[],
+
+
+interface BaseHomeResponse {
+  isLoggedIn: boolean;
+  nickname: string;
+  userImageUrl?: string;
+  noticeDocuments?: NoticeDocument[];
+  ongoingParties?: OngoingParty[];
 }
+
+export interface UserHomeResponse extends BaseHomeResponse {
+  voucherCount?: number;
+  reduceCarbonAmount?: number;
+  ongoingParties?: OngoingParty[];
+}
+
+export interface AdminHomeResponse extends BaseHomeResponse {
+  partyApplicationCount: number;
+  inquiryCount: number;
+  inquiryResponse: InquiryResponse[];
+  adminTotalImpactResponse: AdminTotalImpactResponse;
+}
+
+export type HomeResponse = UserHomeResponse | AdminHomeResponse;
+
+
+
+// export interface HomeResponse extends AdminHomeResponse{
+//   isLoggedIn: boolean,
+//   nickname: string,
+//   userImageUrl?: string,
+//   voucherCount?: number,
+//   reduceCarbonAmount?: number,
+//   ongoingParties?: OngoingParty[],
+//   noticeDocuments?: NoticeDocument[],
+// }
 
 export interface AdminHomeResponse {
   partyApplicationCount: number,

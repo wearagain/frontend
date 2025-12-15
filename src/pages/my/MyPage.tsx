@@ -14,7 +14,7 @@ const MyPage = () => {
   return (
     <div className="flex flex-col h-screen">
       {/* 프로필 */}
-      <ProfileSection name={user?.nickname} ticket={reduceCarbonAmount} impact={voucherCount} />
+      <ProfileSection name={user?.nickname} ticket={voucherCount} impact={reduceCarbonAmount} />
       {/* 환경임팩트 - 의류교환 관련 */}
       <EcoImpactSection updatedAt={`${getDateTime(now, "yyyy.MM.dd HH")}:00`} />
       <div className="divider-compact" />

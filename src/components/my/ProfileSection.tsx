@@ -19,7 +19,7 @@ export default function ProfileSection({ name = "", ticket = 0, impact = 0 }: Pr
         }}>{name} 님 <ChevronRight className="w-4 h-4" /></h3>
         <div className="flex items-center gap-1 text-[#555558] text-sm font-normal">
           <p className="cursor-pointer hover:underline" onClick={() => {
-            navigate("/qr");
+            navigate("/ticket");
           }}>보유 티켓 <span className="font-bold">{ticket}</span></p>
           <div className="w-0.5 h-0.5 rounded-full bg-[#D9D9D9]" />
           <p className="cursor-pointer hover:underline" onClick={() => {

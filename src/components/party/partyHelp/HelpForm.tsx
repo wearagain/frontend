@@ -6,33 +6,26 @@ import { ChevronDown, CircleX } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-long";
-
-type ApplyHelpCategory = "신청" | "결제" | "배송" | "기타";
-
-const CATEGORY_OPTIONS: ApplyHelpCategory[] = ["신청", "결제", "배송", "기타"];
-
-type HelpSubmitPayload = {
-  partyTitle: string;
-  category: ApplyHelpCategory;
-  title: string;
-  content: string;
-};
+import { HelpDropdownItem } from "@/components/party/partyHelp/HelpDropdownItem.tsx";
+import type { CreateInquiryRequest, inquiryType } from "@/types/help.ts";
+import { INQUIRY_TYPE_MAP } from "@/constants/helpConstants.ts";
 
 interface HelpFormProps {
+  defaultPartyId?: string;
   defaultPartyTitle?: string;
-  onSubmit?: (payload: HelpSubmitPayload) => void;
+  onSubmit?: (payload: CreateInquiryRequest) => void;
+  isLoading?: boolean;
 }
 
-export function HelpForm({ defaultPartyTitle = "", onSubmit }: HelpFormProps) {
+export function HelpForm({ defaultPartyTitle = "", onSubmit, isLoading = false }: HelpFormProps) {
   const [partyTitle, setPartyTitle] = useState(defaultPartyTitle);
-  const [category, setCategory] = useState<ApplyHelpCategory | "">("");
+  const [category, setCategory] = useState<inquiryType | null>(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // defaultPartyTitle 변경 시 반영
   useEffect(() => {
     setPartyTitle(defaultPartyTitle);
   }, [defaultPartyTitle]);
@@ -44,14 +37,26 @@ export function HelpForm({ defaultPartyTitle = "", onSubmit }: HelpFormProps) {
 
   const handleSubmit = () => {
     if (!isFilled || !category) return;
-    const payload = { partyTitle, category, title: title.trim(), content: content.trim() };
+
+    const payload = {
+      inquiryType: category,
+      title: title.trim(),
+      content: content.trim(),
+    };
+
     if (onSubmit) {
       onSubmit(payload);
     } else {
-      // TODO: submit API 연동
       console.log("문의 제출", payload);
     }
   };
+
+  const handleCategorySelect = (selectedCategory: inquiryType) => {
+    setCategory(selectedCategory);
+    setIsDropdownOpen(false);
+  };
+
+  const categoryOptions = Object.entries(INQUIRY_TYPE_MAP) as [inquiryType, string][];
 
   return (
     <>
@@ -76,28 +81,33 @@ export function HelpForm({ defaultPartyTitle = "", onSubmit }: HelpFormProps) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
+                  theme='normalOutlined'
                   id='category'
                   className='w-full justify-between rounded-lg border border-[#E4E4E4] bg-white px-4 py-4 text-base font-medium'
+                  onClick={() => {
+                    setIsDropdownOpen(true);
+                  }}
                 >
                   <span className={category ? "text-[#222222]" : "text-[#939396]"}>
-                    {category || "카테고리"}
+                    {category ? INQUIRY_TYPE_MAP[category] : "카테고리"}
                   </span>
                   <ChevronDown size={20} className='text-[#939396]' />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className='w-full min-w-[200px]'>
-                {CATEGORY_OPTIONS.map((opt) => (
-                  <DropdownMenuItem key={opt} onSelect={() => setCategory(opt)}>
-                    <span
-                      className={
-                        opt === category ? "text-(--color-purple-light) font-semibold" : ""
-                      }
-                    >
-                      {opt}
-                    </span>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
+              {isDropdownOpen && (
+                <DropdownMenuContent className='dropdown-menu'>
+                  {categoryOptions.map(([key, label], idx) => (
+                    <HelpDropdownItem
+                      key={key}
+                      category={key}
+                      label={label}
+                      onSelect={handleCategorySelect}
+                      isSelected={category === key}
+                      isLast={idx == categoryOptions.length - 1}
+                    />
+                  ))}
+                </DropdownMenuContent>
+              )}
             </DropdownMenu>
           </div>
 
@@ -139,8 +149,13 @@ export function HelpForm({ defaultPartyTitle = "", onSubmit }: HelpFormProps) {
       </main>
 
       <div className='shrink-0 sticky bottom-0 bg-white px-5 pt-4 pb-8'>
-        <Button theme='purple' disabled={!isFilled} onClick={handleSubmit} className='w-full'>
-          문의하기
+        <Button
+          theme='purple'
+          disabled={!isFilled || isLoading}
+          onClick={handleSubmit}
+          className='w-full'
+        >
+          {isLoading ? "전송 중..." : "문의하기"}
         </Button>
       </div>
     </>

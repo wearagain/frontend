@@ -177,7 +177,9 @@ const userRoutes: RouteObject = {
     {
       path: "ticket",
       element: <TicketPage />,
-      handle: { header: { type: "backClose", label: "티켓", onClose: () => window.history.back() } },
+      handle: {
+        header: { type: "backClose", label: "티켓", onClose: () => window.history.back() },
+      },
     },
 
     // 파티 참여
@@ -194,6 +196,11 @@ const userRoutes: RouteObject = {
           element: <PartyHelpPage />,
           handle: { header: { type: "base", label: "문의하기", showBack: true } },
         }, // /party/help/:id
+        {
+          path: "help/:id/complete",
+          element: <ApplyCompletePage />,
+          handle: { header: { type: "close", onClose: () => window.history.back() } },
+        }, // /party/help/:id/complete
         {
           path: ":id",
           element: <PartyDetailPage />,
@@ -243,12 +250,12 @@ const userRoutes: RouteObject = {
     {
       path: "chat",
       children: [
-        { index: true, element: <ChatPageWrapper />,
-          handle: { header: { type: "base", label: "", to: "/", showBack: true} },
+        {
+          index: true,
+          element: <ChatPageWrapper />,
+          handle: { header: { type: "base", label: "", to: "/", showBack: true } },
         }, // /chat
-        { path: ":roomId", element: <ChatPageWrapper />,
-        handle: { header: {type: "none"} },
-        }, // /chat/:roomId
+        { path: ":roomId", element: <ChatPageWrapper />, handle: { header: { type: "none" } } }, // /chat/:roomId
       ],
     },
 
@@ -256,11 +263,17 @@ const userRoutes: RouteObject = {
     {
       path: "party-chat",
       children: [
-        { index: true, element: <PartyChatPageWrapper />,
-          handle: { header: { type: "base", label: "", to: "/party/apply?tab=host", showBack: true} },
+        {
+          index: true,
+          element: <PartyChatPageWrapper />,
+          handle: {
+            header: { type: "base", label: "", to: "/party/apply?tab=host", showBack: true },
+          },
         }, // /party-chat
-        { path: ":roomId", element: <PartyChatPageWrapper />,
-          handle: { header: {type: "none"} },
+        {
+          path: ":roomId",
+          element: <PartyChatPageWrapper />,
+          handle: { header: { type: "none" } },
         }, // /party-chat/:roomId
       ],
     },

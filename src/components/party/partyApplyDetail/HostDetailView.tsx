@@ -10,7 +10,7 @@ import { formatDateKR } from "@/utils/formatDate";
 import { useCancelHostApplication } from "@/hooks/party/useApply";
 import type { HostApplicationResponse } from "@/types/apply";
 import { Headset } from "lucide-react";
-import {DeliveryStatusDescription} from "@/constants/adminConstants.ts";
+import { DeliveryStatusDescription } from "@/constants/adminConstants.ts";
 
 interface HostDetailViewProps {
   data: HostApplicationResponse;
@@ -60,8 +60,8 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
   };
 
   const handleManage = () => {
-    navigate(`/admin/party/manage/${partyId}/participants`)
-  }
+    navigate(`/admin/party/manage/${partyId}/participants`);
+  };
 
   const renderAlert = () => {
     switch (status) {
@@ -82,7 +82,7 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
         <div className='flex gap-2'>
           <Button
             theme='purpleOutlined'
-            onClick={() => navigate("/party/help", { state: { partyTitle } })}
+            onClick={() => navigate(`/party/help/${id}`, { state: { partyTitle } })}
             className='w-14'
           >
             <Headset size={20} />
@@ -96,7 +96,7 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
       return (
         <Button
           theme='purple'
-          onClick={() => navigate(`/party/help`, { state: { partyTitle } })}
+          onClick={() => navigate(`/party/help/${partyId}`, { state: { partyTitle } })}
           className='w-full'
         >
           문의하기
@@ -160,15 +160,16 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
                 />
                 <InfoRow label='장소' value={`${address} ${addressDetail}`} />
                 <div className='flex justify-between'>
-                <InfoRow label='최대 참석자 수' value={`${maxAttendeeCnt}명`} />
-                {data?.partyId &&
+                  <InfoRow label='최대 참석자 수' value={`${maxAttendeeCnt}명`} />
+                  {data?.partyId && (
                     <button
-                        onClick={handleManage}
-                        className="min-w-max font-regular text-sm underline text-[#939396]"
+                      onClick={handleManage}
+                      className='min-w-max font-regular text-sm underline text-[#939396]'
                     >
                       참여자 관리
                     </button>
-                } </div>
+                  )}{" "}
+                </div>
                 <InfoRow label='최대 의류 수량' value={`${maxChangeCnt}벌`} />
                 <InfoRow label='소개' value={partyDescription} />
               </div>
@@ -179,7 +180,9 @@ export const HostDetailView = ({ data }: HostDetailViewProps) => {
             <div className='px-5 mb-5'>
               <h4 className='font-semibold mb-3'>결제 및 배송</h4>
               <div className='flex flex-col gap-2'>
-                {deliveryStatus && <InfoRow label='상태' value={DeliveryStatusDescription[deliveryStatus] || "-"} />}
+                {deliveryStatus && (
+                  <InfoRow label='상태' value={DeliveryStatusDescription[deliveryStatus] || "-"} />
+                )}
                 <InfoRow
                   label='주소'
                   value={`${deliverAddress || ""} ${deliverAddressDetail || ""}`}

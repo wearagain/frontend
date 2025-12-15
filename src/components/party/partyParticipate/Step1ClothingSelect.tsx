@@ -20,6 +20,8 @@ export default function Step1ClothingSelect({ maxItemLimit, onNext }: Participan
   const { data: exchangedClothings = [] } = useGetMyTakenClothes();
 
   const [historyModalOpen, setHistoryModalOpen] = useState(false);
+  const isModalOpen = (selectedItems.length > 0);
+
   const [currentItemCode, setCurrentItemCode] = useState<ClothingCategoryCode | null>(null);
 
   const selectedItemsMap = useMemo(() => {
@@ -142,6 +144,7 @@ export default function Step1ClothingSelect({ maxItemLimit, onNext }: Participan
           <ClothingCategoryDisplay
             selectedItems={selectedItemsMap}
             onItemToggle={handleItemToggle}
+            isModalOpen={isModalOpen}
           />
         </main>
       </div>
@@ -158,7 +161,7 @@ export default function Step1ClothingSelect({ maxItemLimit, onNext }: Participan
       )}
 
       {/* 선택된 품목 모달 */}
-      {selectedItems.length > 0 && !historyModalOpen && (
+      {isModalOpen && !historyModalOpen && (
         <ClothingSelectedModal
           currentTotal={totalCount}
           selectedItems={selectedItems}
